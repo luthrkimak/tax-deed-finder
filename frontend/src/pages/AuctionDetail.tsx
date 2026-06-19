@@ -80,6 +80,16 @@ export default function AuctionDetail() {
           placeholder="Add notes about this property…"
           className="w-full border rounded p-3 text-sm h-24 resize-none"
         />
+        {favorite && (
+          <button
+            onClick={async () => {
+              await apiClient.updateFavorite(favorite.id, notes)
+            }}
+            className="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700 mt-2"
+          >
+            Save Notes
+          </button>
+        )}
       </div>
 
       <div className="mt-4 flex gap-3">

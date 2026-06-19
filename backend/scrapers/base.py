@@ -40,11 +40,18 @@ class BaseScraper(ABC):
             result.records_found = len(records)
 
             if records:
+                # Get existing parcel IDs for this county before upsert
+                existing_result = sb.table("auctions").select("parcel_id").eq("state", self.state).eq("county", self.county).execute()
+                existing_parcels = {row["parcel_id"] for row in existing_result.data}
+
                 upsert_result = sb.table("auctions").upsert(
                     records, on_conflict="parcel_id,state,county"
                 ).execute()
-                result.records_new = len(upsert_result.data)
-                result.new_ids = [row["id"] for row in upsert_result.data if row.get("id")]
+
+                # Only IDs for truly new records (not updates to existing ones)
+                new_records = [r for r in upsert_result.data if r.get("parcel_id") not in existing_parcels]
+                result.new_ids = [r["id"] for r in new_records if r.get("id")]
+                result.records_new = len(new_records)
 
             sb.table("scrape_logs").insert({
                 "source": self.source_name,

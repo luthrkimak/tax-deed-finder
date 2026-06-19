@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from db.client import get_supabase
 from api.deps import get_current_user
-from models.favorite import FavoriteCreate
+from models.favorite import FavoriteCreate, FavoriteUpdate
 
 router = APIRouter()
 
@@ -20,6 +20,15 @@ def list_favorites(user_id: str = Depends(get_current_user)):
     sb = get_supabase()
     result = sb.table("favorites").select("*, auctions(*)").eq("user_id", user_id).execute()
     return result.data
+
+@router.patch("/{favorite_id}")
+def update_favorite(favorite_id: str, body: FavoriteUpdate, user_id: str = Depends(get_current_user)):
+    sb = get_supabase()
+    updates = body.model_dump(exclude_none=True)
+    result = sb.table("favorites").update(updates).eq("id", favorite_id).eq("user_id", user_id).execute()
+    if not result.data:
+        raise HTTPException(status_code=404, detail="Favorite not found")
+    return result.data[0]
 
 @router.delete("/{favorite_id}", status_code=204)
 def delete_favorite(favorite_id: str, user_id: str = Depends(get_current_user)):

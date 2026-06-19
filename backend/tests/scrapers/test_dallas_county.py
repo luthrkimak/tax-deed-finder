@@ -15,6 +15,7 @@ def test_parse_returns_auction_records():
     assert records[0]["county"] == "Dallas"
     assert records[0]["type"] == "foreclosure"
     assert records[0]["source"] == "scrape"
+    assert records[0]["auction_date"] == "2026-07-01"
 
 def test_parse_address():
     html = FIXTURE.read_text()

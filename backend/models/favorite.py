@@ -8,6 +8,9 @@ class FavoriteCreate(BaseModel):
     auction_id: str
     notes: Optional[str] = None
 
+class FavoriteUpdate(BaseModel):
+    notes: Optional[str] = None
+
 class Favorite(BaseModel):
     id: str
     user_id: str

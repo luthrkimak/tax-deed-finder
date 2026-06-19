@@ -30,7 +30,7 @@ class DallasCountyScraper(BaseScraper):
                 "parcel_id": parcel.get_text(strip=True),
                 "address": address.get_text(strip=True),
                 "min_bid": self._parse_currency(bid.get_text(strip=True)),
-                "auction_date": sale_date.get_text(strip=True) if sale_date else None,
+                "auction_date": self._parse_date(sale_date.get_text(strip=True)) if sale_date else None,
                 "source": "scrape",
                 "source_url": SEARCH_URL,
             })
@@ -46,6 +46,16 @@ class DallasCountyScraper(BaseScraper):
             browser.close()
         self.sleep()
         return self.parse(html)
+
+    @staticmethod
+    def _parse_date(value: str) -> str | None:
+        from datetime import datetime
+        for fmt in ("%Y-%m-%d", "%m/%d/%Y", "%B %d, %Y"):
+            try:
+                return datetime.strptime(value.strip(), fmt).date().isoformat()
+            except ValueError:
+                continue
+        return None
 
     @staticmethod
     def _parse_currency(value: str) -> float:

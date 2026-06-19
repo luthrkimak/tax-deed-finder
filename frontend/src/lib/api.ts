@@ -39,6 +39,12 @@ export const apiClient = {
     await axios.delete(`${BASE_URL}/favorites/${id}`, { headers })
   },
 
+  async updateFavorite(id: string, notes: string): Promise<Favorite> {
+    const headers = await authHeaders()
+    const { data } = await axios.patch(`${BASE_URL}/favorites/${id}`, { notes }, { headers })
+    return data
+  },
+
   async listAlerts(): Promise<Alert[]> {
     const headers = await authHeaders()
     const { data } = await axios.get(`${BASE_URL}/alerts`, { headers })
