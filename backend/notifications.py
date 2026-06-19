@@ -1,6 +1,7 @@
 from __future__ import annotations
 import html
 import os
+from datetime import datetime, timezone
 import resend
 from db.client import get_supabase
 
@@ -43,4 +44,4 @@ def send_alert_emails(new_auction_ids: list[str]) -> None:
             "subject": f"Tax Deed Finder — {len(matching)} new auction(s) match your alert",
             "html": f"<h2>New Auctions Found</h2><ul>{items_html}</ul>",
         })
-        sb.table("alerts").update({"last_sent_at": "now()"}).eq("id", alert["id"]).execute()
+        sb.table("alerts").update({"last_sent_at": datetime.now(timezone.utc).isoformat()}).eq("id", alert["id"]).execute()

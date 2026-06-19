@@ -14,6 +14,7 @@ class ScrapeResult:
     records_found: int = 0
     records_new: int = 0
     error: Optional[str] = None
+    new_ids: list[str] = field(default_factory=list)
 
 class BaseScraper(ABC):
     state: str
@@ -43,6 +44,7 @@ class BaseScraper(ABC):
                     records, on_conflict="parcel_id,state,county"
                 ).execute()
                 result.records_new = len(upsert_result.data)
+                result.new_ids = [row["id"] for row in upsert_result.data if row.get("id")]
 
             sb.table("scrape_logs").insert({
                 "source": self.source_name,

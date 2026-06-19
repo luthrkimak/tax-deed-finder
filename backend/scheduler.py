@@ -24,6 +24,7 @@ def run_all_scrapers():
         try:
             result = scraper.run()
             logger.info("%s: found=%d new=%d", scraper.source_name, result.records_found, result.records_new)
+            new_ids.extend(result.new_ids)
         except Exception as exc:
             logger.error("Scraper %s crashed: %s", ScraperClass.__name__, exc)
     send_alert_emails(new_ids)
