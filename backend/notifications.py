@@ -1,4 +1,5 @@
 from __future__ import annotations
+import html
 import os
 import resend
 from db.client import get_supabase
@@ -33,7 +34,7 @@ def send_alert_emails(new_auction_ids: list[str]) -> None:
         if not matching:
             continue
         items_html = "".join(
-            f"<li><b>{a.get('address', 'N/A')}</b> — {a.get('type')} — Bid: ${a.get('min_bid', 0):,.2f} — Date: {a.get('auction_date', 'TBD')}</li>"
+            f"<li><b>{html.escape(a.get('address') or 'N/A')}</b> — {html.escape(a.get('type') or '')} — Bid: ${a.get('min_bid', 0):,.2f} — Date: {html.escape(str(a.get('auction_date') or 'TBD'))}</li>"
             for a in matching
         )
         resend.Emails.send({
