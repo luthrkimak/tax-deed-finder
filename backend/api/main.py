@@ -1,8 +1,17 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api.routes import auctions, favorites, alerts
+from scheduler import create_scheduler
 
-app = FastAPI(title="Tax Deed Finder API")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    scheduler = create_scheduler()
+    scheduler.start()
+    yield
+    scheduler.shutdown()
+
+app = FastAPI(title="Tax Deed Finder API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
