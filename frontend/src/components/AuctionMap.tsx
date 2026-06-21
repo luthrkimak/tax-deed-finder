@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { MapContainer, TileLayer, Popup, CircleMarker } from 'react-leaflet'
-import type { Auction } from '../types'
+import type { AuctionFilters, PinData } from '../types'
+import { apiClient } from '../lib/api'
 import 'leaflet/dist/leaflet.css'
 
 const PIN_COLORS: Record<string, string> = {
@@ -16,12 +17,19 @@ const LEGEND = [
 ]
 
 interface Props {
-  auctions: Auction[]
+  filters: AuctionFilters
 }
 
-export default function AuctionMap({ auctions }: Props) {
-  const [selected, setSelected] = useState<Auction | null>(null)
-  const mappable = auctions.filter(a => a.lat != null && a.lng != null)
+export default function AuctionMap({ filters }: Props) {
+  const [pins, setPins] = useState<PinData[]>([])
+  const [selected, setSelected] = useState<string | null>(null)
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const { page, page_size, date_from, date_to, status, ...mapFilters } = filters
+    void page; void page_size; void date_from; void date_to; void status
+    apiClient.getPins(mapFilters).then(setPins).catch(() => setPins([]))
+  }, [JSON.stringify(filters)])  // stringify avoids infinite loops from object identity changes
 
   return (
     <MapContainer
@@ -33,19 +41,19 @@ export default function AuctionMap({ auctions }: Props) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {mappable.map(auction => (
+      {pins.map(pin => (
         <CircleMarker
-          key={auction.id}
-          center={[auction.lat!, auction.lng!]}
+          key={pin.id}
+          center={[pin.lat, pin.lng]}
           radius={8}
-          pathOptions={{ color: PIN_COLORS[auction.type] ?? '#6b7280', fillColor: PIN_COLORS[auction.type] ?? '#6b7280', fillOpacity: 0.85 }}
-          eventHandlers={{ click: () => setSelected(auction) }}
+          pathOptions={{ color: PIN_COLORS[pin.type] ?? '#6b7280', fillColor: PIN_COLORS[pin.type] ?? '#6b7280', fillOpacity: 0.85 }}
+          eventHandlers={{ click: () => setSelected(pin.id) }}
         >
-          {selected?.id === auction.id && (
+          {selected === pin.id && (
             <Popup onClose={() => setSelected(null)}>
               <div className="text-sm">
-                <p className="font-semibold">{auction.address}</p>
-                <p>${auction.min_bid?.toLocaleString()} — {auction.type}</p>
+                <p className="font-semibold">{pin.address}</p>
+                <p>${pin.min_bid?.toLocaleString()} — {pin.type}</p>
               </div>
             </Popup>
           )}

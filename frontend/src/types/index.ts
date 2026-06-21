@@ -59,6 +59,15 @@ export interface Favorite {
   auction?: Auction
 }
 
+export interface PinData {
+  id: string
+  lat: number
+  lng: number
+  type: string
+  address: string | null
+  min_bid: number | null
+}
+
 export interface Alert {
   id: string
   user_id: string

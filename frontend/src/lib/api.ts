@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { Auction, AuctionFilters, AuctionsResponse, Favorite, Alert } from '../types'
+import type { Auction, AuctionFilters, AuctionsResponse, Favorite, Alert, PinData } from '../types'
 import { supabase } from './supabase'
 
 const BASE_URL = import.meta.env.VITE_API_URL
@@ -25,6 +25,12 @@ export const apiClient = {
 
   async getAuction(id: string): Promise<Auction> {
     const { data } = await axios.get(`${BASE_URL}/auctions/${id}`)
+    return data
+  },
+
+  async getPins(filters: Omit<AuctionFilters, 'page' | 'page_size' | 'date_from' | 'date_to' | 'status'> = {}): Promise<PinData[]> {
+    const params = Object.fromEntries(Object.entries(filters).filter(([, v]) => v !== undefined))
+    const { data } = await axios.get(`${BASE_URL}/auctions/pins`, { params })
     return data
   },
 

@@ -63,6 +63,34 @@ def get_counties(state: Optional[str] = Query(None)):
     counties = sorted({row["county"] for row in result.data if row.get("county")})
     return counties
 
+@router.get("/pins")
+def get_pins(
+    state: Optional[str] = Query(None),
+    county: Optional[str] = Query(None),
+    type: Optional[AuctionType] = Query(None),
+    property_type: Optional[PropertyType] = Query(None),
+    min_bid: Optional[Decimal] = Query(None),
+    max_bid: Optional[Decimal] = Query(None),
+):
+    """Returns lat/lng/type for all matching auctions — used by map (no pagination)."""
+    sb = get_supabase()
+    query = sb.table("auctions").select("id,lat,lng,type,address,min_bid").not_.is_("lat", "null")
+    if state:
+        query = query.eq("state", state.upper())
+    if county:
+        query = query.eq("county", county)
+    if type:
+        query = query.eq("type", type)
+    if property_type:
+        query = query.eq("property_type", property_type)
+    if min_bid is not None:
+        query = query.gte("min_bid", float(min_bid))
+    if max_bid is not None:
+        query = query.lte("min_bid", float(max_bid))
+    result = query.limit(2000).execute()
+    return result.data
+
+
 @router.get("/{auction_id}")
 def get_auction(auction_id: str):
     sb = get_supabase()

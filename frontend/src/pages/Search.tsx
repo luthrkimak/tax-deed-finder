@@ -99,7 +99,7 @@ export default function Search() {
           )}
         </div>
         <div className="flex-1">
-          <AuctionMap auctions={auctions} />
+          <AuctionMap filters={filters} />
         </div>
       </div>
     </div>
