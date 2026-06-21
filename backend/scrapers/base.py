@@ -53,6 +53,11 @@ class BaseScraper(ABC):
                 result.new_ids = [r["id"] for r in new_records if r.get("id")]
                 result.records_new = len(new_records)
 
+                # Geocode new records automatically (import here to avoid circular imports)
+                if result.new_ids:
+                    from scrapers.geocoder import geocode_auctions
+                    geocode_auctions(result.new_ids)
+
             sb.table("scrape_logs").insert({
                 "source": self.source_name,
                 "state": self.state,
