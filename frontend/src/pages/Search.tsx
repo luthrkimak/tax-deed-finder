@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import type { Auction, AuctionFilters } from '../types'
 import { apiClient } from '../lib/api'
 import { supabase } from '../lib/supabase'
+import { useI18n } from '../lib/i18n'
 import FilterBar from '../components/FilterBar'
 import AuctionCard from '../components/AuctionCard'
 import AuctionMap from '../components/AuctionMap'
 
 export default function Search() {
   const navigate = useNavigate()
+  const { t } = useI18n()
   const [auctions, setAuctions] = useState<Auction[]>([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
@@ -79,7 +81,7 @@ export default function Search() {
       <FilterBar onSearch={f => search(f, 1)} loading={loading} />
       <div className="flex flex-1 overflow-hidden">
         <div className="w-[480px] flex-shrink-0 overflow-y-auto p-4 space-y-3 border-r">
-          <p className="text-sm text-gray-500">{total.toLocaleString()} resultados</p>
+          <p className="text-sm text-gray-500">{total.toLocaleString()} {t.search_results}</p>
           {auctions.map(auction => (
             <AuctionCard
               key={auction.id}
@@ -90,9 +92,9 @@ export default function Search() {
           ))}
           {totalPages > 1 && (
             <div className="flex justify-center gap-2 pt-2">
-              <button onClick={() => search(filters, page - 1)} disabled={page === 1} className="px-3 py-1 border rounded disabled:opacity-40">Anterior</button>
+              <button onClick={() => search(filters, page - 1)} disabled={page === 1} className="px-3 py-1 border rounded disabled:opacity-40">{t.search_prev}</button>
               <span className="px-3 py-1 text-sm">{page} / {totalPages}</span>
-              <button onClick={() => search(filters, page + 1)} disabled={page === totalPages} className="px-3 py-1 border rounded disabled:opacity-40">Próximo</button>
+              <button onClick={() => search(filters, page + 1)} disabled={page === totalPages} className="px-3 py-1 border rounded disabled:opacity-40">{t.search_next}</button>
             </div>
           )}
         </div>

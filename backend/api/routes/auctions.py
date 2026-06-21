@@ -27,7 +27,7 @@ def get_auctions(
     if state:
         query = query.eq("state", state.upper())
     if county:
-        query = query.ilike("county", f"%{county}%")
+        query = query.eq("county", county)
     if type:
         query = query.eq("type", type)
     if status:
@@ -52,6 +52,16 @@ def get_auctions(
         "page": page,
         "page_size": page_size,
     }
+
+@router.get("/counties")
+def get_counties(state: Optional[str] = Query(None)):
+    sb = get_supabase()
+    query = sb.table("auctions").select("county")
+    if state:
+        query = query.eq("state", state.upper())
+    result = query.execute()
+    counties = sorted({row["county"] for row in result.data if row.get("county")})
+    return counties
 
 @router.get("/{auction_id}")
 def get_auction(auction_id: str):

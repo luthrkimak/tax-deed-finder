@@ -1,10 +1,8 @@
-from scrapers.base import BaseScraper
+from scrapers.realforeclose_base import RealForecloseScraper
 
-class MiamiDadeScraper(BaseScraper):
+class MiamiDadeScraper(RealForecloseScraper):
     state = "FL"
     county = "Miami-Dade"
     source_name = "miami_dade_fl"
-
-    def scrape(self) -> list[dict]:
-        # TODO: implement when Miami-Dade portal access is confirmed
-        return []
+    base_url = "https://miamidade.realforeclose.com"
+    auction_type = "foreclosure"

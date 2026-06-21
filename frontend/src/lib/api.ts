@@ -11,6 +11,12 @@ async function authHeaders() {
 }
 
 export const apiClient = {
+  async getCounties(state?: string): Promise<string[]> {
+    const params = state ? { state } : {}
+    const { data } = await axios.get(`${BASE_URL}/auctions/counties`, { params })
+    return data
+  },
+
   async getAuctions(filters: AuctionFilters = {}): Promise<AuctionsResponse> {
     const params = Object.fromEntries(Object.entries(filters).filter(([, v]) => v !== undefined))
     const { data } = await axios.get(`${BASE_URL}/auctions`, { params })

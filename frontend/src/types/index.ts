@@ -23,6 +23,8 @@ export interface Auction {
   redfin_url: string | null
   source: 'api' | 'scrape'
   source_url: string | null
+  lat: number | null
+  lng: number | null
   created_at: string
   updated_at: string
 }

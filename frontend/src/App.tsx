@@ -7,6 +7,7 @@ import Search from './pages/Search'
 import AuctionDetail from './pages/AuctionDetail'
 import Favorites from './pages/Favorites'
 import Alerts from './pages/Alerts'
+import Counties from './pages/Counties'
 import Navbar from './components/Navbar'
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
@@ -34,6 +35,7 @@ export default function App() {
               <Route path="/auctions/:id" element={<AuctionDetail />} />
               <Route path="/favorites" element={<RequireAuth><Favorites /></RequireAuth>} />
               <Route path="/alerts" element={<RequireAuth><Alerts /></RequireAuth>} />
+              <Route path="/counties" element={<Counties />} />
             </Routes>
           </>
         } />

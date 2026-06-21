@@ -1,0 +1,333 @@
+export type SaleType = 'tax_deed' | 'tax_lien' | 'both' | 'redeemable_deed'
+export type BidType = 'auction' | 'premium_bid' | 'bid_down'
+
+export interface CountyInfo {
+  name: string
+  phone?: string
+  address?: string
+  website?: string
+}
+
+export interface StateInfo {
+  name: string
+  abbr: string
+  saleType: SaleType
+  bidType: BidType
+  interestRate?: string
+  redemptionPeriod?: string
+  numCounties: number
+  counties: CountyInfo[]
+}
+
+export const STATES: StateInfo[] = [
+  {
+    name: 'Alaska', abbr: 'AK',
+    saleType: 'tax_deed', bidType: 'auction', numCounties: 18,
+    counties: [
+      { name: 'Aleutians East', phone: '907-497-2588', address: '3380 C Street, Anchorage, AK 99503' },
+      { name: 'Anchorage', phone: '907-343-6770', address: '632 W 6Th Ave, Anchorage, AK 99501' },
+      { name: 'Bristol Bay', phone: '907-246-4224', address: 'PO Box 189, Naknek, AK 99633', website: 'http://www.theborough.com' },
+      { name: 'Denali', phone: '907-683-1330', address: 'PO Box 480, Healy, AK 99743' },
+      { name: 'Fairbanks North Star', phone: '907-451-2749', address: 'PO BOX 71267, Fairbanks, AK 99707' },
+      { name: 'Haines', phone: '907-766-2231', address: 'PO BOX 1209, Haines, AK 99827', website: 'http://www.hainesborough.us' },
+      { name: 'Juneau', phone: '907-586-5265', address: '155 S Seward St Juneau, AK 99801', website: 'http://www.juneau.org' },
+      { name: 'Kenai Peninsula', phone: '907-714-2304', address: '144 N Binkley St, Soldotna, AK 99669' },
+      { name: 'Ketchikan Gateway', phone: '907-228-6640', address: '1900 First Avenue, Ketchikan, AK 99901' },
+      { name: 'Kodiak Island', phone: '907-486-9353', address: '710 Mill Bay Rd Kodiak, AK 99615' },
+      { name: 'Lake And Peninsula', phone: '907-246-3421', address: 'PO BOX 495, King Salmon, AK 99613' },
+      { name: 'Matanuska-Susitna', phone: '907-745-9642', address: '350 E Dahlia Ave Palmer, AK 99645' },
+      { name: 'North Slope', phone: '907-852-0355', address: 'PO BOX 69, Barrow, AK 99723' },
+      { name: 'Northwest Arctic', phone: '907-442-2500', address: 'PO Box 1110 Kotzebue, AK 99752' },
+      { name: 'Sitka', phone: '907-747-1836', address: '100 Lincoln St, Sitka, AK 99835' },
+      { name: 'Skagway', phone: '907-983-3297', address: '700 Spring Street, PO BOX 415, Skagway, AK 99840' },
+      { name: 'Wrangell', phone: '907-874-2381', address: 'PO Box 531, Wrangell, AK 99929' },
+      { name: 'Yakutat', phone: '907-784-3323', address: 'PO Box 160 Yakutat, AK 99689' },
+    ],
+  },
+  {
+    name: 'Arkansas', abbr: 'AR',
+    saleType: 'tax_deed', bidType: 'premium_bid', redemptionPeriod: '30 dias', numCounties: 75,
+    counties: [],
+  },
+  {
+    name: 'California', abbr: 'CA',
+    saleType: 'both', bidType: 'premium_bid', interestRate: '18%', redemptionPeriod: '2-3 anos', numCounties: 58,
+    counties: [],
+  },
+  {
+    name: 'Connecticut', abbr: 'CT',
+    saleType: 'redeemable_deed', bidType: 'premium_bid', interestRate: '18%', redemptionPeriod: '6 meses', numCounties: 8,
+    counties: [
+      { name: 'Fairfield', phone: '203-579-6527', address: '1061 Main Street, Bridgeport, CT 06604' },
+      { name: 'Hartford', phone: '860-757-9640', address: '95 Washington Street Hartford, CT 06106' },
+      { name: 'Litchfield', phone: '860-567-7557', address: 'P.O. Box 247, Litchfield, CT 06759' },
+      { name: 'Middlesex', phone: '860-344-2966', address: '265 DeKoven Drive, Middletown, CT 06457' },
+      { name: 'New Haven', phone: '203-946-8054', address: '235 Church Street, New Haven, CT 06510' },
+      { name: 'New London', phone: '860-447-5216', address: '181 Captain\'s Walk, New London, CT 06320' },
+      { name: 'Tolland', phone: '860-871-3650', address: '69 Brooklyn Street Vernon Rockville, CT 06066' },
+      { name: 'Windham', phone: '860-465-3029', address: 'Town Building, 979 Main St, Willimantic, CT 06226' },
+    ],
+  },
+  {
+    name: 'Delaware', abbr: 'DE',
+    saleType: 'tax_deed', bidType: 'premium_bid', interestRate: '15%', redemptionPeriod: '60 dias', numCounties: 3,
+    counties: [
+      { name: 'Kent', phone: '302-744-2300', address: '555 S Bay Rd, Dover, DE 19901', website: 'http://www.co.kent.de.us' },
+      { name: 'New Castle', phone: '302-395-8383', address: '800 North French Street Wilmington, DE 19801', website: 'http://www.co.new-castle.de.us' },
+      { name: 'Sussex', phone: '302-855-7742', address: 'PO BOX 589, Georgetown, DE 19947', website: 'http://www.sussexcountyde.gov' },
+    ],
+  },
+  {
+    name: 'Florida', abbr: 'FL',
+    saleType: 'both', bidType: 'premium_bid', interestRate: '18%', redemptionPeriod: '2 anos', numCounties: 67,
+    counties: [
+      { name: 'Alachua', phone: '352-374-5236', address: '12 SE 1st Street, Gainesville, FL 32601', website: 'http://www.co.alachua.fl.us' },
+      { name: 'Baker', phone: '904-653-4518', address: '55 N 3Rd St, Macclenny, FL 32063' },
+      { name: 'Bay', phone: '850-248-8501', address: 'County Courthouse, Panama City, FL 32401' },
+      { name: 'Bradford', phone: '904-966-6248', address: '945 North Temple Ave Starke, FL 32091', website: 'http://www.bradford-co-fla.org' },
+      { name: 'Brevard', phone: '321-264-6969', address: '2725 Judge Fran Jamieson Way Melbourne, FL 32940', website: 'http://www.brevardcounty.us' },
+      { name: 'Broward', phone: '954-831-4000', address: 'Annex B, 115 South Andrews Avenue, Fort Lauderdale, FL 33301', website: 'http://www.broward.org' },
+      { name: 'Calhoun', phone: '850-674-8242', address: '20859 Central Ave E, Blountstown, FL 32424' },
+      { name: 'Charlotte', phone: '941-743-1350', address: '18500 Murdock Cir, Port Charlotte, FL 33948', website: 'http://www.charlottecountyfl.com' },
+      { name: 'Citrus', phone: '352-341-6500', address: '110 N Apopka Ave Inverness, FL 34450', website: 'http://www.citruscountyfl.org' },
+      { name: 'Clay', phone: '904-284-269-6320', address: 'County Administration Center 477 Houston Street, Green Cove Springs, FL 32043', website: 'http://www.claycountygov.com' },
+      { name: 'Collier', phone: '239-252-8172', address: '3301 E Tamiami Trail, Naples, FL 34112', website: 'http://www.colliergov.net' },
+      { name: 'Columbia', phone: '954-734-7401', address: '135 NE Hernando Avenue, #1529 Lake City, FL 32056', website: 'http://www.columbiacountyfl.com' },
+      { name: 'Dade', phone: '305-270-4916', address: '111 Nw 1St St, Miami, FL 33128', website: 'http://www.miamidade.gov' },
+      { name: 'DeSoto', phone: '863-993-4861', address: '201 E Oak Street, Arcadia, FL 34266' },
+      { name: 'Dixie', phone: '352-498-1213', address: '214 SW 351 Hwy, Cross City, FL 32628' },
+      { name: 'Duval', phone: '904-630-1916', address: '330 E Bay St, Jacksonville, FL 32202', website: 'http://www.coj.net' },
+      { name: 'Escambia', phone: '850-438-6500', address: '221 N Palafox St Pensacola, FL 32502' },
+      { name: 'Flagler', phone: '386-313-4160', address: '1769 E Moody Blvd, Bldg 2 Bunnell, FL 32110', website: 'http://www.flaglercounty.org' },
+      { name: 'Franklin', phone: '850-653-9523', address: '33 Market St, Apalachicola, FL 32320' },
+      { name: 'Gadsden', phone: '850-627-7255', address: '9 E Jefferson Street, Quincy, FL 32351' },
+      { name: 'Gilchrist', phone: '352-463-3178', address: '112 S Main Street, Trenton, FL 32693' },
+      { name: 'Glades', phone: '863-946-6035', address: 'PO Box 1018, Moore Haven, FL 33471' },
+      { name: 'Gulf', phone: '850-229-6116', address: '1000 Cecil G Costin Sr Blvd Port Saint Joe, FL 32456' },
+      { name: 'Hamilton', phone: '386-792-1284', address: '207 NE 1st Street, Jasper, FL 32052', website: 'http://www.hamiltoncountyflorida.com' },
+      { name: 'Hardee', phone: '863-773-9144', address: '412 W Orange St, Wauchula, FL 33873', website: 'http://www.hardeecounty.net' },
+      { name: 'Hendry', phone: '863-675-5280', address: 'PO BOX 1760, Labelle, FL 33975', website: 'http://www.hendryfl.net' },
+      { name: 'Hernando', phone: '352-754-4180', address: '20 N Main St, Brooksville, FL 34601', website: 'http://www.co.hernando.fl.us' },
+      { name: 'Highlands', phone: '863-402-6685', address: '600 S Commerce Ave, Sebring, FL 33870', website: 'http://www.highlands-county.com' },
+      { name: 'Hillsborough', phone: '813-635-5200', address: 'PO BOX 1110, Tampa, FL 33601', website: 'http://www.hillsboroughcounty.org' },
+      { name: 'Holmes', phone: '850-547-1115', address: 'PO Box 397 Bonifay, FL 32425', website: 'http://www.holmescountyfl.org' },
+      { name: 'Indian River', phone: '772-226-1343', address: '1800 27Th St, Vero Beach, FL 32960', website: 'http://www.ircgov.com' },
+      { name: 'Jackson', phone: '850-482-9653', address: '2864 Madison St, Marianna, FL 32448' },
+      { name: 'Jefferson', phone: '850-342-0147', address: '1 Court House Cir Monticello, FL 32346', website: 'http://www.co.jefferson.fl.us' },
+      { name: 'Lafayette', phone: '386-294-1961', address: 'PO BOX 88, Mayo, FL 32066' },
+      { name: 'Lake', phone: '352-343-9602', address: 'PO BOX 7800, Tavares, FL 32778', website: 'http://www.lakegoverment.com' },
+      { name: 'Lee', phone: '239-533-9000', address: '2120 Main Street Fort Myers, FL 33901', website: 'http://www.lee-county.com' },
+      { name: 'Leon', phone: '850-606-4700', address: '301 S Monroe St Tallahassee, FL 32301', website: 'http://www.co.leon.fl.us' },
+      { name: 'Levy', phone: '352-486-5174', address: 'PO BOX 310, Bronson, FL 32621', website: 'http://www.levycounty.org' },
+      { name: 'Liberty', phone: '850-643-2442', address: 'PO BOX 399, Bristol, FL 32321', website: 'http://www.libertycountyflorida.com' },
+      { name: 'Madison', phone: '850-973-6136', address: 'PO BOX 539, Madison, FL 32340', website: 'http://www.madisoncountyfl.com' },
+      { name: 'Manatee', phone: '941-750-9566', address: 'PO BOX 1000, Bradenton, FL 34206', website: 'http://www.mymanatee.org' },
+      { name: 'Marion', phone: '352-368-8200', address: '601 SE 25th Ave, Ocala, FL 34471', website: 'http://www.marioncountyfl.org' },
+      { name: 'Martin', phone: '772-288-5749', address: '304 NW 2nd Street, Stuart, FL 34994', website: 'http://www.martin.fl.us' },
+      { name: 'Monroe', phone: '305-295-3010', address: '1100 Simonton Street Key West, FL 33040', website: 'http://www.monroecounty-fl.gov' },
+      { name: 'Nassau', phone: '904-491-7400', address: '96161 Nassau Pl, Yulee, FL 32097', website: 'http://www.nassaucountyfl.com' },
+      { name: 'Okaloosa', phone: '850-651-7300', address: '101 E James Lee Blvd Crestview, FL 32536', website: 'http://www.co.okaloosa.fl.us' },
+      { name: 'Okeechobee', phone: '863-763-3421', address: '304 NW 2nd Street, Okeechobee, FL 34972', website: 'http://www.co.okeechobee.fl.us' },
+      { name: 'Orange', phone: '407-836-2700', address: '201 S Rosalind Avenue Orlando, FL 32801', website: 'http://www.orangecountyfl.net' },
+      { name: 'Osceola', phone: '407-742-4037', address: '1 Courthouse Sq Kissimmee, FL 34741', website: 'http://www.osceolaorg' },
+      { name: 'Palm Beach', phone: '561-355-2264', address: '301 N Olive Ave, West Palm Beach, FL 33401', website: 'http://www.pbcgov.com' },
+      { name: 'Pasco', phone: '352-521-4338', address: '7530 Little Rd, New Port Richey, FL 34654', website: 'http://www.pascocountyfl.net' },
+      { name: 'Pinellas', phone: '727-464-7777', address: '315 Court St, Clearwater, FL 33756', website: 'http://www.pinellascounty.org' },
+      { name: 'Polk', phone: '863-534-4700', address: 'PO BOX 9005, Bartow, FL 33831', website: 'http://www.polk-county.net' },
+      { name: 'Putnam', phone: '386-329-0276', address: '410 Saint Johns Ave, Palatka, FL 32177', website: 'http://www.putnam-fl.com' },
+      { name: 'Santa Rosa', phone: '850-983-1855', address: '6495 Caroline St, Milton, FL 32570', website: 'http://www.co.santa-rosa.fl.us' },
+      { name: 'Sarasota', phone: '941-951-5344', address: 'PO BOX 8, Sarasota, FL 34230', website: 'http://www.co.sarasota.fl.us' },
+      { name: 'Seminole', phone: '407-665-7219', address: '1101 E 1St St, Sanford, FL 32771', website: 'http://www.seminolecountyfl.gov' },
+      { name: 'St. Johns', phone: '904-209-0300', address: '4020 Lewis Speedway Saint Augustine, FL 32084', website: 'http://www.co.st-johns.fl.us' },
+      { name: 'St. Lucie', phone: '772-462-1400', address: '2300 Virginia Ave, Fort Pierce, FL 34982', website: 'http://www.stlucieco.gov' },
+      { name: 'Sumter', phone: '352-793-0200', address: '910 N Main St, Bushnell, FL 33513', website: 'http://www.sumtercountyfl.gov' },
+      { name: 'Suwannee', phone: '386-364-3450', address: '224 Pine Ave SW, Live Oak, FL 32064', website: 'http://www.suwcounty.org' },
+      { name: 'Taylor', phone: '850-838-3500', address: '201 E Green Street, Perry, FL 32347', website: 'http://www.taylorcountygov.com' },
+      { name: 'Union', phone: '386-496-4241', address: '55 W Main Street, Lake Butler, FL 32054', website: 'http://www.unioncofl.com' },
+      { name: 'Volusia', phone: '386-736-5920', address: '123 W Indiana Ave Deland, FL 32720', website: 'http://www.volusia.org' },
+      { name: 'Wakulla', phone: '850-926-0919', address: 'PO BOX 1263 Crawfordville, FL 32326', website: 'http://www.mywakulla.com' },
+      { name: 'Walton', phone: '850-892-8155', address: 'PO Box 1355, Defuniak Springs, FL 32435', website: 'http://www.co.walton.fl.us' },
+      { name: 'Washington', phone: '850-638-6200', address: '1331 South Blvd, Chipley, FL 32428', website: 'http://www.washingtonfl.com' },
+    ],
+  },
+  {
+    name: 'Georgia', abbr: 'GA',
+    saleType: 'redeemable_deed', bidType: 'premium_bid', interestRate: '20%', redemptionPeriod: '1 ano', numCounties: 159,
+    counties: [],
+  },
+  {
+    name: 'Hawaii', abbr: 'HI',
+    saleType: 'redeemable_deed', bidType: 'premium_bid', interestRate: '12%', redemptionPeriod: '1 ano', numCounties: 4,
+    counties: [
+      { name: 'Hawaii', phone: '808-961-8255', address: '25 Aupuni St, Hilo, HI 96720' },
+      { name: 'Honolulu', phone: '808-768-4385', address: '530 S King St, Honolulu, HI 96813', website: 'http://www.honolulu.gov' },
+      { name: 'Kauai', phone: '808-241-6371', address: '4444 Rice St, Lihue, HI 96766' },
+      { name: 'Maui', phone: '808-270-7838', address: '200 S High Street, Wailuku, HI 96793' },
+    ],
+  },
+  {
+    name: 'Idaho', abbr: 'ID',
+    saleType: 'tax_deed', bidType: 'premium_bid', numCounties: 44,
+    counties: [],
+  },
+  {
+    name: 'Kansas', abbr: 'KS',
+    saleType: 'tax_deed', bidType: 'premium_bid', numCounties: 105,
+    counties: [],
+  },
+  {
+    name: 'Maine', abbr: 'ME',
+    saleType: 'redeemable_deed', bidType: 'premium_bid', interestRate: '8%', redemptionPeriod: '2 anos', numCounties: 16,
+    counties: [],
+  },
+  {
+    name: 'Massachusetts', abbr: 'MA',
+    saleType: 'redeemable_deed', bidType: 'premium_bid', interestRate: '16%', redemptionPeriod: '6 meses', numCounties: 14,
+    counties: [],
+  },
+  {
+    name: 'Michigan', abbr: 'MI',
+    saleType: 'tax_deed', bidType: 'premium_bid', numCounties: 83,
+    counties: [],
+  },
+  {
+    name: 'Minnesota', abbr: 'MN',
+    saleType: 'tax_deed', bidType: 'premium_bid', numCounties: 87,
+    counties: [],
+  },
+  {
+    name: 'Nevada', abbr: 'NV',
+    saleType: 'both', bidType: 'premium_bid', interestRate: '12%', redemptionPeriod: 'até 2 anos', numCounties: 17,
+    counties: [],
+  },
+  {
+    name: 'New Hampshire', abbr: 'NH',
+    saleType: 'tax_deed', bidType: 'premium_bid', numCounties: 10,
+    counties: [],
+  },
+  {
+    name: 'New Mexico', abbr: 'NM',
+    saleType: 'tax_deed', bidType: 'premium_bid', numCounties: 33,
+    counties: [],
+  },
+  {
+    name: 'New York', abbr: 'NY',
+    saleType: 'both', bidType: 'auction', interestRate: '20% (lien)', redemptionPeriod: '2 anos (lien)', numCounties: 58,
+    counties: [],
+  },
+  {
+    name: 'North Carolina', abbr: 'NC',
+    saleType: 'tax_deed', bidType: 'premium_bid', numCounties: 100,
+    counties: [],
+  },
+  {
+    name: 'North Dakota', abbr: 'ND',
+    saleType: 'tax_deed', bidType: 'premium_bid', numCounties: 53,
+    counties: [],
+  },
+  {
+    name: 'Ohio', abbr: 'OH',
+    saleType: 'both', bidType: 'auction', interestRate: '18%', redemptionPeriod: '1 ano', numCounties: 88,
+    counties: [],
+  },
+  {
+    name: 'Oklahoma', abbr: 'OK',
+    saleType: 'tax_deed', bidType: 'premium_bid', numCounties: 77,
+    counties: [],
+  },
+  {
+    name: 'Oregon', abbr: 'OR',
+    saleType: 'tax_deed', bidType: 'premium_bid', numCounties: 36,
+    counties: [],
+  },
+  {
+    name: 'Pennsylvania', abbr: 'PA',
+    saleType: 'tax_deed', bidType: 'premium_bid', numCounties: 67,
+    counties: [],
+  },
+  {
+    name: 'Rhode Island', abbr: 'RI',
+    saleType: 'redeemable_deed', bidType: 'bid_down', interestRate: '16%', redemptionPeriod: '1 ano', numCounties: 5,
+    counties: [
+      { name: 'Bristol', address: 'Bristol, RI 2809' },
+      { name: 'Kent', address: ', RI' },
+      { name: 'Newport', address: 'Newport, RI 2840' },
+      { name: 'Providence', address: 'Providence, RI 2903' },
+      { name: 'Washington', address: '4800 Tower Hill Road, Wakefield, RI 02879' },
+    ],
+  },
+  {
+    name: 'South Dakota', abbr: 'SD',
+    saleType: 'tax_deed', bidType: 'premium_bid', numCounties: 66,
+    counties: [],
+  },
+  {
+    name: 'Tennessee', abbr: 'TN',
+    saleType: 'redeemable_deed', bidType: 'premium_bid', interestRate: '10%', redemptionPeriod: '1 ano', numCounties: 95,
+    counties: [],
+  },
+  {
+    name: 'Texas', abbr: 'TX',
+    saleType: 'redeemable_deed', bidType: 'premium_bid', interestRate: '25%–50%', redemptionPeriod: '6 meses–2 anos', numCounties: 254,
+    counties: [
+      { name: 'Anderson', phone: '903-723-7408', address: '500 N. Church Street Palestine, TX 75801', website: 'http://www.co.anderson.tx.us' },
+      { name: 'Austin', phone: '979865-9124', address: '1 E Main St, Bellville, TX 77418', website: 'http://www.austincounty.com' },
+      { name: 'Bexar', phone: '210-335-2251', address: '100 Dolorosa Street, San Antonio, TX 78205', website: 'http://www.co.bexar.tx.us' },
+      { name: 'Brazoria', phone: '979-864-1316', address: '111 E Locust St, Angleton, TX 77515', website: 'http://www.brazoriacountytx.gov' },
+      { name: 'Collin', phone: '469-742-9200', address: '210 S Mcdonald St Mckinney, TX 75069', website: 'http://www.co.collin.tx.us' },
+      { name: 'Dallas', phone: '214637-7811', address: '509 Main St Ste 103, Dallas, TX 75202', website: 'http://www.dallascounty.org' },
+      { name: 'Denton', phone: '940 349-3500', address: '110 W Hickory St, Denton, TX 76201', website: 'http://www.co.denton.tx.us' },
+      { name: 'El Paso', phone: '9155455481', address: '500 E San Antonio Ave, El Paso, TX 79901', website: 'http://www.co.el-paso.tx.us' },
+      { name: 'Fort Bend', phone: '281-341-3710', address: '301 Jackson Street Richmond, TX 77469', website: 'http://www.co.fort-bend.tx.us' },
+      { name: 'Galveston', phone: '409-766-2481', address: '722 Moody Ave, Galveston, TX 77550', website: 'http://www.co.galveston.tx.us' },
+      { name: 'Harris', phone: '713-274-8000', address: '1001 Preston St Houston, TX 77002', website: 'http://www.co.harris.tx.us' },
+      { name: 'Hidalgo', phone: '956-318-8466', address: '100 N Closner Blvd Edinburg, TX 78539', website: 'http://www.co.hidalgo.tx.us' },
+      { name: 'Jefferson', phone: '409-835-8516', address: '1149 Pearl St, Beaumont, TX 77701', website: 'http://www.co.jefferson.tx.us' },
+      { name: 'Lubbock', phone: '806 775-1086', address: 'P. O. Box 10536, Lubbock, TX 79408', website: 'http://www.co.lubbock.tx.us' },
+      { name: 'Montgomery', phone: '936 539-7897', address: '301 N Thompson St Ste 210, Conroe, TX 77301', website: 'http://www.co.montgomery.tx.us' },
+      { name: 'Tarrant', phone: '817-884-1100', address: 'Room 130 100 W. Weatherford St, Fort Worth, TX 76102', website: 'http://www.tarrant.tx.us' },
+      { name: 'Travis', phone: '512 834-9317', address: '314 W 11Th Street Austin, TX 78701', website: 'http://www.co.travis.tx.us' },
+      { name: 'Williamson', phone: '512 930-3787', address: '710 Main Street, Georgetown, TX 78626', website: 'http://www.wilco.org' },
+    ],
+  },
+  {
+    name: 'Utah', abbr: 'UT',
+    saleType: 'tax_deed', bidType: 'premium_bid', numCounties: 29,
+    counties: [],
+  },
+  {
+    name: 'Virginia', abbr: 'VA',
+    saleType: 'tax_deed', bidType: 'premium_bid', numCounties: 95,
+    counties: [],
+  },
+  {
+    name: 'Washington', abbr: 'WA',
+    saleType: 'tax_deed', bidType: 'premium_bid', numCounties: 39,
+    counties: [],
+  },
+  {
+    name: 'Wisconsin', abbr: 'WI',
+    saleType: 'tax_deed', bidType: 'premium_bid', numCounties: 72,
+    counties: [],
+  },
+]
+
+export const SALE_TYPE_LABELS: Record<SaleType, string> = {
+  tax_deed: 'Tax Deed',
+  tax_lien: 'Tax Lien',
+  both: 'Tax Lien e Tax Deed',
+  redeemable_deed: 'Redeemable Deed',
+}
+
+export const SALE_TYPE_COLORS: Record<SaleType, string> = {
+  tax_deed:       'bg-blue-100 text-blue-800',
+  tax_lien:       'bg-green-100 text-green-800',
+  both:           'bg-purple-100 text-purple-800',
+  redeemable_deed:'bg-orange-100 text-orange-800',
+}
+
+export const BID_TYPE_LABELS: Record<BidType, string> = {
+  auction:      'Auction',
+  premium_bid:  'Premium Bid',
+  bid_down:     'Bid Down',
+}
