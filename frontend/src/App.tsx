@@ -9,7 +9,7 @@ import Favorites from './pages/Favorites'
 import Alerts from './pages/Alerts'
 import Navbar from './components/Navbar'
 
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
+function RequireAuth({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null | undefined>(undefined)
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => setSession(data.session))
@@ -27,15 +27,15 @@ export default function App() {
       <Routes>
         <Route path="/auth" element={<Auth />} />
         <Route path="/*" element={
-          <ProtectedRoute>
+          <>
             <Navbar />
             <Routes>
               <Route path="/" element={<Search />} />
               <Route path="/auctions/:id" element={<AuctionDetail />} />
-              <Route path="/favorites" element={<Favorites />} />
-              <Route path="/alerts" element={<Alerts />} />
+              <Route path="/favorites" element={<RequireAuth><Favorites /></RequireAuth>} />
+              <Route path="/alerts" element={<RequireAuth><Alerts /></RequireAuth>} />
             </Routes>
-          </ProtectedRoute>
+          </>
         } />
       </Routes>
     </BrowserRouter>

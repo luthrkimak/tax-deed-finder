@@ -1,17 +1,43 @@
 import { useEffect, useState, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import type { Auction, AuctionFilters } from '../types'
 import { apiClient } from '../lib/api'
+import { supabase } from '../lib/supabase'
 import FilterBar from '../components/FilterBar'
 import AuctionCard from '../components/AuctionCard'
 import AuctionMap from '../components/AuctionMap'
 
 export default function Search() {
+  const navigate = useNavigate()
   const [auctions, setAuctions] = useState<Auction[]>([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
   const [filters, setFilters] = useState<AuctionFilters>({})
   const [loading, setLoading] = useState(false)
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set())
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setIsLoggedIn(!!data.session)
+      if (data.session) {
+        apiClient.listFavorites().then(favs => {
+          setFavoriteIds(new Set(favs.map(f => f.auction_id)))
+        }).catch(() => {})
+      }
+    })
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, s) => {
+      setIsLoggedIn(!!s)
+      if (s) {
+        apiClient.listFavorites().then(favs => {
+          setFavoriteIds(new Set(favs.map(f => f.auction_id)))
+        }).catch(() => {})
+      } else {
+        setFavoriteIds(new Set())
+      }
+    })
+    return () => subscription.unsubscribe()
+  }, [])
 
   const search = useCallback(async (newFilters: AuctionFilters, newPage = 1) => {
     setLoading(true)
@@ -28,13 +54,11 @@ export default function Search() {
 
   useEffect(() => { search({}) }, [search])
 
-  useEffect(() => {
-    apiClient.listFavorites().then(favs => {
-      setFavoriteIds(new Set(favs.map(f => f.auction_id)))
-    }).catch(() => {})
-  }, [])
-
   async function toggleFavorite(auction: Auction) {
+    if (!isLoggedIn) {
+      navigate('/auth')
+      return
+    }
     if (favoriteIds.has(auction.id)) {
       const favs = await apiClient.listFavorites()
       const fav = favs.find(f => f.auction_id === auction.id)
@@ -55,7 +79,7 @@ export default function Search() {
       <FilterBar onSearch={f => search(f, 1)} loading={loading} />
       <div className="flex flex-1 overflow-hidden">
         <div className="w-[480px] flex-shrink-0 overflow-y-auto p-4 space-y-3 border-r">
-          <p className="text-sm text-gray-500">{total.toLocaleString()} results</p>
+          <p className="text-sm text-gray-500">{total.toLocaleString()} resultados</p>
           {auctions.map(auction => (
             <AuctionCard
               key={auction.id}
@@ -66,9 +90,9 @@ export default function Search() {
           ))}
           {totalPages > 1 && (
             <div className="flex justify-center gap-2 pt-2">
-              <button onClick={() => search(filters, page - 1)} disabled={page === 1} className="px-3 py-1 border rounded disabled:opacity-40">Prev</button>
+              <button onClick={() => search(filters, page - 1)} disabled={page === 1} className="px-3 py-1 border rounded disabled:opacity-40">Anterior</button>
               <span className="px-3 py-1 text-sm">{page} / {totalPages}</span>
-              <button onClick={() => search(filters, page + 1)} disabled={page === totalPages} className="px-3 py-1 border rounded disabled:opacity-40">Next</button>
+              <button onClick={() => search(filters, page + 1)} disabled={page === totalPages} className="px-3 py-1 border rounded disabled:opacity-40">Próximo</button>
             </div>
           )}
         </div>
