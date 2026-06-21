@@ -5,6 +5,8 @@ from apscheduler.triggers.cron import CronTrigger
 from scrapers.florida.orange_county import OrangeCountyScraper
 from scrapers.florida.miami_dade import MiamiDadeScraper
 from scrapers.florida.all_counties import FL_SCRAPERS
+from scrapers.california.all_counties import CA_SCRAPERS
+from scrapers.north_carolina.all_counties import NC_SCRAPERS
 from scrapers.texas.dallas_county import DallasCountyScraper
 from scrapers.texas.travis_county import TravisCountyScraper
 from scrapers.georgia.fulton_county import FultonCountyScraper
@@ -16,6 +18,8 @@ SCRAPERS = [
     OrangeCountyScraper,
     MiamiDadeScraper,
     *FL_SCRAPERS,
+    *CA_SCRAPERS,
+    *NC_SCRAPERS,
     DallasCountyScraper,
     TravisCountyScraper,
     FultonCountyScraper,
