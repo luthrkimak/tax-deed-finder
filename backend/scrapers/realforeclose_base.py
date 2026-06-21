@@ -97,7 +97,13 @@ class RealForecloseScraper(BaseScraper):
                             address_line2 = dta2.get_text(strip=True)
                     break
 
-            address = f"{address_line1}, {self.state} {address_line2}".strip(", ") if address_line1 else None
+            if address_line1:
+                if address_line2:
+                    address = f"{address_line1}, {address_line2}, {self.state}"
+                else:
+                    address = f"{address_line1}, {self.state}"
+            else:
+                address = None
 
             assessed_raw = self._parse_label(item, "Assessed Value")
             assessed = self._parse_currency(assessed_raw) if assessed_raw else None
