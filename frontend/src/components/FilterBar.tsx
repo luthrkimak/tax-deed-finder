@@ -19,6 +19,8 @@ export default function FilterBar({ onSearch, loading }: Props) {
   const [propertyType, setPropertyType] = useState<PropertyType | ''>('')
   const [minBid, setMinBid] = useState('')
   const [maxBid, setMaxBid] = useState('')
+  const [dateFrom, setDateFrom] = useState('')
+  const [dateTo, setDateTo] = useState('')
 
   useEffect(() => {
     setCounty('')
@@ -34,6 +36,8 @@ export default function FilterBar({ onSearch, loading }: Props) {
       property_type: (propertyType as PropertyType) || undefined,
       min_bid: minBid ? Number(minBid) : undefined,
       max_bid: maxBid ? Number(maxBid) : undefined,
+      date_from: dateFrom || undefined,
+      date_to: dateTo || undefined,
       page: 1,
     })
   }
@@ -92,6 +96,26 @@ export default function FilterBar({ onSearch, loading }: Props) {
       <div>
         <label className="block text-xs font-medium text-gray-500 mb-1">{t.filter_max_bid}</label>
         <input type="number" value={maxBid} onChange={e => setMaxBid(e.target.value)} placeholder={t.filter_any_value} className={`${inputClass} w-28`} />
+      </div>
+
+      <div>
+        <label className="block text-xs font-medium text-gray-500 mb-1">{t.filter_date_from}</label>
+        <input
+          type="date"
+          value={dateFrom}
+          onChange={e => setDateFrom(e.target.value)}
+          className={`${inputClass} w-36`}
+        />
+      </div>
+
+      <div>
+        <label className="block text-xs font-medium text-gray-500 mb-1">{t.filter_date_to}</label>
+        <input
+          type="date"
+          value={dateTo}
+          onChange={e => setDateTo(e.target.value)}
+          className={`${inputClass} w-36`}
+        />
       </div>
 
       <button
