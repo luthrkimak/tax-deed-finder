@@ -6,20 +6,44 @@ export default function Auth() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isSignup, setIsSignup] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [message, setMessage] = useState('')
   const navigate = useNavigate()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
-    setError(null)
-    const { error } = isSignup
-      ? await supabase.auth.signUp({ email, password })
-      : await supabase.auth.signInWithPassword({ email, password })
+    setError('')
+    setMessage('')
+
+    if (isSignup) {
+      const { error } = await supabase.auth.signUp({ email, password })
+      if (error) {
+        setError(error.message)
+      } else {
+        setMessage('Verifique seu email para confirmar o cadastro.')
+      }
+    } else {
+      const { error } = await supabase.auth.signInWithPassword({ email, password })
+      if (error) {
+        setError(
+          error.message === 'Invalid login credentials'
+            ? 'Email ou senha incorretos.'
+            : error.message
+        )
+      } else {
+        navigate('/')
+      }
+    }
+
     setLoading(false)
-    if (error) return setError(error.message)
-    navigate('/')
+  }
+
+  function toggleMode() {
+    setIsSignup(!isSignup)
+    setError('')
+    setMessage('')
   }
 
   return (
@@ -40,6 +64,7 @@ export default function Auth() {
             required
           />
           {error && <p className="text-red-500 text-sm">{error}</p>}
+          {message && <p className="text-green-600 text-sm">{message}</p>}
           <button
             type="submit" disabled={loading}
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-50"
@@ -48,7 +73,7 @@ export default function Auth() {
           </button>
         </form>
         <button
-          onClick={() => setIsSignup(!isSignup)}
+          onClick={toggleMode}
           className="mt-4 text-sm text-blue-600 w-full text-center"
         >
           {isSignup ? 'Already have an account? Log in' : "Don't have an account? Sign up"}
