@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react'
-import { MapContainer, TileLayer, Popup, CircleMarker } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import MarkerClusterGroup from 'react-leaflet-cluster'
+import L from 'leaflet'
 import type { AuctionFilters, PinData } from '../types'
 import { apiClient } from '../lib/api'
 import 'leaflet/dist/leaflet.css'
+import 'react-leaflet-cluster/dist/assets/MarkerCluster.css'
+import 'react-leaflet-cluster/dist/assets/MarkerCluster.Default.css'
 
 const PIN_COLORS: Record<string, string> = {
   tax_deed:    '#2563eb',
@@ -15,6 +19,14 @@ const LEGEND = [
   { label: 'Tax Lien',   color: '#16a34a' },
   { label: 'Foreclosure', color: '#ea580c' },
 ]
+
+const makeIcon = (color: string) =>
+  L.divIcon({
+    className: '',
+    html: `<div style="width:12px;height:12px;border-radius:50%;background:${color};border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.4)"></div>`,
+    iconSize: [12, 12],
+    iconAnchor: [6, 6],
+  })
 
 interface Props {
   filters: AuctionFilters
@@ -41,24 +53,25 @@ export default function AuctionMap({ filters }: Props) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {pins.map(pin => (
-        <CircleMarker
-          key={pin.id}
-          center={[pin.lat, pin.lng]}
-          radius={8}
-          pathOptions={{ color: PIN_COLORS[pin.type] ?? '#6b7280', fillColor: PIN_COLORS[pin.type] ?? '#6b7280', fillOpacity: 0.85 }}
-          eventHandlers={{ click: () => setSelected(pin.id) }}
-        >
-          {selected === pin.id && (
-            <Popup onClose={() => setSelected(null)}>
-              <div className="text-sm">
-                <p className="font-semibold">{pin.address}</p>
-                <p>${pin.min_bid?.toLocaleString()} — {pin.type}</p>
-              </div>
-            </Popup>
-          )}
-        </CircleMarker>
-      ))}
+      <MarkerClusterGroup chunkedLoading>
+        {pins.map(pin => (
+          <Marker
+            key={pin.id}
+            position={[pin.lat, pin.lng]}
+            icon={makeIcon(PIN_COLORS[pin.type] ?? '#6b7280')}
+            eventHandlers={{ click: () => setSelected(pin.id) }}
+          >
+            {selected === pin.id && (
+              <Popup onClose={() => setSelected(null)}>
+                <div className="text-sm">
+                  <p className="font-semibold">{pin.address}</p>
+                  <p>${pin.min_bid?.toLocaleString()} — {pin.type}</p>
+                </div>
+              </Popup>
+            )}
+          </Marker>
+        ))}
+      </MarkerClusterGroup>
       <div style={{ position: 'absolute', bottom: 24, left: 12, zIndex: 1000 }}
         className="bg-white rounded-lg shadow px-3 py-2 text-xs space-y-1.5">
         {LEGEND.map(({ label, color }) => (
