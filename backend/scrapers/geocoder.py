@@ -75,9 +75,9 @@ def geocode_auctions(auction_ids: list[str]) -> None:
 
         for q in queries:
             coords = _nominatim(q)
-            time.sleep(1.1)  # Nominatim rate-limit: max 1 req/sec
             if coords:
                 break
+            time.sleep(1.1)  # rate-limit only between retries
 
         if coords:
             sb.table("auctions").update({"lat": coords[0], "lng": coords[1]}).eq("id", row["id"]).execute()
