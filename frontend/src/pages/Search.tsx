@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from 'react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import type { Auction, AuctionFilters, AuctionType, PropertyType } from '../types'
 import { apiClient } from '../lib/api'
@@ -30,7 +30,7 @@ export default function Search() {
   const [page, setPage] = useState(1)
   const [filters, setFilters] = useState<AuctionFilters>(() => paramsToFilters(searchParams))
   const [loading, setLoading] = useState(false)
-  const initialFilters = useRef(paramsToFilters(searchParams))
+  const initialFilters = useMemo(() => paramsToFilters(searchParams), [])  // eslint-disable-line react-hooks/exhaustive-deps
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set())
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
@@ -79,7 +79,7 @@ export default function Search() {
     }
   }, [setSearchParams])
 
-  useEffect(() => { search(initialFilters.current) }, [search])
+  useEffect(() => { search(initialFilters) }, [])  // eslint-disable-line react-hooks/exhaustive-deps
 
   async function toggleFavorite(auction: Auction) {
     if (!isLoggedIn) {
