@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { useI18n, LANG_OPTIONS, type Lang } from '../lib/i18n'
 
 const parcelGridStyle: React.CSSProperties = {
   backgroundImage: [
@@ -20,6 +21,7 @@ export default function Auth() {
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
   const navigate = useNavigate()
+  const { lang, setLang, t } = useI18n()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -32,14 +34,14 @@ export default function Auth() {
       if (error) {
         setError(error.message)
       } else {
-        setMessage('Verifique seu email para confirmar o cadastro.')
+        setMessage(t.auth_check_email)
       }
     } else {
       const { error } = await supabase.auth.signInWithPassword({ email, password })
       if (error) {
         setError(
           error.message === 'Invalid login credentials'
-            ? 'Email ou senha incorretos.'
+            ? t.auth_wrong_creds
             : error.message
         )
       } else {
@@ -115,8 +117,8 @@ export default function Auth() {
         {/* Bottom: stats */}
         <div style={{ display: 'flex', gap: '2.5rem' }}>
           {[
-            { value: 'FL · TX · GA', label: 'Estados' },
-            { value: 'Diário', label: 'Atualização' },
+            { value: 'FL · TX · GA', label: 'States' },
+            { value: 'Daily', label: 'Updates' },
           ].map(({ value, label }) => (
             <div key={label}>
               <div style={{ color: '#ffffff', fontWeight: 700, fontSize: '1rem', letterSpacing: '-0.01em' }}>
@@ -149,7 +151,44 @@ export default function Auth() {
         alignItems: 'center',
         backgroundColor: '#ffffff',
         padding: '3rem 2rem',
+        position: 'relative',
       }}>
+
+        {/* Language selector — top right */}
+        <div style={{
+          position: 'absolute',
+          top: '1.5rem',
+          right: '1.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '2px',
+          backgroundColor: '#f1f5f9',
+          borderRadius: '8px',
+          padding: '3px',
+        }}>
+          {LANG_OPTIONS.map(opt => (
+            <button
+              key={opt.value}
+              onClick={() => setLang(opt.value as Lang)}
+              title={opt.label}
+              style={{
+                background: lang === opt.value ? '#ffffff' : 'transparent',
+                border: 'none',
+                borderRadius: '6px',
+                padding: '4px 8px',
+                fontSize: '12px',
+                fontWeight: lang === opt.value ? 700 : 400,
+                color: lang === opt.value ? 'var(--navy)' : '#94a3b8',
+                cursor: 'pointer',
+                transition: 'all 0.15s',
+                boxShadow: lang === opt.value ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
+                lineHeight: 1.4,
+              }}
+            >
+              {opt.flag} {opt.value.toUpperCase()}
+            </button>
+          ))}
+        </div>
 
         {/* Mobile logo */}
         <div className="lg:hidden" style={{
@@ -171,10 +210,10 @@ export default function Auth() {
             marginBottom: '0.25rem',
             letterSpacing: '-0.02em',
           }}>
-            {isSignup ? 'Criar conta' : 'Bem-vindo de volta'}
+            {isSignup ? t.auth_create_account : t.auth_welcome_back}
           </h2>
           <p style={{ fontSize: '0.875rem', color: '#64748b', marginBottom: '2rem' }}>
-            {isSignup ? 'Comece a acompanhar leilões hoje.' : 'Entre na sua conta.'}
+            {isSignup ? t.auth_create_sub : t.auth_sign_in_sub}
           </p>
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -206,7 +245,7 @@ export default function Auth() {
 
             <div>
               <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 500, color: '#374151', marginBottom: '0.375rem' }}>
-                Senha
+                {t.auth_password}
               </label>
               <input
                 type="password"
@@ -255,7 +294,7 @@ export default function Auth() {
               onMouseEnter={e => { if (!loading) (e.currentTarget.style.backgroundColor = '#001a4a') }}
               onMouseLeave={e => { (e.currentTarget.style.backgroundColor = 'var(--navy)') }}
             >
-              {loading ? 'Aguarde…' : isSignup ? 'Criar conta' : 'Entrar'}
+              {loading ? t.auth_loading : isSignup ? t.auth_create_btn : t.auth_sign_in_btn}
             </button>
           </form>
 
@@ -275,7 +314,7 @@ export default function Auth() {
             onMouseEnter={e => (e.currentTarget.style.color = 'var(--navy)')}
             onMouseLeave={e => (e.currentTarget.style.color = '#64748b')}
           >
-            {isSignup ? 'Já tem conta? Entrar' : 'Não tem conta? Criar conta'}
+            {isSignup ? t.auth_already_account : t.auth_no_account}
           </button>
 
         </div>
