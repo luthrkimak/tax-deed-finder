@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import L from 'leaflet'
@@ -35,6 +36,7 @@ interface Props {
 export default function AuctionMap({ filters }: Props) {
   const [pins, setPins] = useState<PinData[]>([])
   const [selected, setSelected] = useState<string | null>(null)
+  const navigate = useNavigate()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -63,9 +65,18 @@ export default function AuctionMap({ filters }: Props) {
           >
             {selected === pin.id && (
               <Popup onClose={() => setSelected(null)}>
-                <div className="text-sm">
-                  <p className="font-semibold">{pin.address}</p>
-                  <p>${pin.min_bid?.toLocaleString()} — {pin.type}</p>
+                <div className="text-sm space-y-1.5" style={{ minWidth: 180 }}>
+                  <p className="font-semibold leading-snug">{pin.address ?? '—'}</p>
+                  <p className="text-gray-500">
+                    {pin.type?.replace('_', ' ')}
+                    {pin.min_bid != null && <> · <span className="font-medium text-gray-800">${pin.min_bid.toLocaleString()}</span></>}
+                  </p>
+                  <button
+                    onClick={() => navigate(`/auctions/${pin.id}`)}
+                    className="mt-1 w-full text-center text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded px-3 py-1.5 transition-colors"
+                  >
+                    Ver detalhes →
+                  </button>
                 </div>
               </Popup>
             )}

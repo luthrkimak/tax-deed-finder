@@ -8,6 +8,7 @@ Usage (from backend/ directory):
 Pass --limit N to test on the first N records instead of the full set.
 Rate limit: Nominatim allows 1 request/second — ~200 records takes ~7 minutes.
 """
+from __future__ import annotations
 import sys
 import time
 import re
