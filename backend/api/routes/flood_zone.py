@@ -4,7 +4,7 @@ import requests
 router = APIRouter()
 
 FEMA_URL = (
-    "https://hazards.fema.gov/gis/nfhl/rest/services/public/NFHL/MapServer/28/query"
+    "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28/query"
 )
 HEADERS = {"User-Agent": "TAx-Deed-Finder/1.0 (luthrkimak@gmail.com)"}
 
