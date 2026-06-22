@@ -109,10 +109,17 @@ export default function AuctionDetail() {
             {t.detail_official}
           </a>
         )}
-        {auction.zillow_url && (
-          <a href={auction.zillow_url} target="_blank" rel="noopener noreferrer"
+        {(auction.zillow_url || auction.address) && (
+          <a
+            href={
+              auction.zillow_url ||
+              `https://www.zillow.com/homes/${encodeURIComponent((auction.address ?? '').replace(/,\s*/g, ' ').trim())}_rb/`
+            }
+            target="_blank" rel="noopener noreferrer"
             style={{ borderColor: 'var(--navy)', color: 'var(--navy)' }}
-            className="border rounded px-4 py-2 text-sm font-medium hover:bg-blue-50 transition-colors">
+            className="border rounded px-4 py-2 text-sm font-medium hover:bg-blue-50 transition-colors flex items-center gap-1.5"
+          >
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5V21h7v-6h6v6h7V9.5L12 2z"/></svg>
             Zillow
           </a>
         )}
