@@ -101,52 +101,59 @@ export default function AuctionDetail() {
         )}
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-3">
+      <div className="mt-6 grid grid-cols-2 gap-3">
         {auction.source_url && (
           <a href={auction.source_url} target="_blank" rel="noopener noreferrer"
-            style={{ borderColor: 'var(--navy)', color: 'var(--navy)' }}
-            className="border rounded px-4 py-2 text-sm font-medium hover:bg-blue-50 transition-colors">
-            {t.detail_official}
+            className="flex items-center gap-3 p-4 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-100 transition-all group">
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'var(--navy)' }}>
+              <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+            </div>
+            <div className="min-w-0">
+              <p className="font-semibold text-sm" style={{ color: 'var(--navy)' }}>{t.detail_official}</p>
+              <p className="text-xs text-blue-500 truncate">Ver leilão oficial</p>
+            </div>
           </a>
         )}
         {(auction.zillow_url || auction.address) && (
           <a
-            href={
-              auction.zillow_url ||
-              `https://www.zillow.com/homes/${encodeURIComponent((auction.address ?? '').replace(/,\s*/g, ' ').trim())}_rb/`
-            }
+            href={auction.zillow_url || `https://www.zillow.com/homes/${encodeURIComponent((auction.address ?? '').replace(/,\s*/g, ' ').trim())}_rb/`}
             target="_blank" rel="noopener noreferrer"
-            style={{ borderColor: 'var(--navy)', color: 'var(--navy)' }}
-            className="border rounded px-4 py-2 text-sm font-medium hover:bg-blue-50 transition-colors flex items-center gap-1.5"
-          >
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5V21h7v-6h6v6h7V9.5L12 2z"/></svg>
-            Zillow
+            className="flex items-center gap-3 p-4 rounded-xl bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 transition-all group">
+            <div className="w-10 h-10 rounded-lg bg-indigo-600 flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9.5V21h7v-6h6v6h7V9.5L12 2z"/></svg>
+            </div>
+            <div className="min-w-0">
+              <p className="font-semibold text-indigo-900 text-sm">Zillow</p>
+              <p className="text-xs text-indigo-500">Valor de mercado</p>
+            </div>
           </a>
         )}
         {(auction.address || (auction.lat && auction.lng)) && (
           <a
-            href={
-              auction.address
-                ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(auction.address)}`
-                : `https://www.google.com/maps?q=${auction.lat},${auction.lng}`
-            }
+            href={auction.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(auction.address)}` : `https://www.google.com/maps?q=${auction.lat},${auction.lng}`}
             target="_blank" rel="noopener noreferrer"
-            style={{ borderColor: 'var(--red)', color: 'var(--red)' }}
-            className="border rounded px-4 py-2 text-sm font-medium hover:bg-red-50 transition-colors flex items-center gap-1.5"
-          >
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-            Google Maps
+            className="flex items-center gap-3 p-4 rounded-xl bg-red-50 hover:bg-red-100 border border-red-100 transition-all group">
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'var(--red)' }}>
+              <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            </div>
+            <div className="min-w-0">
+              <p className="font-semibold text-red-900 text-sm">Google Maps</p>
+              <p className="text-xs text-red-500">Ver localização</p>
+            </div>
           </a>
         )}
         {auction.address && (
           <a
             href={`https://www.google.com/maps?q=${encodeURIComponent(auction.address)}&layer=c`}
             target="_blank" rel="noopener noreferrer"
-            style={{ borderColor: 'var(--red)', color: 'var(--red)' }}
-            className="border rounded px-4 py-2 text-sm font-medium hover:bg-red-50 transition-colors flex items-center gap-1.5"
-          >
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-            Street View
+            className="flex items-center gap-3 p-4 rounded-xl bg-orange-50 hover:bg-orange-100 border border-orange-100 transition-all group">
+            <div className="w-10 h-10 rounded-lg bg-orange-500 flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div className="min-w-0">
+              <p className="font-semibold text-orange-900 text-sm">Street View</p>
+              <p className="text-xs text-orange-500">Ver a rua</p>
+            </div>
           </a>
         )}
       </div>
