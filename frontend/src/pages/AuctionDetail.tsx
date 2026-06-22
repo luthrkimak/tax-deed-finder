@@ -116,22 +116,24 @@ export default function AuctionDetail() {
             Zillow
           </a>
         )}
-        <a
-          href={
-            auction.lat && auction.lng
-              ? `https://www.google.com/maps?q=${auction.lat},${auction.lng}`
-              : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(auction.address ?? '')}`
-          }
-          target="_blank" rel="noopener noreferrer"
-          style={{ borderColor: 'var(--red)', color: 'var(--red)' }}
-          className="border rounded px-4 py-2 text-sm font-medium hover:bg-red-50 transition-colors flex items-center gap-1.5"
-        >
-          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          Google Maps
-        </a>
-        {(auction.lat && auction.lng) && (
+        {(auction.address || (auction.lat && auction.lng)) && (
           <a
-            href={`https://www.google.com/maps?q=&layer=c&cbll=${auction.lat},${auction.lng}`}
+            href={
+              auction.address
+                ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(auction.address)}`
+                : `https://www.google.com/maps?q=${auction.lat},${auction.lng}`
+            }
+            target="_blank" rel="noopener noreferrer"
+            style={{ borderColor: 'var(--red)', color: 'var(--red)' }}
+            className="border rounded px-4 py-2 text-sm font-medium hover:bg-red-50 transition-colors flex items-center gap-1.5"
+          >
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            Google Maps
+          </a>
+        )}
+        {auction.address && (
+          <a
+            href={`https://www.google.com/maps?q=${encodeURIComponent(auction.address)}&layer=c`}
             target="_blank" rel="noopener noreferrer"
             style={{ borderColor: 'var(--red)', color: 'var(--red)' }}
             className="border rounded px-4 py-2 text-sm font-medium hover:bg-red-50 transition-colors flex items-center gap-1.5"
