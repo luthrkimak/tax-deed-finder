@@ -4,6 +4,15 @@ import type { Auction, Favorite } from '../types'
 import { apiClient } from '../lib/api'
 import { useI18n } from '../lib/i18n'
 
+type FloodZoneState = { zone: string; sfha: boolean } | 'loading' | 'error' | null
+
+function floodZoneStyle(zone: string) {
+  if (zone.startsWith('V')) return { bg: 'bg-red-100', border: 'border-red-300', text: 'text-red-900', label: 'Alto risco costeiro' }
+  if (zone.startsWith('A'))  return { bg: 'bg-red-50',  border: 'border-red-200', text: 'text-red-800', label: 'Alto risco' }
+  if (zone === 'X')          return { bg: 'bg-green-50', border: 'border-green-200', text: 'text-green-800', label: 'Risco mínimo' }
+  return { bg: 'bg-gray-50', border: 'border-gray-200', text: 'text-gray-700', label: 'Risco indeterminado' }
+}
+
 export default function AuctionDetail() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
@@ -12,6 +21,7 @@ export default function AuctionDetail() {
   const [favorite, setFavorite] = useState<Favorite | null>(null)
   const [notes, setNotes] = useState('')
   const [loading, setLoading] = useState(true)
+  const [floodZone, setFloodZone] = useState<FloodZoneState>(null)
 
   useEffect(() => {
     if (!id) return
@@ -27,6 +37,19 @@ export default function AuctionDetail() {
       })
       .finally(() => setLoading(false))
   }, [id])
+
+  useEffect(() => {
+    if (!auction?.lat || !auction?.lng) return
+    setFloodZone('loading')
+    const base = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+    fetch(`${base}/flood-zone?lat=${auction.lat}&lng=${auction.lng}`)
+      .then(r => r.json())
+      .then(data => {
+        if (data.zone) setFloodZone({ zone: data.zone, sfha: data.sfha })
+        else setFloodZone('error')
+      })
+      .catch(() => setFloodZone('error'))
+  }, [auction?.lat, auction?.lng])
 
   async function toggleFavorite() {
     if (!auction) return
@@ -81,6 +104,47 @@ export default function AuctionDetail() {
           </div>
         ))}
       </div>
+
+      {auction.lat && auction.lng && (
+        <div className="mt-6">
+          <h2 style={{ color: 'var(--navy)' }} className="font-semibold mb-2">Zona de Inundação (FEMA)</h2>
+          {floodZone === 'loading' && (
+            <div className="text-sm text-gray-400">Consultando FEMA...</div>
+          )}
+          {floodZone === 'error' && (
+            <div className="text-sm text-gray-400">Não foi possível consultar a zona de inundação.</div>
+          )}
+          {floodZone && floodZone !== 'loading' && floodZone !== 'error' && (() => {
+            const s = floodZoneStyle(floodZone.zone)
+            return (
+              <div className={`rounded-xl border p-4 ${s.bg} ${s.border}`}>
+                <div className="flex items-center gap-3">
+                  <span className={`text-2xl font-bold ${s.text}`}>Zona {floodZone.zone}</span>
+                  <span className={`text-sm font-medium px-2.5 py-0.5 rounded-full ${s.bg} ${s.text} border ${s.border}`}>{s.label}</span>
+                  {floodZone.sfha && (
+                    <span className="text-xs font-semibold bg-red-600 text-white px-2 py-0.5 rounded-full">Seguro obrigatório</span>
+                  )}
+                </div>
+                {!auction.address && (
+                  <p className="mt-2 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                    ⚠️ Localização aproximada — endereço não disponível. A zona pode não corresponder ao imóvel real.
+                  </p>
+                )}
+                <p className="mt-2 text-xs text-gray-500">
+                  Fonte: FEMA National Flood Hazard Layer ·{' '}
+                  <a
+                    href={`https://msc.fema.gov/portal/search#searchresultsanchor`}
+                    target="_blank" rel="noopener noreferrer"
+                    className="underline hover:text-gray-700"
+                  >
+                    Verificar no mapa oficial
+                  </a>
+                </p>
+              </div>
+            )
+          })()}
+        </div>
+      )}
 
       <div className="mt-6">
         <h2 style={{ color: 'var(--navy)' }} className="font-semibold mb-2">{t.detail_notes}</h2>
