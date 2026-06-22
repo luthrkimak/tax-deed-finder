@@ -1,6 +1,6 @@
-import { useEffect, useState, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
-import type { Auction, AuctionFilters } from '../types'
+import { useEffect, useState, useCallback, useRef } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import type { Auction, AuctionFilters, AuctionType, PropertyType } from '../types'
 import { apiClient } from '../lib/api'
 import { supabase } from '../lib/supabase'
 import { useI18n } from '../lib/i18n'
@@ -8,14 +8,29 @@ import FilterBar from '../components/FilterBar'
 import AuctionCard from '../components/AuctionCard'
 import AuctionMap from '../components/AuctionMap'
 
+function paramsToFilters(params: URLSearchParams): AuctionFilters {
+  return {
+    state: params.get('state') || undefined,
+    county: params.get('county') || undefined,
+    type: (params.get('type') as AuctionType) || undefined,
+    property_type: (params.get('property_type') as PropertyType) || undefined,
+    min_bid: params.get('min_bid') ? Number(params.get('min_bid')) : undefined,
+    max_bid: params.get('max_bid') ? Number(params.get('max_bid')) : undefined,
+    date_from: params.get('date_from') || undefined,
+    date_to: params.get('date_to') || undefined,
+  }
+}
+
 export default function Search() {
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
   const { t } = useI18n()
   const [auctions, setAuctions] = useState<Auction[]>([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
-  const [filters, setFilters] = useState<AuctionFilters>({})
+  const [filters, setFilters] = useState<AuctionFilters>(() => paramsToFilters(searchParams))
   const [loading, setLoading] = useState(false)
+  const initialFilters = useRef(paramsToFilters(searchParams))
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set())
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
@@ -49,12 +64,22 @@ export default function Search() {
       setTotal(result.total)
       setPage(newPage)
       setFilters(newFilters)
+      const params: Record<string, string> = {}
+      if (newFilters.state) params.state = newFilters.state
+      if (newFilters.county) params.county = newFilters.county
+      if (newFilters.type) params.type = newFilters.type
+      if (newFilters.property_type) params.property_type = newFilters.property_type
+      if (newFilters.min_bid != null) params.min_bid = String(newFilters.min_bid)
+      if (newFilters.max_bid != null) params.max_bid = String(newFilters.max_bid)
+      if (newFilters.date_from) params.date_from = newFilters.date_from
+      if (newFilters.date_to) params.date_to = newFilters.date_to
+      setSearchParams(params, { replace: true })
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [setSearchParams])
 
-  useEffect(() => { search({}) }, [search])
+  useEffect(() => { search(initialFilters.current) }, [search])
 
   async function toggleFavorite(auction: Auction) {
     if (!isLoggedIn) {
@@ -78,7 +103,7 @@ export default function Search() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-57px)]">
-      <FilterBar onSearch={f => search(f, 1)} loading={loading} />
+      <FilterBar onSearch={f => search(f, 1)} loading={loading} initialValues={filters} />
       <div className="flex flex-1 overflow-hidden">
         <div className="w-[480px] flex-shrink-0 overflow-y-auto p-4 space-y-3 border-r">
           <p className="text-sm text-gray-500">{total.toLocaleString()} {t.search_results}</p>

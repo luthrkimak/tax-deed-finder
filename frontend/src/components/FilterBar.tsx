@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { AuctionFilters, AuctionType, PropertyType } from '../types'
 import { apiClient } from '../lib/api'
 import { useI18n } from '../lib/i18n'
@@ -6,25 +6,35 @@ import { useI18n } from '../lib/i18n'
 interface Props {
   onSearch: (filters: AuctionFilters) => void
   loading: boolean
+  initialValues?: AuctionFilters
 }
 
 const US_STATES = ['FL', 'TX', 'GA']
 
-export default function FilterBar({ onSearch, loading }: Props) {
+export default function FilterBar({ onSearch, loading, initialValues }: Props) {
   const { t } = useI18n()
-  const [state, setState] = useState('')
-  const [county, setCounty] = useState('')
+  const [state, setState] = useState(initialValues?.state || '')
+  const [county, setCounty] = useState(initialValues?.county || '')
   const [counties, setCounties] = useState<string[]>([])
-  const [type, setType] = useState<AuctionType | ''>('')
-  const [propertyType, setPropertyType] = useState<PropertyType | ''>('')
-  const [minBid, setMinBid] = useState('')
-  const [maxBid, setMaxBid] = useState('')
-  const [dateFrom, setDateFrom] = useState('')
-  const [dateTo, setDateTo] = useState('')
+  const [type, setType] = useState<AuctionType | ''>(initialValues?.type || '')
+  const [propertyType, setPropertyType] = useState<PropertyType | ''>(initialValues?.property_type || '')
+  const [minBid, setMinBid] = useState(initialValues?.min_bid != null ? String(initialValues.min_bid) : '')
+  const [maxBid, setMaxBid] = useState(initialValues?.max_bid != null ? String(initialValues.max_bid) : '')
+  const [dateFrom, setDateFrom] = useState(initialValues?.date_from || '')
+  const [dateTo, setDateTo] = useState(initialValues?.date_to || '')
+  const isFirstLoad = useRef(true)
 
   useEffect(() => {
-    setCounty('')
-    apiClient.getCounties(state || undefined).then(setCounties).catch(() => setCounties([]))
+    if (!isFirstLoad.current) {
+      setCounty('')
+    }
+    apiClient.getCounties(state || undefined).then(list => {
+      setCounties(list)
+      if (isFirstLoad.current) {
+        isFirstLoad.current = false
+        if (initialValues?.county) setCounty(initialValues.county)
+      }
+    }).catch(() => setCounties([]))
   }, [state])
 
   function handleSearch(e: React.FormEvent) {
