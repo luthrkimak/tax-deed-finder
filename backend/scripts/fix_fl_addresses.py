@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Fix malformed FL addresses in the database and re-geocode them."""
 import sys, re, time, requests
+from typing import Optional
 sys.path.insert(0, '.')
 from db.client import get_supabase
 
@@ -36,7 +37,7 @@ def nominatim(query: str):
         print(f"  Nominatim error: {e}")
     return None
 
-def fix_address(addr: str, county: str) -> str | None:
+def fix_address(addr: str, county: str) -> Optional[str]:
     """Return fixed address or None if no fix needed."""
     # Pattern 1: "STREET, FL CITY, ZIP" → "STREET, CITY, FL ZIP"
     m = re.search(r',\s*FL\s+([A-Z][A-Z ]+[A-Z]),\s*(\d{5})', addr)
