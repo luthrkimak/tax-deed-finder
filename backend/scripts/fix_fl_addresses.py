@@ -76,35 +76,55 @@ def main():
 
     print(f"Found {len(all_auctions)} FL auctions with addresses")
 
+    # Detect county centroids: lat/lng shared by 3+ auctions in same county
+    from collections import Counter
+    coord_count: Counter = Counter()
+    for a in all_auctions:
+        if a.get("lat") and a.get("lng"):
+            coord_count[(round(a["lat"], 4), round(a["lng"], 4))] += 1
+    centroids = {coord for coord, cnt in coord_count.items() if cnt >= 3}
+    print(f"Detected {len(centroids)} centroid coordinate(s) shared by 3+ auctions")
+
     fixed = geocoded = skipped = 0
     for a in all_auctions:
         addr = (a.get("address") or "").strip()
         county = a.get("county", "")
         new_addr = fix_address(addr, county)
 
-        if not new_addr:
+        lat = a.get("lat")
+        lng = a.get("lng")
+        is_centroid = lat and lng and (round(lat, 4), round(lng, 4)) in centroids
+        needs_geocode = new_addr or is_centroid or not lat or not lng
+
+        if not needs_geocode:
             skipped += 1
             continue
 
-        print(f"\nFIX  {addr}")
-        print(f"  →  {new_addr}")
+        if new_addr:
+            print(f"\nFIX  {addr}")
+            print(f"  →  {new_addr}")
+            sb.table("auctions").update({"address": new_addr}).eq("id", a["id"]).execute()
+            fixed += 1
+            query_addr = new_addr
+        else:
+            print(f"\nREGEO {addr[:70]}")
+            query_addr = addr
 
-        # Update address in DB
-        sb.table("auctions").update({"address": new_addr}).eq("id", a["id"]).execute()
-        fixed += 1
-
-        # Re-geocode
         city = COUNTY_CITY.get(county, county)
-        coords = nominatim(new_addr) or nominatim(f"{new_addr.split(',')[0].strip()}, {city}, FL")
+        street = query_addr.split(",")[0].strip()
+        coords = (
+            nominatim(query_addr)
+            or nominatim(f"{street}, {city}, FL")
+        )
         time.sleep(1.1)
         if coords:
             sb.table("auctions").update({"lat": coords[0], "lng": coords[1]}).eq("id", a["id"]).execute()
-            print(f"  ✓ Geocoded: {coords}")
+            print(f"  ✓ {coords}")
             geocoded += 1
         else:
             print(f"  ✗ Could not geocode")
 
-    print(f"\nDone — Fixed: {fixed} | Geocoded: {geocoded} | Already OK: {skipped}")
+    print(f"\nDone — Fixed format: {fixed} | Geocoded: {geocoded} | Already OK: {skipped}")
 
 if __name__ == "__main__":
     main()
