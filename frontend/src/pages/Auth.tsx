@@ -85,7 +85,7 @@ export default function Auth() {
             textTransform: 'uppercase',
             fontWeight: 600,
           }}>
-            ★ Tax Deed Finder
+            ★ BidLand
           </span>
         </div>
 
@@ -198,7 +198,7 @@ export default function Auth() {
           fontSize: '1.1rem',
           letterSpacing: '0.02em',
         }}>
-          ★ Tax Deed Finder
+          ★ BidLand
         </div>
 
         <div style={{ width: '100%', maxWidth: '22rem' }}>

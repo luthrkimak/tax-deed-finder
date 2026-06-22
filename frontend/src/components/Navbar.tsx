@@ -23,7 +23,7 @@ export default function Navbar() {
   return (
     <nav style={{ backgroundColor: 'var(--navy)' }} className="px-6 py-3 flex items-center gap-6">
       <Link to="/" className="font-bold text-white text-lg tracking-wide">
-        ★ Tax Deed Finder
+        ★ BidLand
       </Link>
       <Link to="/" className="text-blue-200 hover:text-white text-sm transition-colors">{t.nav_search}</Link>
       <Link to="/favorites" className="text-blue-200 hover:text-white text-sm transition-colors">{t.nav_favorites}</Link>
