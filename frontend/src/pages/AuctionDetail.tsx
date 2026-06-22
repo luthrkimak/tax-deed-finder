@@ -22,6 +22,8 @@ export default function AuctionDetail() {
   const [notes, setNotes] = useState('')
   const [loading, setLoading] = useState(true)
   const [floodZone, setFloodZone] = useState<FloodZoneState>(null)
+  const [manualAddress, setManualAddress] = useState('')
+  const [savingAddress, setSavingAddress] = useState(false)
 
   useEffect(() => {
     if (!id) return
@@ -83,9 +85,38 @@ export default function AuctionDetail() {
       <button onClick={() => navigate(-1)} style={{ color: 'var(--navy)' }} className="hover:underline text-sm mb-4 block">{t.detail_back}</button>
       {auction.photo_url && <img src={auction.photo_url} alt="Property" className="w-full h-64 object-cover rounded-lg mb-4" />}
       <div className="flex items-start justify-between gap-4">
-        <div>
+        <div className="flex-1 min-w-0">
           <h1 style={{ color: 'var(--navy)' }} className="text-2xl font-bold">{auction.address || t.detail_no_address}</h1>
           <p className="text-gray-500 mt-1">{auction.county}, {auction.state} · <span className="capitalize">{auction.type.replace('_', ' ')}</span></p>
+          {!auction.address && (
+            <div className="mt-3 flex gap-2 items-center">
+              <input
+                type="text"
+                value={manualAddress}
+                onChange={e => setManualAddress(e.target.value)}
+                placeholder="Ex: 1234 Oak St, Orlando, FL 32801"
+                className="flex-1 border border-amber-300 bg-amber-50 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500"
+              />
+              <button
+                disabled={!manualAddress.trim() || savingAddress}
+                onClick={async () => {
+                  if (!manualAddress.trim()) return
+                  setSavingAddress(true)
+                  try {
+                    const updated = await apiClient.updateAddress(auction.id, manualAddress.trim())
+                    setAuction(updated)
+                    setManualAddress('')
+                  } finally {
+                    setSavingAddress(false)
+                  }
+                }}
+                style={{ backgroundColor: 'var(--navy)' }}
+                className="text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 disabled:opacity-40 whitespace-nowrap"
+              >
+                {savingAddress ? 'Salvando...' : 'Salvar endereço'}
+              </button>
+            </div>
+          )}
         </div>
         <button
           onClick={toggleFavorite}

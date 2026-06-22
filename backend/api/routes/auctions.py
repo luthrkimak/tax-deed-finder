@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from typing import Optional
 from decimal import Decimal
 from datetime import date
+from pydantic import BaseModel
 from db.client import get_supabase
 from models.auction import Auction, AuctionType, AuctionStatus, PropertyType
 
@@ -97,4 +98,20 @@ def get_auction(auction_id: str):
     result = sb.table("auctions").select("*").eq("id", auction_id).execute()
     if not result.data:
         raise HTTPException(status_code=404, detail="Auction not found")
+    return result.data[0]
+
+
+class AddressUpdate(BaseModel):
+    address: str
+
+
+@router.patch("/{auction_id}/address")
+def update_address(auction_id: str, body: AddressUpdate):
+    sb = get_supabase()
+    if not sb.table("auctions").select("id").eq("id", auction_id).execute().data:
+        raise HTTPException(status_code=404, detail="Auction not found")
+    sb.table("auctions").update({"address": body.address.strip()}).eq("id", auction_id).execute()
+    from scrapers.geocoder import geocode_auctions
+    geocode_auctions([auction_id])
+    result = sb.table("auctions").select("*").eq("id", auction_id).execute()
     return result.data[0]

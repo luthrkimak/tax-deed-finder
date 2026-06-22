@@ -28,6 +28,11 @@ export const apiClient = {
     return data
   },
 
+  async updateAddress(id: string, address: string): Promise<Auction> {
+    const { data } = await axios.patch(`${BASE_URL}/auctions/${id}/address`, { address })
+    return data
+  },
+
   async getPins(filters: Omit<AuctionFilters, 'page' | 'page_size' | 'date_from' | 'date_to' | 'status'> = {}): Promise<PinData[]> {
     const params = Object.fromEntries(Object.entries(filters).filter(([, v]) => v !== undefined))
     const { data } = await axios.get(`${BASE_URL}/auctions/pins`, { params })
