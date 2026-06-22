@@ -64,7 +64,7 @@ export default function AuctionMap({ filters }: Props) {
             eventHandlers={{ click: () => setSelected(pin.id) }}
           >
             {selected === pin.id && (
-              <Popup onClose={() => setSelected(null)}>
+              <Popup eventHandlers={{ remove: () => setSelected(null) }}>
                 <div className="text-sm space-y-1.5" style={{ minWidth: 180 }}>
                   <p className="font-semibold leading-snug">{pin.address ?? '—'}</p>
                   <p className="text-gray-500">
