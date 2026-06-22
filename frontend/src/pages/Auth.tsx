@@ -14,48 +14,51 @@ const parcelGridStyle: React.CSSProperties = {
 }
 
 export default function Auth() {
+  const [step, setStep] = useState<'email' | 'code'>('email')
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [isSignup, setIsSignup] = useState(false)
+  const [code, setCode] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [message, setMessage] = useState('')
   const navigate = useNavigate()
   const { lang, setLang, t } = useI18n()
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function sendCode(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
-    setMessage('')
-
-    if (isSignup) {
-      const { error } = await supabase.auth.signUp({ email, password })
-      if (error) {
-        setError(error.message)
-      } else {
-        setMessage(t.auth_check_email)
-      }
-    } else {
-      const { error } = await supabase.auth.signInWithPassword({ email, password })
-      if (error) {
-        setError(
-          error.message === 'Invalid login credentials'
-            ? t.auth_wrong_creds
-            : error.message
-        )
-      } else {
-        navigate('/')
-      }
-    }
-
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: { shouldCreateUser: true },
+    })
     setLoading(false)
+    if (error) {
+      setError(error.message)
+    } else {
+      setStep('code')
+    }
   }
 
-  function toggleMode() {
-    setIsSignup(!isSignup)
+  async function verifyCode(e: React.FormEvent) {
+    e.preventDefault()
+    setLoading(true)
     setError('')
-    setMessage('')
+    const { error } = await supabase.auth.verifyOtp({
+      email,
+      token: code,
+      type: 'email',
+    })
+    setLoading(false)
+    if (error) {
+      setError(error.message)
+    } else {
+      navigate('/')
+    }
+  }
+
+  async function resend() {
+    setError('')
+    setCode('')
+    await supabase.auth.signInWithOtp({ email, options: { shouldCreateUser: true } })
   }
 
   return (
@@ -76,7 +79,6 @@ export default function Auth() {
         }}
         className="hidden lg:flex"
       >
-        {/* Top: brand */}
         <div>
           <span style={{
             color: 'rgba(255,255,255,0.5)',
@@ -89,7 +91,6 @@ export default function Auth() {
           </span>
         </div>
 
-        {/* Middle: headline */}
         <div>
           <h1 style={{
             fontFamily: 'Georgia, "Times New Roman", serif',
@@ -114,7 +115,6 @@ export default function Auth() {
           </p>
         </div>
 
-        {/* Bottom: stats */}
         <div style={{ display: 'flex', gap: '2.5rem' }}>
           {[
             { value: 'FL · TX · GA', label: 'States' },
@@ -131,7 +131,6 @@ export default function Auth() {
           ))}
         </div>
 
-        {/* Red accent bar */}
         <div style={{
           position: 'absolute',
           top: 0,
@@ -142,7 +141,7 @@ export default function Auth() {
         }} />
       </div>
 
-      {/* ── Right panel (form) ── */}
+      {/* ── Right panel ── */}
       <div style={{
         flex: 1,
         display: 'flex',
@@ -154,7 +153,7 @@ export default function Auth() {
         position: 'relative',
       }}>
 
-        {/* Language selector — top right */}
+        {/* Language selector */}
         <div style={{
           position: 'absolute',
           top: '1.5rem',
@@ -203,119 +202,164 @@ export default function Auth() {
 
         <div style={{ width: '100%', maxWidth: '22rem' }}>
 
-          <h2 style={{
-            fontSize: '1.5rem',
-            fontWeight: 700,
-            color: '#0f172a',
-            marginBottom: '0.25rem',
-            letterSpacing: '-0.02em',
-          }}>
-            {isSignup ? t.auth_create_account : t.auth_welcome_back}
-          </h2>
-          <p style={{ fontSize: '0.875rem', color: '#64748b', marginBottom: '2rem' }}>
-            {isSignup ? t.auth_create_sub : t.auth_sign_in_sub}
-          </p>
+          {step === 'email' ? (
+            <>
+              <h2 style={{
+                fontSize: '1.5rem',
+                fontWeight: 700,
+                color: '#0f172a',
+                marginBottom: '0.25rem',
+                letterSpacing: '-0.02em',
+              }}>
+                {t.auth_welcome_back}
+              </h2>
+              <p style={{ fontSize: '0.875rem', color: '#64748b', marginBottom: '2rem' }}>
+                {t.auth_sign_in_sub}
+              </p>
 
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <form onSubmit={sendCode} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 500, color: '#374151', marginBottom: '0.375rem' }}>
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="voce@exemplo.com"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    required
+                    style={{
+                      width: '100%',
+                      border: '1.5px solid #e2e8f0',
+                      borderRadius: '8px',
+                      padding: '0.7rem 1rem',
+                      fontSize: '0.9rem',
+                      outline: 'none',
+                      transition: 'border-color 0.15s',
+                      boxSizing: 'border-box',
+                    }}
+                    onFocus={e => (e.target.style.borderColor = 'var(--navy)')}
+                    onBlur={e => (e.target.style.borderColor = '#e2e8f0')}
+                  />
+                </div>
 
-            <div>
-              <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 500, color: '#374151', marginBottom: '0.375rem' }}>
-                Email
-              </label>
-              <input
-                type="email"
-                placeholder="voce@exemplo.com"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                required
-                style={{
-                  width: '100%',
-                  border: '1.5px solid #e2e8f0',
-                  borderRadius: '8px',
-                  padding: '0.7rem 1rem',
-                  fontSize: '0.9rem',
-                  outline: 'none',
-                  transition: 'border-color 0.15s',
-                  boxSizing: 'border-box',
-                }}
-                onFocus={e => (e.target.style.borderColor = 'var(--navy)')}
-                onBlur={e => (e.target.style.borderColor = '#e2e8f0')}
-              />
-            </div>
+                {error && <p style={{ fontSize: '0.8125rem', color: '#dc2626', margin: 0 }}>{error}</p>}
 
-            <div>
-              <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 500, color: '#374151', marginBottom: '0.375rem' }}>
-                {t.auth_password}
-              </label>
-              <input
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                required
-                style={{
-                  width: '100%',
-                  border: '1.5px solid #e2e8f0',
-                  borderRadius: '8px',
-                  padding: '0.7rem 1rem',
-                  fontSize: '0.9rem',
-                  outline: 'none',
-                  transition: 'border-color 0.15s',
-                  boxSizing: 'border-box',
-                }}
-                onFocus={e => (e.target.style.borderColor = 'var(--navy)')}
-                onBlur={e => (e.target.style.borderColor = '#e2e8f0')}
-              />
-            </div>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  style={{
+                    backgroundColor: 'var(--navy)',
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: '8px',
+                    padding: '0.8rem',
+                    fontSize: '0.9rem',
+                    fontWeight: 600,
+                    cursor: loading ? 'not-allowed' : 'pointer',
+                    opacity: loading ? 0.6 : 1,
+                    transition: 'opacity 0.15s, background-color 0.15s',
+                    marginTop: '0.25rem',
+                  }}
+                  onMouseEnter={e => { if (!loading) (e.currentTarget.style.backgroundColor = '#001a4a') }}
+                  onMouseLeave={e => { (e.currentTarget.style.backgroundColor = 'var(--navy)') }}
+                >
+                  {loading ? t.auth_sending : t.auth_send_code}
+                </button>
+              </form>
+            </>
+          ) : (
+            <>
+              <h2 style={{
+                fontSize: '1.5rem',
+                fontWeight: 700,
+                color: '#0f172a',
+                marginBottom: '0.25rem',
+                letterSpacing: '-0.02em',
+              }}>
+                {t.auth_code_label}
+              </h2>
+              <p style={{ fontSize: '0.875rem', color: '#64748b', marginBottom: '2rem' }}>
+                {t.auth_code_sent_pre}{' '}
+                <span style={{ color: '#0f172a', fontWeight: 500 }}>{email}</span>
+              </p>
 
-            {error && (
-              <p style={{ fontSize: '0.8125rem', color: '#dc2626', margin: 0 }}>{error}</p>
-            )}
-            {message && (
-              <p style={{ fontSize: '0.8125rem', color: '#16a34a', margin: 0 }}>{message}</p>
-            )}
+              <form onSubmit={verifyCode} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 500, color: '#374151', marginBottom: '0.375rem' }}>
+                    {t.auth_code_label}
+                  </label>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    placeholder={t.auth_code_placeholder}
+                    value={code}
+                    onChange={e => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    required
+                    autoFocus
+                    style={{
+                      width: '100%',
+                      border: '1.5px solid #e2e8f0',
+                      borderRadius: '8px',
+                      padding: '0.7rem 1rem',
+                      fontSize: '1.5rem',
+                      fontWeight: 700,
+                      letterSpacing: '0.4em',
+                      outline: 'none',
+                      transition: 'border-color 0.15s',
+                      boxSizing: 'border-box',
+                      textAlign: 'center',
+                    }}
+                    onFocus={e => (e.target.style.borderColor = 'var(--navy)')}
+                    onBlur={e => (e.target.style.borderColor = '#e2e8f0')}
+                  />
+                </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              style={{
-                backgroundColor: 'var(--navy)',
-                color: '#ffffff',
-                border: 'none',
-                borderRadius: '8px',
-                padding: '0.8rem',
-                fontSize: '0.9rem',
-                fontWeight: 600,
-                cursor: loading ? 'not-allowed' : 'pointer',
-                opacity: loading ? 0.6 : 1,
-                transition: 'opacity 0.15s, background-color 0.15s',
-                marginTop: '0.25rem',
-              }}
-              onMouseEnter={e => { if (!loading) (e.currentTarget.style.backgroundColor = '#001a4a') }}
-              onMouseLeave={e => { (e.currentTarget.style.backgroundColor = 'var(--navy)') }}
-            >
-              {loading ? t.auth_loading : isSignup ? t.auth_create_btn : t.auth_sign_in_btn}
-            </button>
-          </form>
+                {error && <p style={{ fontSize: '0.8125rem', color: '#dc2626', margin: 0 }}>{error}</p>}
 
-          <button
-            onClick={toggleMode}
-            style={{
-              marginTop: '1.25rem',
-              fontSize: '0.8125rem',
-              color: '#64748b',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              width: '100%',
-              textAlign: 'center',
-              transition: 'color 0.15s',
-            }}
-            onMouseEnter={e => (e.currentTarget.style.color = 'var(--navy)')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#64748b')}
-          >
-            {isSignup ? t.auth_already_account : t.auth_no_account}
-          </button>
+                <button
+                  type="submit"
+                  disabled={loading || code.length < 6}
+                  style={{
+                    backgroundColor: 'var(--navy)',
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: '8px',
+                    padding: '0.8rem',
+                    fontSize: '0.9rem',
+                    fontWeight: 600,
+                    cursor: (loading || code.length < 6) ? 'not-allowed' : 'pointer',
+                    opacity: (loading || code.length < 6) ? 0.5 : 1,
+                    transition: 'opacity 0.15s, background-color 0.15s',
+                    marginTop: '0.25rem',
+                  }}
+                  onMouseEnter={e => { if (!loading && code.length === 6) (e.currentTarget.style.backgroundColor = '#001a4a') }}
+                  onMouseLeave={e => { (e.currentTarget.style.backgroundColor = 'var(--navy)') }}
+                >
+                  {loading ? t.auth_verifying : t.auth_verify}
+                </button>
+              </form>
+
+              <div style={{ marginTop: '1.25rem', display: 'flex', justifyContent: 'space-between' }}>
+                <button
+                  onClick={() => { setStep('email'); setError(''); setCode('') }}
+                  style={{ fontSize: '0.8125rem', color: '#94a3b8', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#64748b')}
+                  onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')}
+                >
+                  ← {t.auth_back}
+                </button>
+                <button
+                  onClick={resend}
+                  style={{ fontSize: '0.8125rem', color: '#94a3b8', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'var(--navy)')}
+                  onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')}
+                >
+                  {t.auth_resend}
+                </button>
+              </div>
+            </>
+          )}
 
         </div>
       </div>
