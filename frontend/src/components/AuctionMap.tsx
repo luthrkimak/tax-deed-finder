@@ -24,9 +24,12 @@ const LEGEND = [
 const makeIcon = (color: string) =>
   L.divIcon({
     className: '',
-    html: `<div style="width:12px;height:12px;border-radius:50%;background:${color};border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.4)"></div>`,
-    iconSize: [12, 12],
-    iconAnchor: [6, 6],
+    html: `<svg width="24" height="28" viewBox="0 0 24 28" xmlns="http://www.w3.org/2000/svg" style="display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,0.35))">
+      <polygon points="12,1 23,13 1,13" fill="${color}" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+      <rect x="2" y="12" width="20" height="14" rx="1.5" fill="${color}" stroke="white" stroke-width="1.5"/>
+    </svg>`,
+    iconSize: [24, 28],
+    iconAnchor: [12, 28],
   })
 
 interface Props {
@@ -87,7 +90,10 @@ export default function AuctionMap({ filters }: Props) {
         className="bg-white rounded-lg shadow px-3 py-2 text-xs space-y-1.5">
         {LEGEND.map(({ label, color }) => (
           <div key={label} className="flex items-center gap-2">
-            <span style={{ backgroundColor: color }} className="inline-block w-3 h-3 rounded-full flex-shrink-0" />
+            <svg width="14" height="16" viewBox="0 0 24 28" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+              <polygon points="12,1 23,13 1,13" fill={color} stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
+              <rect x="2" y="12" width="20" height="14" rx="1.5" fill={color} stroke="white" strokeWidth="1.5"/>
+            </svg>
             <span className="text-gray-700">{label}</span>
           </div>
         ))}
