@@ -5,7 +5,7 @@ from typing import Literal, Optional
 from pydantic import BaseModel, Field
 
 AuctionType = Literal["tax_deed", "tax_lien", "foreclosure"]
-AuctionStatus = Literal["upcoming", "active", "sold", "cancelled"]
+AuctionStatus = Literal["upcoming", "active", "sold", "cancelled", "archived"]
 PropertyType = Literal["residential", "commercial", "land"]
 DataSource = Literal["api", "scrape"]
 

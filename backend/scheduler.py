@@ -1,7 +1,9 @@
 from __future__ import annotations
 import logging
+from datetime import date
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
+from db.client import get_supabase
 from scrapers.florida.orange_county import OrangeCountyScraper
 from scrapers.florida.miami_dade import MiamiDadeScraper
 from scrapers.florida.all_counties import FL_SCRAPERS
@@ -42,8 +44,22 @@ def run_all_scrapers():
     send_alert_emails(new_ids)
 
 
+def archive_past_auctions() -> None:
+    sb = get_supabase()
+    today = date.today().isoformat()
+    result = (
+        sb.table("auctions")
+        .update({"status": "archived"})
+        .lt("auction_date", today)
+        .neq("status", "archived")
+        .execute()
+    )
+    logger.info("Archived %d past auctions", len(result.data))
+
+
 def create_scheduler() -> BackgroundScheduler:
     scheduler = BackgroundScheduler()
     scheduler.add_job(run_all_scrapers, CronTrigger(hour=2, minute=0))
     scheduler.add_job(run_all_scrapers, CronTrigger(hour=14, minute=0))
+    scheduler.add_job(archive_past_auctions, CronTrigger(hour=0, minute=0))
     return scheduler
