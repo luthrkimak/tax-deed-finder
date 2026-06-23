@@ -75,14 +75,31 @@ class RealForecloseScraper(BaseScraper):
                 return ""
         return ""
 
+    _CANCELLED_KEYWORDS = {"canceled", "cancelled", "redeemed", "rescheduled"}
+
+    def _parse_status(self, msga: str, msgb: str) -> tuple[str, str | None]:
+        """Return (status, auction_date_iso) from ASTAT_MSGA and ASTAT_MSGB text."""
+        msga_lower = msga.lower()
+        msgb_lower = msgb.lower()
+
+        if any(k in msgb_lower for k in self._CANCELLED_KEYWORDS):
+            return "cancelled", None
+
+        auction_date = self._parse_date(msgb)
+
+        if "sold" in msga_lower:
+            return "sold", auction_date
+
+        return "upcoming", auction_date
+
     def parse(self, html: str) -> list[dict]:
         soup = BeautifulSoup(html, "lxml")
         items = soup.find_all(class_="AUCTION_ITEM")
         records = []
         for item in items:
-            # Auction date from stats block
-            date_el = item.find(class_="ASTAT_MSGB")
-            auction_date = self._parse_date(date_el.get_text(strip=True)) if date_el else None
+            msga = (item.find(class_="ASTAT_MSGA") or type("", (), {"get_text": lambda *a, **k: ""})()).get_text(strip=True)
+            msgb = (item.find(class_="ASTAT_MSGB") or type("", (), {"get_text": lambda *a, **k: ""})()).get_text(strip=True)
+            status, auction_date = self._parse_status(msga, msgb)
 
             parcel_id = self._parse_parcel_id(item)
             address_line1 = self._parse_label(item, "Property Address")
@@ -121,7 +138,7 @@ class RealForecloseScraper(BaseScraper):
 
             records.append({
                 "type": self.auction_type,
-                "status": "upcoming",
+                "status": status,
                 "state": self.state,
                 "county": self.county,
                 "address": address,

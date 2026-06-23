@@ -34,7 +34,7 @@ def get_auctions(
     if status:
         query = query.eq("status", status)
     else:
-        query = query.neq("status", "archived")
+        query = query.not_.in_("status", ["archived", "cancelled"])
     if property_type:
         query = query.eq("property_type", property_type)
     if min_bid is not None:
@@ -77,7 +77,7 @@ def get_pins(
 ):
     """Returns lat/lng/type for all matching auctions — used by map (no pagination)."""
     sb = get_supabase()
-    query = sb.table("auctions").select("id,lat,lng,type,address,min_bid,assessed_value").not_.is_("lat", "null").neq("status", "archived")
+    query = sb.table("auctions").select("id,lat,lng,type,address,min_bid,assessed_value").not_.is_("lat", "null").not_.in_("status", ["archived", "cancelled"])
     if state:
         query = query.eq("state", state.upper())
     if county:
