@@ -34,13 +34,16 @@ const LEGEND = [
 const makeIcon = (color: string) =>
   L.divIcon({
     className: '',
-    html: `<svg width="28" height="32" viewBox="0 0 28 32" xmlns="http://www.w3.org/2000/svg" style="display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))">
-      <polygon points="14,2 26,13 26,27 2,27 2,13" fill="${color}" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-      <rect x="10.5" y="18" width="7" height="9" rx="1" fill="white" fill-opacity="0.3"/>
-      <polygon points="11,27 17,27 14,32" fill="${color}"/>
-    </svg>`,
-    iconSize: [28, 32],
-    iconAnchor: [14, 32],
+    // 48x52px hit area com a casa centralizada — maior área de toque para tablet/mobile
+    html: `<div style="width:48px;height:52px;display:flex;align-items:center;justify-content:center;padding-bottom:8px">
+      <svg width="32" height="38" viewBox="0 0 28 32" xmlns="http://www.w3.org/2000/svg" style="display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))">
+        <polygon points="14,2 26,13 26,27 2,27 2,13" fill="${color}" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+        <rect x="10.5" y="18" width="7" height="9" rx="1" fill="white" fill-opacity="0.3"/>
+        <polygon points="11,27 17,27 14,32" fill="${color}"/>
+      </svg>
+    </div>`,
+    iconSize: [48, 52],
+    iconAnchor: [24, 52],
   })
 
 interface Props {
