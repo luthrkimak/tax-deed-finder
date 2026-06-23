@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import L from 'leaflet'
 import type { AuctionFilters, PinData } from '../types'
@@ -8,6 +8,16 @@ import { apiClient } from '../lib/api'
 import 'leaflet/dist/leaflet.css'
 import 'react-leaflet-cluster/dist/assets/MarkerCluster.css'
 import 'react-leaflet-cluster/dist/assets/MarkerCluster.Default.css'
+
+function FitBounds({ pins }: { pins: PinData[] }) {
+  const map = useMap()
+  useEffect(() => {
+    if (pins.length === 0) return
+    const bounds = L.latLngBounds(pins.map(p => [p.lat, p.lng]))
+    map.fitBounds(bounds, { padding: [48, 48], maxZoom: 13, animate: true })
+  }, [pins]) // eslint-disable-line react-hooks/exhaustive-deps
+  return null
+}
 
 const PIN_COLORS: Record<string, string> = {
   tax_deed:    '#2563eb',
@@ -59,6 +69,11 @@ export default function AuctionMap({ filters }: Props) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+      <FitBounds pins={pins} />
+      <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 1000 }}
+        className="bg-white rounded-lg shadow px-3 py-1.5 text-xs text-gray-600 font-medium">
+        {pins.length.toLocaleString()} propriedades
+      </div>
       <MarkerClusterGroup chunkedLoading>
         {pins.map(pin => (
           <Marker

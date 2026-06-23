@@ -136,6 +136,41 @@ export default function AuctionDetail() {
         ))}
       </div>
 
+      {auction.min_bid != null && auction.assessed_value != null && (() => {
+        const debt = Number(auction.min_bid)
+        const assessed = Number(auction.assessed_value)
+        const profit = assessed - debt
+        const discount = Math.round((profit / assessed) * 100)
+        const isGood = discount >= 40
+        const isOk = discount >= 20
+        const color = profit <= 0 ? '#dc2626' : isGood ? '#16a34a' : isOk ? '#d97706' : '#6b7280'
+        const bg = profit <= 0 ? '#fef2f2' : isGood ? '#f0fdf4' : isOk ? '#fffbeb' : '#f9fafb'
+        const border = profit <= 0 ? '#fecaca' : isGood ? '#bbf7d0' : isOk ? '#fde68a' : '#e5e7eb'
+        return (
+          <div className="mt-6 rounded-xl border p-4" style={{ backgroundColor: bg, borderColor: border }}>
+            <h2 className="font-semibold text-sm mb-3" style={{ color: 'var(--navy)' }}>Análise de ROI</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div>
+                <p className="text-xs text-gray-400 uppercase tracking-wide mb-0.5">Dívida</p>
+                <p className="font-bold text-gray-900">${debt.toLocaleString()}</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-400 uppercase tracking-wide mb-0.5">Avaliação</p>
+                <p className="font-bold text-gray-900">${assessed.toLocaleString()}</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-400 uppercase tracking-wide mb-0.5">Lucro estimado</p>
+                <p className="font-bold" style={{ color }}>{profit >= 0 ? '+' : ''}{profit.toLocaleString('pt-BR', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })}</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-400 uppercase tracking-wide mb-0.5">Desconto</p>
+                <p className="font-bold text-2xl" style={{ color }}>{discount}%</p>
+              </div>
+            </div>
+          </div>
+        )
+      })()}
+
       {auction.lat && auction.lng && (
         <div className="mt-6">
           <h2 style={{ color: 'var(--navy)' }} className="font-semibold mb-2">Zona de Inundação (FEMA)</h2>
