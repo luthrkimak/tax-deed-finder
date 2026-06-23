@@ -47,7 +47,7 @@ def get_auctions(
         query = query.lte("auction_date", date_to.isoformat())
 
     offset = (page - 1) * page_size
-    result = query.range(offset, offset + page_size - 1).execute()
+    result = query.order("auction_date", desc=False, nullsfirst=False).range(offset, offset + page_size - 1).execute()
 
     return {
         "data": result.data,

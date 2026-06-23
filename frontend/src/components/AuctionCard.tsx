@@ -2,6 +2,19 @@ import { Link } from 'react-router-dom'
 import type { Auction } from '../types'
 import { useI18n } from '../lib/i18n'
 
+function relativeDate(dateStr: string): string {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const d = new Date(dateStr + 'T00:00:00')
+  const diff = Math.round((d.getTime() - today.getTime()) / 86400000)
+  if (diff === 0) return 'Hoje'
+  if (diff === 1) return 'Amanhã'
+  if (diff === -1) return 'Ontem'
+  if (diff > 0 && diff <= 30) return `em ${diff} dias`
+  if (diff < 0 && diff >= -30) return `há ${Math.abs(diff)} dias`
+  return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })
+}
+
 const TYPE_LABELS_KEY: Record<string, 'type_tax_deed' | 'type_tax_lien' | 'type_foreclosure'> = {
   tax_deed:    'type_tax_deed',
   tax_lien:    'type_tax_lien',
@@ -63,7 +76,9 @@ export default function AuctionCard({ auction, isFavorited, onToggleFavorite }: 
         </div>
         <div>
           <span className="text-gray-400 text-xs uppercase tracking-wide">{t.card_date}</span>
-          <p className="font-semibold text-gray-900">{auction.auction_date || '—'}</p>
+          <p className="font-semibold text-gray-900">
+            {auction.auction_date ? relativeDate(auction.auction_date) : '—'}
+          </p>
         </div>
         <div>
           <span className="text-gray-400 text-xs uppercase tracking-wide">{t.card_property}</span>
