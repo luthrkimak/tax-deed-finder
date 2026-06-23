@@ -40,12 +40,19 @@ export default function AuctionCard({ auction, isFavorited, onToggleFavorite }: 
     <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
-          <span
-            style={TYPE_STYLE[auction.type] ?? { background: '#475569', color: '#fff' }}
-            className="inline-block text-xs font-semibold px-2 py-0.5 rounded-full mb-2 tracking-wide uppercase"
-          >
-            {t[TYPE_LABELS_KEY[auction.type] ?? 'type_tax_deed']}
-          </span>
+          <div className="flex items-center gap-1.5 mb-2 flex-wrap">
+            <span
+              style={TYPE_STYLE[auction.type] ?? { background: '#475569', color: '#fff' }}
+              className="text-xs font-semibold px-2 py-0.5 rounded-full tracking-wide uppercase"
+            >
+              {t[TYPE_LABELS_KEY[auction.type] ?? 'type_tax_deed']}
+            </span>
+            {auction.status === 'no_bid' && (
+              <span className="text-xs font-semibold bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
+                Sem lance
+              </span>
+            )}
+          </div>
           <Link
             to={`/auctions/${auction.id}`}
             style={{ color: 'var(--navy)' }}
@@ -76,11 +83,8 @@ export default function AuctionCard({ auction, isFavorited, onToggleFavorite }: 
         </div>
         <div>
           <span className="text-gray-400 text-xs uppercase tracking-wide">{t.card_date}</span>
-          <p className="font-semibold text-gray-900 flex items-center gap-1.5">
+          <p className="font-semibold text-gray-900">
             {auction.auction_date ? relativeDate(auction.auction_date) : '—'}
-            {auction.status === 'no_bid' && (
-              <span className="text-[10px] font-semibold bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full">Sem lance</span>
-            )}
           </p>
         </div>
         <div>
