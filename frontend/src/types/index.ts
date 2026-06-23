@@ -1,5 +1,5 @@
 export type AuctionType = 'tax_deed' | 'tax_lien' | 'foreclosure'
-export type AuctionStatus = 'upcoming' | 'active' | 'sold' | 'cancelled'
+export type AuctionStatus = 'upcoming' | 'active' | 'sold' | 'cancelled' | 'archived' | 'no_bid'
 export type PropertyType = 'residential' | 'commercial' | 'land'
 
 export interface Auction {
