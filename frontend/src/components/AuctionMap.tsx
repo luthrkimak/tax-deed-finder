@@ -24,12 +24,13 @@ const LEGEND = [
 const makeIcon = (color: string) =>
   L.divIcon({
     className: '',
-    html: `<svg width="24" height="28" viewBox="0 0 24 28" xmlns="http://www.w3.org/2000/svg" style="display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,0.35))">
-      <polygon points="12,1 23,13 1,13" fill="${color}" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-      <rect x="2" y="12" width="20" height="14" rx="1.5" fill="${color}" stroke="white" stroke-width="1.5"/>
+    html: `<svg width="28" height="32" viewBox="0 0 28 32" xmlns="http://www.w3.org/2000/svg" style="display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))">
+      <polygon points="14,2 26,13 26,27 2,27 2,13" fill="${color}" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+      <rect x="10.5" y="18" width="7" height="9" rx="1" fill="white" fill-opacity="0.3"/>
+      <polygon points="11,27 17,27 14,32" fill="${color}"/>
     </svg>`,
-    iconSize: [24, 28],
-    iconAnchor: [12, 28],
+    iconSize: [28, 32],
+    iconAnchor: [14, 32],
   })
 
 interface Props {
@@ -67,19 +68,50 @@ export default function AuctionMap({ filters }: Props) {
             eventHandlers={{ click: () => setSelected(pin.id) }}
           >
             {selected === pin.id && (
-              <Popup eventHandlers={{ remove: () => setSelected(null) }}>
-                <div className="text-sm space-y-1.5" style={{ minWidth: 180 }}>
-                  <p className="font-semibold leading-snug">{pin.address ?? '—'}</p>
-                  <p className="text-gray-500">
-                    {pin.type?.replace('_', ' ')}
-                    {pin.min_bid != null && <> · <span className="font-medium text-gray-800">${pin.min_bid.toLocaleString()}</span></>}
-                  </p>
-                  <button
-                    onClick={() => navigate(`/auctions/${pin.id}`)}
-                    className="mt-1 w-full text-center text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded px-3 py-1.5 transition-colors"
-                  >
-                    Ver detalhes →
-                  </button>
+              <Popup eventHandlers={{ remove: () => setSelected(null) }} minWidth={200}>
+                <div style={{ margin: '-14px -20px -14px', overflow: 'hidden', borderRadius: '8px', width: 220 }}>
+                  <div style={{ height: 4, backgroundColor: PIN_COLORS[pin.type] ?? '#6b7280' }} />
+                  <div style={{ padding: '12px 14px 14px' }}>
+                    <span style={{
+                      display: 'inline-block',
+                      fontSize: '10px',
+                      fontWeight: 600,
+                      letterSpacing: '0.05em',
+                      textTransform: 'uppercase',
+                      color: PIN_COLORS[pin.type] ?? '#6b7280',
+                      backgroundColor: `${PIN_COLORS[pin.type] ?? '#6b7280'}18`,
+                      borderRadius: '4px',
+                      padding: '2px 6px',
+                      marginBottom: '8px',
+                    }}>
+                      {pin.type?.replace(/_/g, ' ')}
+                    </span>
+                    <p style={{ margin: '0 0 6px', fontSize: '13px', fontWeight: 600, color: '#1e293b', lineHeight: 1.4 }}>
+                      {pin.address ?? '—'}
+                    </p>
+                    {pin.min_bid != null && (
+                      <p style={{ margin: '0 0 12px', fontSize: '15px', fontWeight: 700, color: '#1e293b' }}>
+                        ${pin.min_bid.toLocaleString()}
+                        <span style={{ fontSize: '11px', fontWeight: 400, color: '#94a3b8', marginLeft: 4 }}>lance mín.</span>
+                      </p>
+                    )}
+                    <button
+                      onClick={() => navigate(`/auctions/${pin.id}`)}
+                      style={{
+                        width: '100%',
+                        padding: '7px 0',
+                        backgroundColor: PIN_COLORS[pin.type] ?? '#6b7280',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '6px',
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Ver detalhes →
+                    </button>
+                  </div>
                 </div>
               </Popup>
             )}
@@ -90,9 +122,10 @@ export default function AuctionMap({ filters }: Props) {
         className="bg-white rounded-lg shadow px-3 py-2 text-xs space-y-1.5">
         {LEGEND.map(({ label, color }) => (
           <div key={label} className="flex items-center gap-2">
-            <svg width="14" height="16" viewBox="0 0 24 28" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
-              <polygon points="12,1 23,13 1,13" fill={color} stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
-              <rect x="2" y="12" width="20" height="14" rx="1.5" fill={color} stroke="white" strokeWidth="1.5"/>
+            <svg width="12" height="14" viewBox="0 0 28 32" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+              <polygon points="14,2 26,13 26,27 2,27 2,13" fill={color} stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
+              <rect x="10.5" y="18" width="7" height="9" rx="1" fill="white" fillOpacity="0.3"/>
+              <polygon points="11,27 17,27 14,32" fill={color}/>
             </svg>
             <span className="text-gray-700">{label}</span>
           </div>
