@@ -45,4 +45,5 @@ def run_all_scrapers():
 def create_scheduler() -> BackgroundScheduler:
     scheduler = BackgroundScheduler()
     scheduler.add_job(run_all_scrapers, CronTrigger(hour=2, minute=0))
+    scheduler.add_job(run_all_scrapers, CronTrigger(hour=14, minute=0))
     return scheduler
