@@ -47,14 +47,23 @@ def run_all_scrapers():
 def archive_past_auctions() -> None:
     sb = get_supabase()
     today = date.today().isoformat()
-    result = (
+    # Sold auctions that passed → archive (hide)
+    sold = (
         sb.table("auctions")
         .update({"status": "archived"})
         .lt("auction_date", today)
-        .neq("status", "archived")
+        .eq("status", "sold")
         .execute()
     )
-    logger.info("Archived %d past auctions", len(result.data))
+    # Upcoming auctions that passed without a bid → no_bid (keep visible)
+    no_bid = (
+        sb.table("auctions")
+        .update({"status": "no_bid"})
+        .lt("auction_date", today)
+        .in_("status", ["upcoming", "active"])
+        .execute()
+    )
+    logger.info("Archived %d sold | marked %d as no_bid", len(sold.data), len(no_bid.data))
 
 
 def create_scheduler() -> BackgroundScheduler:

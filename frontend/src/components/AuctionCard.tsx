@@ -76,8 +76,11 @@ export default function AuctionCard({ auction, isFavorited, onToggleFavorite }: 
         </div>
         <div>
           <span className="text-gray-400 text-xs uppercase tracking-wide">{t.card_date}</span>
-          <p className="font-semibold text-gray-900">
+          <p className="font-semibold text-gray-900 flex items-center gap-1.5">
             {auction.auction_date ? relativeDate(auction.auction_date) : '—'}
+            {auction.status === 'no_bid' && (
+              <span className="text-[10px] font-semibold bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full">Sem lance</span>
+            )}
           </p>
         </div>
         <div>
