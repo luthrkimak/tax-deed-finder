@@ -4,6 +4,7 @@ import time
 import logging
 import requests
 from db.client import get_supabase
+from scrapers.address_normalizer import normalize_address
 
 logger = logging.getLogger(__name__)
 
@@ -55,7 +56,7 @@ def geocode_auctions(auction_ids: list[str]) -> None:
         .data
     )
     for row in rows:
-        addr = (row.get("address") or "").strip()
+        addr = normalize_address((row.get("address") or "").strip()) or ""
         county = row.get("county", "")
         state = row.get("state", "")
         city = COUNTY_CITY.get(county, county)
