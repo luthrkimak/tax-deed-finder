@@ -8,7 +8,7 @@ const translations = {
     nav_search: 'Busca',
     nav_favorites: 'Favoritos',
     nav_alerts: 'Alertas',
-    nav_counties: 'Diretório',
+    nav_counties: 'Condados',
     nav_login: 'Entrar',
     nav_logout: 'Sair',
     // FilterBar

@@ -42,9 +42,9 @@ export default function Counties() {
   }, [selected, countySearch])
 
   const labels = {
-    pt: { title: 'Diretório Nacional dos Condados', search: 'Buscar estado...', all: 'Todos os tipos', counties: 'Condados', phone: 'Telefone', address: 'Endereço', website: 'Site', interest: 'Juros', redemption: 'Resgate', bid: 'Lance', nCounties: 'condados', back: '← Voltar', searchCounty: 'Buscar condado...' },
-    en: { title: 'National County Directory', search: 'Search state...', all: 'All types', counties: 'Counties', phone: 'Phone', address: 'Address', website: 'Website', interest: 'Interest', redemption: 'Redemption', bid: 'Bid Type', nCounties: 'counties', back: '← Back', searchCounty: 'Search county...' },
-    es: { title: 'Directorio Nacional de Condados', search: 'Buscar estado...', all: 'Todos los tipos', counties: 'Condados', phone: 'Teléfono', address: 'Dirección', website: 'Sitio web', interest: 'Interés', redemption: 'Redención', bid: 'Tipo de oferta', nCounties: 'condados', back: '← Volver', searchCounty: 'Buscar condado...' },
+    pt: { title: 'Condados dos EUA', search: 'Buscar estado...', all: 'Todos os tipos', counties: 'Condados', phone: 'Telefone', address: 'Endereço', website: 'Site', interest: 'Juros', redemption: 'Resgate', bid: 'Lance', nCounties: 'condados', back: '← Voltar', searchCounty: 'Buscar condado...' },
+    en: { title: 'US Counties', search: 'Search state...', all: 'All types', counties: 'Counties', phone: 'Phone', address: 'Address', website: 'Website', interest: 'Interest', redemption: 'Redemption', bid: 'Bid Type', nCounties: 'counties', back: '← Back', searchCounty: 'Search county...' },
+    es: { title: 'Condados de EE.UU.', search: 'Buscar estado...', all: 'Todos los tipos', counties: 'Condados', phone: 'Teléfono', address: 'Dirección', website: 'Sitio web', interest: 'Interés', redemption: 'Redención', bid: 'Tipo de oferta', nCounties: 'condados', back: '← Volver', searchCounty: 'Buscar condado...' },
   }[lang]
 
   if (selected) {
