@@ -89,12 +89,20 @@ export default function AuctionMap({ filters }: Props) {
                     <p style={{ margin: '0 0 6px', fontSize: '13px', fontWeight: 600, color: '#1e293b', lineHeight: 1.4 }}>
                       {pin.address ?? '—'}
                     </p>
-                    {pin.min_bid != null && (
-                      <p style={{ margin: '0 0 12px', fontSize: '15px', fontWeight: 700, color: '#1e293b' }}>
-                        ${pin.min_bid.toLocaleString()}
-                        <span style={{ fontSize: '11px', fontWeight: 400, color: '#94a3b8', marginLeft: 4 }}>lance mín.</span>
-                      </p>
-                    )}
+                    <div style={{ display: 'flex', gap: '12px', margin: '0 0 12px' }}>
+                      {pin.min_bid != null && (
+                        <div>
+                          <div style={{ fontSize: '10px', color: '#94a3b8', marginBottom: 1 }}>Dívida</div>
+                          <div style={{ fontSize: '14px', fontWeight: 700, color: '#1e293b' }}>${pin.min_bid.toLocaleString()}</div>
+                        </div>
+                      )}
+                      {pin.assessed_value != null && (
+                        <div>
+                          <div style={{ fontSize: '10px', color: '#94a3b8', marginBottom: 1 }}>Avaliação</div>
+                          <div style={{ fontSize: '14px', fontWeight: 700, color: '#1e293b' }}>${pin.assessed_value.toLocaleString()}</div>
+                        </div>
+                      )}
+                    </div>
                     <button
                       onClick={() => navigate(`/auctions/${pin.id}`)}
                       style={{

@@ -66,6 +66,7 @@ export interface PinData {
   type: string
   address: string | null
   min_bid: number | null
+  assessed_value: number | null
 }
 
 export interface Alert {
