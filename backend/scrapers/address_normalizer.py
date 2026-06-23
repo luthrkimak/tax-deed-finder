@@ -22,7 +22,7 @@ _ABBREV = {
 
 
 def normalize_address(raw: str | None) -> str | None:
-    if not raw:
+    if not raw or not raw.strip():
         return raw
     s = raw.upper()
     for abbr, full in _ABBREV.items():

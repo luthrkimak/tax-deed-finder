@@ -63,8 +63,6 @@ def geocode_auctions(auction_ids: list[str]) -> None:
 
         # Normalize: strip trailing state abbreviation that may already be appended
         addr_clean = re.sub(r",\s*[A-Z]{2}\s*$", "", addr).strip()
-        # Collapse double-spaces that can confuse Nominatim
-        addr_clean = re.sub(r"  +", " ", addr_clean)
         # Strip unit/apt suffixes for fallback query
         street_only = re.sub(r"\s*(UNIT|APT|#|STE)\s*\S+", "", addr_clean, flags=re.I).strip()
 
