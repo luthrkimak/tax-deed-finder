@@ -1,14 +1,27 @@
 import { useState, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   STATES, SALE_TYPE_LABELS, SALE_TYPE_COLORS, BID_TYPE_LABELS,
   type StateInfo, type SaleType,
 } from '../lib/counties-data'
 import { useI18n } from '../lib/i18n'
 
+// Condados FL cobertos automaticamente pelo scraper
+const FL_COVERED = new Set([
+  'Alachua','Baker','Bay','Brevard','Broward','Calhoun','Charlotte','Citrus','Clay',
+  'Duval','Escambia','Flagler','Gilchrist','Gulf','Hendry','Hernando','Highlands',
+  'Hillsborough','Indian River','Jackson','Lake','Lee','Leon','Manatee','Marion',
+  'Martin','Miami-Dade','Dade','Monroe','Nassau','Okaloosa','Okeechobee','Orange',
+  'Osceola','Palm Beach','Pasco','Pinellas','Polk','Putnam','Santa Rosa','Sarasota',
+  'Seminole','St. Johns','St. Lucie','Sumter','Suwannee','Taylor','Union',
+  'Volusia','Wakulla','Walton','Washington',
+])
+
 const ALL_SALE_TYPES: SaleType[] = ['tax_deed', 'tax_lien', 'both', 'redeemable_deed']
 
 export default function Counties() {
   const { lang } = useI18n()
+  const navigate = useNavigate()
   const [search, setSearch] = useState('')
   const [filterType, setFilterType] = useState<SaleType | ''>('')
   const [selected, setSelected] = useState<StateInfo | null>(null)
@@ -79,20 +92,51 @@ export default function Counties() {
               className="border rounded px-3 py-2 text-sm w-full mb-4 focus:outline-none focus:border-[#002868]"
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {filteredCounties.map(county => (
-                <div key={county.name} className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-sm">
-                  <p className="font-semibold text-sm" style={{ color: 'var(--navy)' }}>{county.name}</p>
-                  {county.phone && <p className="text-xs text-gray-500 mt-1">📞 {county.phone}</p>}
-                  {county.address && <p className="text-xs text-gray-500 mt-0.5">📍 {county.address}</p>}
-                  {county.website && (
-                    <a href={county.website} target="_blank" rel="noopener noreferrer"
-                      className="text-xs mt-1 hover:underline block truncate"
-                      style={{ color: 'var(--red)' }}>
-                      🌐 {county.website.replace(/^https?:\/\//, '')}
-                    </a>
-                  )}
-                </div>
-              ))}
+              {filteredCounties.map(county => {
+                const isCovered = selected?.abbr !== 'FL' || FL_COVERED.has(county.name)
+                return (
+                  <div key={county.name} className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-sm flex flex-col gap-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="font-semibold text-sm" style={{ color: 'var(--navy)' }}>{county.name}</p>
+                      {selected?.abbr === 'FL' && (
+                        <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full flex-shrink-0 ${isCovered ? 'bg-green-50 text-green-700' : 'bg-amber-50 text-amber-700'}`}>
+                          {isCovered ? '● Coberto' : '○ Manual'}
+                        </span>
+                      )}
+                    </div>
+                    {county.phone && <p className="text-xs text-gray-500">📞 {county.phone}</p>}
+                    {county.address && <p className="text-xs text-gray-500">📍 {county.address}</p>}
+                    {county.website && (
+                      <a href={county.website} target="_blank" rel="noopener noreferrer"
+                        className="text-xs hover:underline truncate"
+                        style={{ color: 'var(--red)' }}>
+                        🌐 {county.website.replace(/^https?:\/\//, '')}
+                      </a>
+                    )}
+                    <div className="mt-2">
+                      {isCovered ? (
+                        <button
+                          onClick={() => navigate(`/?state=${selected?.abbr}&county=${encodeURIComponent(county.name)}`)}
+                          className="text-xs font-medium text-white px-3 py-1.5 rounded-md w-full text-center transition-opacity hover:opacity-90"
+                          style={{ backgroundColor: 'var(--navy)' }}
+                        >
+                          Ver leilões →
+                        </button>
+                      ) : county.auctionUrl ? (
+                        <a
+                          href={county.auctionUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs font-medium px-3 py-1.5 rounded-md w-full text-center block transition-opacity hover:opacity-90"
+                          style={{ backgroundColor: '#d97706', color: '#fff' }}
+                        >
+                          Ver site oficial ↗
+                        </a>
+                      ) : null}
+                    </div>
+                  </div>
+                )
+              })}
             </div>
             {filteredCounties.length === 0 && (
               <p className="text-gray-400 text-sm text-center py-8">Nenhum condado encontrado.</p>
