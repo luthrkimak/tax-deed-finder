@@ -112,7 +112,7 @@ export default function Dashboard() {
         <section>
           <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Top condados</h2>
           <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 space-y-3">
-            {stats.top_counties.map(({ county, count }) => (
+            {stats.top_counties.slice(0, 8).map(({ county, count }) => (
               <button
                 key={county}
                 onClick={() => navigate(`/?state=FL&county=${encodeURIComponent(county)}`)}
@@ -135,7 +135,7 @@ export default function Dashboard() {
       <section>
         <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Maiores descontos</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {stats.top_discounts.map(d => (
+          {stats.top_discounts.slice(0, 5).map(d => (
             <button
               key={d.id}
               onClick={() => navigate(`/auctions/${d.id}`)}
@@ -143,7 +143,7 @@ export default function Dashboard() {
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold uppercase tracking-wide text-gray-400">{d.type?.replace(/_/g, ' ')}</span>
-                <span className="text-lg font-bold text-green-600">{d.discount_pct}% off</span>
+                <span className="text-lg font-bold text-green-600">{d.discount_pct}% desc.</span>
               </div>
               <p className="text-sm font-semibold text-gray-800 leading-tight mb-1">{d.address ?? '—'}</p>
               <p className="text-xs text-gray-400 mb-3">{d.county} · {fmtDate(d.auction_date)}</p>
