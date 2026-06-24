@@ -17,7 +17,7 @@ export default function Navbar() {
 
   async function signOut() {
     await supabase.auth.signOut()
-    navigate('/')
+    navigate('/search')
   }
 
   return (
@@ -25,7 +25,10 @@ export default function Navbar() {
       <Link to="/" className="font-bold text-white text-lg tracking-wide">
         ★ BidLand
       </Link>
-      <Link to="/" className="text-blue-200 hover:text-white text-sm transition-colors">{t.nav_search}</Link>
+      {session && (
+        <Link to="/dashboard" className="text-blue-200 hover:text-white text-sm transition-colors">Dashboard</Link>
+      )}
+      <Link to="/search" className="text-blue-200 hover:text-white text-sm transition-colors">{t.nav_search}</Link>
       <Link to="/favorites" className="text-blue-200 hover:text-white text-sm transition-colors">{t.nav_favorites}</Link>
       <Link to="/alerts" className="text-blue-200 hover:text-white text-sm transition-colors">{t.nav_alerts}</Link>
       <Link to="/counties" className="text-blue-200 hover:text-white text-sm transition-colors">{t.nav_counties}</Link>
