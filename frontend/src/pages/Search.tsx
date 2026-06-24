@@ -21,16 +21,22 @@ function paramsToFilters(params: URLSearchParams): AuctionFilters {
   }
 }
 
+function paramsToPage(params: URLSearchParams): number {
+  const p = Number(params.get('page'))
+  return p > 0 ? p : 1
+}
+
 export default function Search() {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const { t } = useI18n()
   const [auctions, setAuctions] = useState<Auction[]>([])
   const [total, setTotal] = useState(0)
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(() => paramsToPage(searchParams))
   const [filters, setFilters] = useState<AuctionFilters>(() => paramsToFilters(searchParams))
   const [loading, setLoading] = useState(false)
   const initialFilters = useMemo(() => paramsToFilters(searchParams), [])  // eslint-disable-line react-hooks/exhaustive-deps
+  const initialPage = useMemo(() => paramsToPage(searchParams), [])  // eslint-disable-line react-hooks/exhaustive-deps
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set())
   const [favError, setFavError] = useState<string | null>(null)
 
@@ -71,13 +77,14 @@ export default function Search() {
       if (newFilters.max_bid != null) params.max_bid = String(newFilters.max_bid)
       if (newFilters.date_from) params.date_from = newFilters.date_from
       if (newFilters.date_to) params.date_to = newFilters.date_to
+      if (newPage > 1) params.page = String(newPage)
       setSearchParams(params, { replace: true })
     } finally {
       setLoading(false)
     }
   }, [setSearchParams])
 
-  useEffect(() => { search(initialFilters) }, [])  // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { search(initialFilters, initialPage) }, [])  // eslint-disable-line react-hooks/exhaustive-deps
 
   async function toggleFavorite(auction: Auction) {
     setFavError(null)

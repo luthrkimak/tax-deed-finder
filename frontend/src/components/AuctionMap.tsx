@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
@@ -9,13 +9,42 @@ import 'leaflet/dist/leaflet.css'
 import 'react-leaflet-cluster/dist/assets/MarkerCluster.css'
 import 'react-leaflet-cluster/dist/assets/MarkerCluster.Default.css'
 
-function FitBounds({ pins }: { pins: PinData[] }) {
+const MAP_VIEWPORT_KEY = 'map_viewport'
+
+function FitBounds({ pins, filterKey }: { pins: PinData[], filterKey: string }) {
   const map = useMap()
+  const initializedRef = useRef(false)
+
+  // Save viewport whenever the user moves/zooms the map
   useEffect(() => {
-    if (pins.length === 0) return
+    const save = () => {
+      const c = map.getCenter()
+      sessionStorage.setItem(MAP_VIEWPORT_KEY, JSON.stringify({
+        filterKey, lat: c.lat, lng: c.lng, zoom: map.getZoom(),
+      }))
+    }
+    map.on('moveend', save)
+    return () => { map.off('moveend', save) }
+  }, [map, filterKey])
+
+  // On initial pin load: restore saved viewport or fit to pins
+  useEffect(() => {
+    if (pins.length === 0 || initializedRef.current) return
+    initializedRef.current = true
+    try {
+      const raw = sessionStorage.getItem(MAP_VIEWPORT_KEY)
+      if (raw) {
+        const saved = JSON.parse(raw)
+        if (saved.filterKey === filterKey) {
+          map.setView([saved.lat, saved.lng], saved.zoom, { animate: false })
+          return
+        }
+      }
+    } catch {}
     const bounds = L.latLngBounds(pins.map(p => [p.lat, p.lng]))
     map.fitBounds(bounds, { padding: [48, 48], maxZoom: 13, animate: true })
   }, [pins]) // eslint-disable-line react-hooks/exhaustive-deps
+
   return null
 }
 
@@ -82,7 +111,7 @@ export default function AuctionMap({ filters }: Props) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <FitBounds pins={pins} />
+      <FitBounds pins={pins} filterKey={JSON.stringify(filters)} />
       <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 1000 }}
         className="bg-white rounded-lg shadow px-3 py-1.5 text-xs text-gray-600 font-medium">
         {pins.length.toLocaleString()} propriedades
