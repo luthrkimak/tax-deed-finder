@@ -26,22 +26,32 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    Promise.all([apiClient.getStats(), apiClient.listFavorites()])
+    // Load stats and favorites independently so a favorites auth error
+    // doesn't prevent the stats section from rendering.
+    Promise.all([
+      apiClient.getStats(),
+      apiClient.listFavorites().catch(() => []),
+    ])
       .then(([s, f]) => {
         setStats(s)
-        // Sort favorites by auction_date ascending, filter only future ones
+        const today = new Date().toISOString().split('T')[0]
         const upcoming = f
-          .filter(fav => fav.auction?.auction_date && fav.auction.auction_date >= new Date().toISOString().split('T')[0])
+          .filter(fav => fav.auction?.auction_date && fav.auction.auction_date >= today)
           .sort((a, b) => (a.auction?.auction_date ?? '').localeCompare(b.auction?.auction_date ?? ''))
         setFavs(upcoming)
       })
+      .catch(() => setStats(null))
       .finally(() => setLoading(false))
   }, [])
 
   if (loading) return (
     <div className="flex items-center justify-center h-64 text-gray-400">Carregando...</div>
   )
-  if (!stats) return null
+  if (!stats) return (
+    <div className="flex items-center justify-center h-64 text-gray-400">
+      Não foi possível carregar os dados. Tente recarregar a página.
+    </div>
+  )
 
   const maxCount = Math.max(...stats.top_counties.map(c => c.count), 1)
 
