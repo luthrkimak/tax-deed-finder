@@ -1,0 +1,339 @@
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - link "★ Tax Deed Finder" [ref=e4] [cursor=pointer]:
+      - /url: /
+    - link "Busca" [ref=e5] [cursor=pointer]:
+      - /url: /
+    - link "Favoritos" [ref=e6] [cursor=pointer]:
+      - /url: /favorites
+    - link "Alertas" [ref=e7] [cursor=pointer]:
+      - /url: /alerts
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - button "🇧🇷 PT" [ref=e10] [cursor=pointer]
+        - button "🇺🇸 EN" [ref=e11] [cursor=pointer]
+        - button "🇪🇸 ES" [ref=e12] [cursor=pointer]
+      - link "Entrar" [ref=e13] [cursor=pointer]:
+        - /url: /auth
+  - generic [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e16]:
+        - generic [ref=e17]: Estado
+        - combobox [ref=e18]:
+          - option "Todos"
+          - option "FL" [selected]
+          - option "TX"
+          - option "GA"
+      - generic [ref=e19]:
+        - generic [ref=e20]: Condado
+        - combobox [ref=e21]:
+          - option "Todos"
+          - option "Alachua"
+          - option "Bay"
+          - option "Brevard"
+          - option "Broward" [selected]
+          - option "Calhoun"
+          - option "Citrus"
+          - option "Clay"
+          - option "Duval"
+          - option "Flagler"
+          - option "Hendry"
+          - option "Hernando"
+          - option "Highlands"
+          - option "Hillsborough"
+          - option "Indian River"
+          - option "Jackson"
+          - option "Lee"
+          - option "Leon"
+          - option "Manatee"
+          - option "Marion"
+          - option "Martin"
+          - option "Miami-Dade"
+          - option "Monroe"
+          - option "Okeechobee"
+          - option "Orange"
+          - option "Palm Beach"
+          - option "Pasco"
+          - option "Pinellas"
+          - option "Polk"
+          - option "Putnam"
+          - option "Santa Rosa"
+          - option "Seminole"
+          - option "St. Lucie"
+          - option "Suwannee"
+          - option "Washington"
+      - generic [ref=e22]:
+        - generic [ref=e23]: Tipo
+        - combobox [ref=e24]:
+          - option "Todos" [selected]
+          - option "Tax Deed"
+          - option "Tax Lien"
+          - option "Foreclosure"
+      - generic [ref=e25]:
+        - generic [ref=e26]: Imóvel
+        - combobox [ref=e27]:
+          - option "Todos" [selected]
+          - option "Residencial"
+          - option "Comercial"
+          - option "Terreno"
+      - generic [ref=e28]:
+        - generic [ref=e29]: Lance mín. ($)
+        - spinbutton [ref=e30]
+      - generic [ref=e31]:
+        - generic [ref=e32]: Lance máx. ($)
+        - spinbutton [ref=e33]
+      - button "Buscar" [ref=e60] [cursor=pointer]
+    - generic [ref=e35]:
+      - generic [ref=e36]:
+        - paragraph [ref=e37]: 11 resultados
+        - generic [ref=e405]:
+          - generic [ref=e406]:
+            - generic [ref=e407]:
+              - generic [ref=e408]: Foreclosure
+              - link "1754 NE 46 ST, FL" [ref=e409] [cursor=pointer]:
+                - /url: /auctions/b4e64f59-54b5-48ff-8ca0-568928ae6422
+              - paragraph [ref=e410]: Broward, FL
+            - button "☆" [ref=e411] [cursor=pointer]
+          - generic [ref=e412]:
+            - generic [ref=e413]:
+              - text: Lance Mín.
+              - paragraph [ref=e414]: $364.307,86
+            - generic [ref=e415]:
+              - text: Avaliado
+              - paragraph [ref=e416]: —
+            - generic [ref=e417]:
+              - text: Data
+              - paragraph [ref=e418]: 2026-06-23
+            - generic [ref=e419]:
+              - text: Imóvel
+              - paragraph [ref=e420]: —
+        - generic [ref=e421]:
+          - generic [ref=e422]:
+            - generic [ref=e423]:
+              - generic [ref=e424]: Foreclosure
+              - link "2661 LAGUNA WAY, FL" [ref=e425] [cursor=pointer]:
+                - /url: /auctions/5c297f7a-7a04-499b-9ba4-ea3ebb211e3a
+              - paragraph [ref=e426]: Broward, FL
+            - button "☆" [ref=e427] [cursor=pointer]
+          - generic [ref=e428]:
+            - generic [ref=e429]:
+              - text: Lance Mín.
+              - paragraph [ref=e430]: $317.417,14
+            - generic [ref=e431]:
+              - text: Avaliado
+              - paragraph [ref=e432]: —
+            - generic [ref=e433]:
+              - text: Data
+              - paragraph [ref=e434]: 2026-06-23
+            - generic [ref=e435]:
+              - text: Imóvel
+              - paragraph [ref=e436]: —
+        - generic [ref=e437]:
+          - generic [ref=e438]:
+            - generic [ref=e439]:
+              - generic [ref=e440]: Foreclosure
+              - link "2165 NW 19 ST, FL" [ref=e441] [cursor=pointer]:
+                - /url: /auctions/6e8928dd-1b94-468e-9443-6b29c7ebab44
+              - paragraph [ref=e442]: Broward, FL
+            - button "☆" [ref=e443] [cursor=pointer]
+          - generic [ref=e444]:
+            - generic [ref=e445]:
+              - text: Lance Mín.
+              - paragraph [ref=e446]: $579.483,79
+            - generic [ref=e447]:
+              - text: Avaliado
+              - paragraph [ref=e448]: —
+            - generic [ref=e449]:
+              - text: Data
+              - paragraph [ref=e450]: 2026-06-23
+            - generic [ref=e451]:
+              - text: Imóvel
+              - paragraph [ref=e452]: —
+        - generic [ref=e453]:
+          - generic [ref=e454]:
+            - generic [ref=e455]:
+              - generic [ref=e456]: Foreclosure
+              - link "7802 NW 68 TER, FL" [ref=e457] [cursor=pointer]:
+                - /url: /auctions/f6c08e80-e079-4dc5-95d2-d1dd0a96ae54
+              - paragraph [ref=e458]: Broward, FL
+            - button "☆" [ref=e459] [cursor=pointer]
+          - generic [ref=e460]:
+            - generic [ref=e461]:
+              - text: Lance Mín.
+              - paragraph [ref=e462]: $221.384,73
+            - generic [ref=e463]:
+              - text: Avaliado
+              - paragraph [ref=e464]: —
+            - generic [ref=e465]:
+              - text: Data
+              - paragraph [ref=e466]: 2026-06-23
+            - generic [ref=e467]:
+              - text: Imóvel
+              - paragraph [ref=e468]: —
+        - generic [ref=e469]:
+          - generic [ref=e470]:
+            - generic [ref=e471]:
+              - generic [ref=e472]: Foreclosure
+              - link "3261 NW 15 ST, FL" [ref=e473] [cursor=pointer]:
+                - /url: /auctions/4270908b-5e62-4dc3-8bbf-d975b57b1b0e
+              - paragraph [ref=e474]: Broward, FL
+            - button "☆" [ref=e475] [cursor=pointer]
+          - generic [ref=e476]:
+            - generic [ref=e477]:
+              - text: Lance Mín.
+              - paragraph [ref=e478]: $59.489,89
+            - generic [ref=e479]:
+              - text: Avaliado
+              - paragraph [ref=e480]: —
+            - generic [ref=e481]:
+              - text: Data
+              - paragraph [ref=e482]: 2026-06-23
+            - generic [ref=e483]:
+              - text: Imóvel
+              - paragraph [ref=e484]: —
+        - generic [ref=e485]:
+          - generic [ref=e486]:
+            - generic [ref=e487]:
+              - generic [ref=e488]: Foreclosure
+              - link "23-25 SE 4 ST, FL" [ref=e489] [cursor=pointer]:
+                - /url: /auctions/af3a8a8b-8272-44da-88cb-d115a2a7e9a0
+              - paragraph [ref=e490]: Broward, FL
+            - button "☆" [ref=e491] [cursor=pointer]
+          - generic [ref=e492]:
+            - generic [ref=e493]:
+              - text: Lance Mín.
+              - paragraph [ref=e494]: $687.320,34
+            - generic [ref=e495]:
+              - text: Avaliado
+              - paragraph [ref=e496]: —
+            - generic [ref=e497]:
+              - text: Data
+              - paragraph [ref=e498]: 2026-06-23
+            - generic [ref=e499]:
+              - text: Imóvel
+              - paragraph [ref=e500]: —
+        - generic [ref=e501]:
+          - generic [ref=e502]:
+            - generic [ref=e503]:
+              - generic [ref=e504]: Foreclosure
+              - link "801 NW 42 AVE, FL" [ref=e505] [cursor=pointer]:
+                - /url: /auctions/5ff8c6b1-e038-4145-bfc9-10ee8238fe01
+              - paragraph [ref=e506]: Broward, FL
+            - button "☆" [ref=e507] [cursor=pointer]
+          - generic [ref=e508]:
+            - generic [ref=e509]:
+              - text: Lance Mín.
+              - paragraph [ref=e510]: $81.541,91
+            - generic [ref=e511]:
+              - text: Avaliado
+              - paragraph [ref=e512]: —
+            - generic [ref=e513]:
+              - text: Data
+              - paragraph [ref=e514]: 2026-06-23
+            - generic [ref=e515]:
+              - text: Imóvel
+              - paragraph [ref=e516]: —
+        - generic [ref=e517]:
+          - generic [ref=e518]:
+            - generic [ref=e519]:
+              - generic [ref=e520]: Foreclosure
+              - link "8452 SW 29 ST, FL" [ref=e521] [cursor=pointer]:
+                - /url: /auctions/c7da6122-4c61-4c91-86f0-2b862de38cda
+              - paragraph [ref=e522]: Broward, FL
+            - button "☆" [ref=e523] [cursor=pointer]
+          - generic [ref=e524]:
+            - generic [ref=e525]:
+              - text: Lance Mín.
+              - paragraph [ref=e526]: $16.963,39
+            - generic [ref=e527]:
+              - text: Avaliado
+              - paragraph [ref=e528]: —
+            - generic [ref=e529]:
+              - text: Data
+              - paragraph [ref=e530]: 2026-06-23
+            - generic [ref=e531]:
+              - text: Imóvel
+              - paragraph [ref=e532]: —
+        - generic [ref=e533]:
+          - generic [ref=e534]:
+            - generic [ref=e535]:
+              - generic [ref=e536]: Foreclosure
+              - link "8350 SANDS POINT BLVD E201, FL" [ref=e537] [cursor=pointer]:
+                - /url: /auctions/48008da2-f301-4a2f-af46-ae899d2efe9c
+              - paragraph [ref=e538]: Broward, FL
+            - button "☆" [ref=e539] [cursor=pointer]
+          - generic [ref=e540]:
+            - generic [ref=e541]:
+              - text: Lance Mín.
+              - paragraph [ref=e542]: $23.335,37
+            - generic [ref=e543]:
+              - text: Avaliado
+              - paragraph [ref=e544]: —
+            - generic [ref=e545]:
+              - text: Data
+              - paragraph [ref=e546]: 2026-06-23
+            - generic [ref=e547]:
+              - text: Imóvel
+              - paragraph [ref=e548]: —
+        - generic [ref=e549]:
+          - generic [ref=e550]:
+            - generic [ref=e551]:
+              - generic [ref=e552]: Foreclosure
+              - link "3933 NW 81 TER, FL" [ref=e553] [cursor=pointer]:
+                - /url: /auctions/ce7cc54e-21c3-42d1-a44c-23e2e61696b6
+              - paragraph [ref=e554]: Broward, FL
+            - button "☆" [ref=e555] [cursor=pointer]
+          - generic [ref=e556]:
+            - generic [ref=e557]:
+              - text: Lance Mín.
+              - paragraph [ref=e558]: $223.902,91
+            - generic [ref=e559]:
+              - text: Avaliado
+              - paragraph [ref=e560]: —
+            - generic [ref=e561]:
+              - text: Data
+              - paragraph [ref=e562]: —
+            - generic [ref=e563]:
+              - text: Imóvel
+              - paragraph [ref=e564]: —
+        - generic [ref=e565]:
+          - generic [ref=e566]:
+            - generic [ref=e567]:
+              - generic [ref=e568]: Foreclosure
+              - link "8740 NW 7 CT, FL" [ref=e569] [cursor=pointer]:
+                - /url: /auctions/04ccf7cd-2eae-414f-8b63-0ea02351e253
+              - paragraph [ref=e570]: Broward, FL
+            - button "☆" [ref=e571] [cursor=pointer]
+          - generic [ref=e572]:
+            - generic [ref=e573]:
+              - text: Lance Mín.
+              - paragraph [ref=e574]: $350.495,35
+            - generic [ref=e575]:
+              - text: Avaliado
+              - paragraph [ref=e576]: —
+            - generic [ref=e577]:
+              - text: Data
+              - paragraph [ref=e578]: 2026-06-23
+            - generic [ref=e579]:
+              - text: Imóvel
+              - paragraph [ref=e580]: —
+      - generic [ref=e39]:
+        - generic:
+          - generic:
+            - img
+        - generic:
+          - generic [ref=e40]:
+            - button "Zoom in" [ref=e41] [cursor=pointer]: +
+            - button "Zoom out" [ref=e42] [cursor=pointer]: −
+          - generic [ref=e43]:
+            - link "Leaflet" [ref=e44] [cursor=pointer]:
+              - /url: https://leafletjs.com
+              - img [ref=e45]
+              - text: Leaflet
+            - text: "| ©"
+            - link "OpenStreetMap" [ref=e49] [cursor=pointer]:
+              - /url: https://www.openstreetmap.org/copyright
+        - generic [ref=e50]:
+          - generic [ref=e53]: Tax Deed
+          - generic [ref=e56]: Tax Lien
+          - generic [ref=e59]: Foreclosure

@@ -1,0 +1,20 @@
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - link "★ Tax Deed Finder" [ref=e4] [cursor=pointer]:
+      - /url: /
+    - link "Busca" [ref=e5] [cursor=pointer]:
+      - /url: /
+    - link "Favoritos" [ref=e6] [cursor=pointer]:
+      - /url: /favorites
+    - link "Alertas" [ref=e7] [cursor=pointer]:
+      - /url: /alerts
+    - link "Diretório" [ref=e8] [cursor=pointer]:
+      - /url: /counties
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - button "🇧🇷 PT" [ref=e11] [cursor=pointer]
+        - button "🇺🇸 EN" [ref=e12] [cursor=pointer]
+        - button "🇪🇸 ES" [ref=e13] [cursor=pointer]
+      - link "Entrar" [ref=e14] [cursor=pointer]:
+        - /url: /auth
+  - generic [ref=e15]: Carregando…

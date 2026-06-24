@@ -1,0 +1,139 @@
+[      43ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:21550
+[      52ms] [WARNING] ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition. @ http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4426
+[      52ms] [WARNING] ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. @ http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4426
+[      53ms] [ERROR] Warning: Rendering <Context> directly is not supported and will be removed in a future major release. Did you mean to render <Context.Consumer> instead?%s 
+    at div
+    at MapContainerComponent (http://localhost:5173/node_modules/.vite/deps/react-leaflet.js?v=41c54dcb:10080:34)
+    at AuctionMap (http://localhost:5173/src/components/AuctionMap.tsx:26:38)
+    at div
+    at div
+    at div
+    at Search (http://localhost:5173/src/pages/Search.tsx:27:20)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4122:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4592:5)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4122:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4592:5)
+    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4535:15)
+    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:5273:5)
+    at App @ http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:520
+[      53ms] [ERROR] Warning: A context consumer was rendered with multiple children, or a child that isn't a function. A context consumer expects a single child that is a function. If you did pass a function, make sure there is no trailing or leading whitespace around it.%s 
+    at div
+    at MapContainerComponent (http://localhost:5173/node_modules/.vite/deps/react-leaflet.js?v=41c54dcb:10080:34)
+    at AuctionMap (http://localhost:5173/src/components/AuctionMap.tsx:26:38)
+    at div
+    at div
+    at div
+    at Search (http://localhost:5173/src/pages/Search.tsx:27:20)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4122:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4592:5)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4122:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4592:5)
+    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4535:15)
+    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:5273:5)
+    at App @ http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:520
+[      53ms] [ERROR] Warning: A context consumer was rendered with multiple children, or a child that isn't a function. A context consumer expects a single child that is a function. If you did pass a function, make sure there is no trailing or leading whitespace around it.%s 
+    at div
+    at MapContainerComponent (http://localhost:5173/node_modules/.vite/deps/react-leaflet.js?v=41c54dcb:10080:34)
+    at AuctionMap (http://localhost:5173/src/components/AuctionMap.tsx:26:38)
+    at div
+    at div
+    at div
+    at Search (http://localhost:5173/src/pages/Search.tsx:27:20)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4122:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4592:5)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4122:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4592:5)
+    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4535:15)
+    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:5273:5)
+    at App @ http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:520
+[      53ms] TypeError: render2 is not a function
+    at updateContextConsumer (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:15699:27)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:15957:22)
+    at HTMLUnknownElement.callCallback2 (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:3674:22)
+    at Object.invokeGuardedCallbackDev (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:3699:24)
+    at invokeGuardedCallback (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:3733:39)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:19765:15)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:19198:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:19137:13)
+    at renderRootSync (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:19116:15)
+    at performSyncWorkOnRoot (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:18874:28)
+[      54ms] [ERROR] Warning: A context consumer was rendered with multiple children, or a child that isn't a function. A context consumer expects a single child that is a function. If you did pass a function, make sure there is no trailing or leading whitespace around it.%s 
+    at div
+    at MapContainerComponent (http://localhost:5173/node_modules/.vite/deps/react-leaflet.js?v=41c54dcb:10080:34)
+    at AuctionMap (http://localhost:5173/src/components/AuctionMap.tsx:26:38)
+    at div
+    at div
+    at div
+    at Search (http://localhost:5173/src/pages/Search.tsx:27:20)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4122:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4592:5)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4122:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4592:5)
+    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4535:15)
+    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:5273:5)
+    at App @ http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:520
+[      54ms] [ERROR] Warning: A context consumer was rendered with multiple children, or a child that isn't a function. A context consumer expects a single child that is a function. If you did pass a function, make sure there is no trailing or leading whitespace around it.%s 
+    at div
+    at MapContainerComponent (http://localhost:5173/node_modules/.vite/deps/react-leaflet.js?v=41c54dcb:10080:34)
+    at AuctionMap (http://localhost:5173/src/components/AuctionMap.tsx:26:38)
+    at div
+    at div
+    at div
+    at Search (http://localhost:5173/src/pages/Search.tsx:27:20)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4122:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4592:5)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4122:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4592:5)
+    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4535:15)
+    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:5273:5)
+    at App @ http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:520
+[      54ms] TypeError: render2 is not a function
+    at updateContextConsumer (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:15699:27)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:15957:22)
+    at HTMLUnknownElement.callCallback2 (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:3674:22)
+    at Object.invokeGuardedCallbackDev (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:3699:24)
+    at invokeGuardedCallback (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:3733:39)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:19765:15)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:19198:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:19137:13)
+    at renderRootSync (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:19116:15)
+    at recoverFromConcurrentError (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:18736:28)
+[      54ms] [ERROR] The above error occurred in the <Context.Consumer> component:
+
+    at div
+    at MapContainerComponent (http://localhost:5173/node_modules/.vite/deps/react-leaflet.js?v=41c54dcb:10080:34)
+    at AuctionMap (http://localhost:5173/src/components/AuctionMap.tsx:26:38)
+    at div
+    at div
+    at div
+    at Search (http://localhost:5173/src/pages/Search.tsx:27:20)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4122:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4592:5)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4122:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4592:5)
+    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:4535:15)
+    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=41c54dcb:5273:5)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries. @ http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:14031
+[      54ms] TypeError: render2 is not a function
+    at updateContextConsumer (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:15699:27)
+    at beginWork (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:15957:22)
+    at beginWork$1 (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:19753:22)
+    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:19198:20)
+    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:19137:13)
+    at renderRootSync (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:19116:15)
+    at recoverFromConcurrentError (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:18736:28)
+    at performSyncWorkOnRoot (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:18879:28)
+    at flushSyncCallbacks (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:9119:30)
+    at commitRootImpl (http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41c54dcb:19432:11)
+[    6416ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:5173/@vite/client:559
+[    6417ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/:0
+[    7421ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/:0
+[    8425ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/:0
+[    9430ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/:0
+[   10433ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/:0
+[   11930ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=932984aa:21550
+[   11952ms] [WARNING] ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition. @ http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b236fe48:4426
+[   11952ms] [WARNING] ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. @ http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b236fe48:4426

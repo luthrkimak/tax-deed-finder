@@ -1,0 +1,72 @@
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - link "★ Tax Deed Finder" [ref=e4] [cursor=pointer]:
+      - /url: /
+    - link "Busca" [ref=e5] [cursor=pointer]:
+      - /url: /
+    - link "Favoritos" [ref=e6] [cursor=pointer]:
+      - /url: /favorites
+    - link "Alertas" [ref=e7] [cursor=pointer]:
+      - /url: /alerts
+    - link "Diretório" [ref=e8] [cursor=pointer]:
+      - /url: /counties
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - button "🇧🇷 PT" [ref=e11] [cursor=pointer]
+        - button "🇺🇸 EN" [ref=e12] [cursor=pointer]
+        - button "🇪🇸 ES" [ref=e13] [cursor=pointer]
+      - link "Entrar" [ref=e14] [cursor=pointer]:
+        - /url: /auth
+  - generic [ref=e15]:
+    - generic [ref=e16]:
+      - generic [ref=e17]:
+        - generic [ref=e18]: Estado
+        - combobox [ref=e19]:
+          - option "Todos" [selected]
+          - option "FL"
+          - option "TX"
+          - option "GA"
+      - generic [ref=e20]:
+        - generic [ref=e21]: Condado
+        - combobox [disabled] [ref=e22]:
+          - option "Todos" [selected]
+      - generic [ref=e23]:
+        - generic [ref=e24]: Tipo
+        - combobox [ref=e25]:
+          - option "Todos" [selected]
+          - option "Tax Deed"
+          - option "Tax Lien"
+          - option "Foreclosure"
+      - generic [ref=e26]:
+        - generic [ref=e27]: Imóvel
+        - combobox [ref=e28]:
+          - option "Todos" [selected]
+          - option "Residencial"
+          - option "Comercial"
+          - option "Terreno"
+      - generic [ref=e29]:
+        - generic [ref=e30]: Lance mín. ($)
+        - spinbutton [ref=e31]
+      - generic [ref=e32]:
+        - generic [ref=e33]: Lance máx. ($)
+        - spinbutton [ref=e34]
+      - button "Buscando…" [disabled] [ref=e35]
+    - generic [ref=e36]:
+      - paragraph [ref=e38]: 0 resultados
+      - generic [ref=e40]:
+        - generic:
+          - generic [ref=e41]:
+            - button "Zoom in" [ref=e42] [cursor=pointer]: +
+            - button "Zoom out" [ref=e43] [cursor=pointer]: −
+          - generic [ref=e44]:
+            - link "Leaflet" [ref=e45] [cursor=pointer]:
+              - /url: https://leafletjs.com
+              - img [ref=e46]
+              - text: Leaflet
+            - text: "| ©"
+            - link "OpenStreetMap" [ref=e50] [cursor=pointer]:
+              - /url: https://www.openstreetmap.org/copyright
+        - generic [ref=e51]:
+          - generic [ref=e54]: Tax Deed
+          - generic [ref=e57]: Tax Lien
+          - generic [ref=e60]: Foreclosure

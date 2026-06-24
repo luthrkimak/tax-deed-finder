@@ -1,0 +1,33 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - generic [ref=e5]: ★ Tax Deed Finder
+    - generic [ref=e6]:
+      - heading "Find your next investment before the crowd." [level=1] [ref=e7]:
+        - text: Find your next
+        - text: investment
+        - text: before the crowd.
+      - paragraph [ref=e8]: Property auctions across Florida, Texas and Georgia — tracked daily, geocoded, and filtered so you can act first.
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: FL · TX · GA
+        - generic [ref=e12]: States
+      - generic [ref=e13]:
+        - generic [ref=e14]: Daily
+        - generic [ref=e15]: Updates
+  - generic [ref=e17]:
+    - generic [ref=e18]:
+      - button "🇧🇷 PT" [ref=e19] [cursor=pointer]
+      - button "🇺🇸 EN" [ref=e20] [cursor=pointer]
+      - button "🇪🇸 ES" [ref=e21] [cursor=pointer]
+    - generic [ref=e22]:
+      - heading "Bem-vindo de volta" [level=2] [ref=e23]
+      - paragraph [ref=e24]: Entre na sua conta.
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - generic [ref=e27]: Email
+          - textbox "voce@exemplo.com" [ref=e28]
+        - generic [ref=e29]:
+          - generic [ref=e30]: Senha
+          - textbox "••••••••" [ref=e31]
+        - button "Entrar" [ref=e32] [cursor=pointer]
+      - button "Não tem conta? Criar conta" [ref=e33] [cursor=pointer]

@@ -1,0 +1,317 @@
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - link "★ Tax Deed Finder" [ref=e4] [cursor=pointer]:
+      - /url: /
+    - link "Busca" [ref=e5] [cursor=pointer]:
+      - /url: /
+    - link "Favoritos" [ref=e6] [cursor=pointer]:
+      - /url: /favorites
+    - link "Alertas" [ref=e7] [cursor=pointer]:
+      - /url: /alerts
+    - link "Diretório" [ref=e8] [cursor=pointer]:
+      - /url: /counties
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - button "🇧🇷 PT" [ref=e11] [cursor=pointer]
+        - button "🇺🇸 EN" [ref=e12] [cursor=pointer]
+        - button "🇪🇸 ES" [ref=e13] [cursor=pointer]
+      - link "Entrar" [ref=e14] [cursor=pointer]:
+        - /url: /auth
+  - generic [ref=e15]:
+    - heading "Diretório Nacional dos Condados" [level=1] [ref=e16]
+    - paragraph [ref=e17]: "Fonte: The Deed Hunters · thedeedhunters.com"
+    - generic [ref=e18]:
+      - textbox "Buscar estado..." [ref=e19]
+      - combobox [ref=e20]:
+        - option "Todos os tipos" [selected]
+        - option "Tax Deed"
+        - option "Tax Lien"
+        - option "Tax Lien e Tax Deed"
+        - option "Redeemable Deed"
+      - generic [ref=e21]: 32 estados
+    - generic [ref=e22]:
+      - button "AK Tax Deed Alaska Auction 18 condados" [ref=e23] [cursor=pointer]:
+        - generic [ref=e24]:
+          - generic [ref=e25]: AK
+          - generic [ref=e26]: Tax Deed
+        - paragraph [ref=e27]: Alaska
+        - generic [ref=e28]:
+          - generic [ref=e29]: Auction
+          - generic [ref=e30]: 18 condados
+      - button "AR Tax Deed Arkansas Premium Bid 30 dias 75 condados" [ref=e31] [cursor=pointer]:
+        - generic [ref=e32]:
+          - generic [ref=e33]: AR
+          - generic [ref=e34]: Tax Deed
+        - paragraph [ref=e35]: Arkansas
+        - generic [ref=e36]:
+          - generic [ref=e37]: Premium Bid
+          - generic [ref=e38]: 30 dias
+          - generic [ref=e39]: 75 condados
+      - button "CA Tax Lien e Tax Deed California Premium Bid 18% 2-3 anos 58 condados" [ref=e40] [cursor=pointer]:
+        - generic [ref=e41]:
+          - generic [ref=e42]: CA
+          - generic [ref=e43]: Tax Lien e Tax Deed
+        - paragraph [ref=e44]: California
+        - generic [ref=e45]:
+          - generic [ref=e46]: Premium Bid
+          - generic [ref=e47]: 18%
+          - generic [ref=e48]: 2-3 anos
+          - generic [ref=e49]: 58 condados
+      - button "CT Redeemable Deed Connecticut Premium Bid 18% 6 meses 8 condados" [ref=e50] [cursor=pointer]:
+        - generic [ref=e51]:
+          - generic [ref=e52]: CT
+          - generic [ref=e53]: Redeemable Deed
+        - paragraph [ref=e54]: Connecticut
+        - generic [ref=e55]:
+          - generic [ref=e56]: Premium Bid
+          - generic [ref=e57]: 18%
+          - generic [ref=e58]: 6 meses
+          - generic [ref=e59]: 8 condados
+      - button "DE Tax Deed Delaware Premium Bid 15% 60 dias 3 condados" [ref=e60] [cursor=pointer]:
+        - generic [ref=e61]:
+          - generic [ref=e62]: DE
+          - generic [ref=e63]: Tax Deed
+        - paragraph [ref=e64]: Delaware
+        - generic [ref=e65]:
+          - generic [ref=e66]: Premium Bid
+          - generic [ref=e67]: 15%
+          - generic [ref=e68]: 60 dias
+          - generic [ref=e69]: 3 condados
+      - button "FL Tax Lien e Tax Deed Florida Premium Bid 18% 2 anos 67 condados" [ref=e70] [cursor=pointer]:
+        - generic [ref=e71]:
+          - generic [ref=e72]: FL
+          - generic [ref=e73]: Tax Lien e Tax Deed
+        - paragraph [ref=e74]: Florida
+        - generic [ref=e75]:
+          - generic [ref=e76]: Premium Bid
+          - generic [ref=e77]: 18%
+          - generic [ref=e78]: 2 anos
+          - generic [ref=e79]: 67 condados
+      - button "GA Redeemable Deed Georgia Premium Bid 20% 1 ano 159 condados" [ref=e80] [cursor=pointer]:
+        - generic [ref=e81]:
+          - generic [ref=e82]: GA
+          - generic [ref=e83]: Redeemable Deed
+        - paragraph [ref=e84]: Georgia
+        - generic [ref=e85]:
+          - generic [ref=e86]: Premium Bid
+          - generic [ref=e87]: 20%
+          - generic [ref=e88]: 1 ano
+          - generic [ref=e89]: 159 condados
+      - button "HI Redeemable Deed Hawaii Premium Bid 12% 1 ano 4 condados" [ref=e90] [cursor=pointer]:
+        - generic [ref=e91]:
+          - generic [ref=e92]: HI
+          - generic [ref=e93]: Redeemable Deed
+        - paragraph [ref=e94]: Hawaii
+        - generic [ref=e95]:
+          - generic [ref=e96]: Premium Bid
+          - generic [ref=e97]: 12%
+          - generic [ref=e98]: 1 ano
+          - generic [ref=e99]: 4 condados
+      - button "ID Tax Deed Idaho Premium Bid 44 condados" [ref=e100] [cursor=pointer]:
+        - generic [ref=e101]:
+          - generic [ref=e102]: ID
+          - generic [ref=e103]: Tax Deed
+        - paragraph [ref=e104]: Idaho
+        - generic [ref=e105]:
+          - generic [ref=e106]: Premium Bid
+          - generic [ref=e107]: 44 condados
+      - button "KS Tax Deed Kansas Premium Bid 105 condados" [ref=e108] [cursor=pointer]:
+        - generic [ref=e109]:
+          - generic [ref=e110]: KS
+          - generic [ref=e111]: Tax Deed
+        - paragraph [ref=e112]: Kansas
+        - generic [ref=e113]:
+          - generic [ref=e114]: Premium Bid
+          - generic [ref=e115]: 105 condados
+      - button "ME Redeemable Deed Maine Premium Bid 8% 2 anos 16 condados" [ref=e116] [cursor=pointer]:
+        - generic [ref=e117]:
+          - generic [ref=e118]: ME
+          - generic [ref=e119]: Redeemable Deed
+        - paragraph [ref=e120]: Maine
+        - generic [ref=e121]:
+          - generic [ref=e122]: Premium Bid
+          - generic [ref=e123]: 8%
+          - generic [ref=e124]: 2 anos
+          - generic [ref=e125]: 16 condados
+      - button "MA Redeemable Deed Massachusetts Premium Bid 16% 6 meses 14 condados" [ref=e126] [cursor=pointer]:
+        - generic [ref=e127]:
+          - generic [ref=e128]: MA
+          - generic [ref=e129]: Redeemable Deed
+        - paragraph [ref=e130]: Massachusetts
+        - generic [ref=e131]:
+          - generic [ref=e132]: Premium Bid
+          - generic [ref=e133]: 16%
+          - generic [ref=e134]: 6 meses
+          - generic [ref=e135]: 14 condados
+      - button "MI Tax Deed Michigan Premium Bid 83 condados" [ref=e136] [cursor=pointer]:
+        - generic [ref=e137]:
+          - generic [ref=e138]: MI
+          - generic [ref=e139]: Tax Deed
+        - paragraph [ref=e140]: Michigan
+        - generic [ref=e141]:
+          - generic [ref=e142]: Premium Bid
+          - generic [ref=e143]: 83 condados
+      - button "MN Tax Deed Minnesota Premium Bid 87 condados" [ref=e144] [cursor=pointer]:
+        - generic [ref=e145]:
+          - generic [ref=e146]: MN
+          - generic [ref=e147]: Tax Deed
+        - paragraph [ref=e148]: Minnesota
+        - generic [ref=e149]:
+          - generic [ref=e150]: Premium Bid
+          - generic [ref=e151]: 87 condados
+      - button "NV Tax Lien e Tax Deed Nevada Premium Bid 12% até 2 anos 17 condados" [ref=e152] [cursor=pointer]:
+        - generic [ref=e153]:
+          - generic [ref=e154]: NV
+          - generic [ref=e155]: Tax Lien e Tax Deed
+        - paragraph [ref=e156]: Nevada
+        - generic [ref=e157]:
+          - generic [ref=e158]: Premium Bid
+          - generic [ref=e159]: 12%
+          - generic [ref=e160]: até 2 anos
+          - generic [ref=e161]: 17 condados
+      - button "NH Tax Deed New Hampshire Premium Bid 10 condados" [ref=e162] [cursor=pointer]:
+        - generic [ref=e163]:
+          - generic [ref=e164]: NH
+          - generic [ref=e165]: Tax Deed
+        - paragraph [ref=e166]: New Hampshire
+        - generic [ref=e167]:
+          - generic [ref=e168]: Premium Bid
+          - generic [ref=e169]: 10 condados
+      - button "NM Tax Deed New Mexico Premium Bid 33 condados" [ref=e170] [cursor=pointer]:
+        - generic [ref=e171]:
+          - generic [ref=e172]: NM
+          - generic [ref=e173]: Tax Deed
+        - paragraph [ref=e174]: New Mexico
+        - generic [ref=e175]:
+          - generic [ref=e176]: Premium Bid
+          - generic [ref=e177]: 33 condados
+      - button "NY Tax Lien e Tax Deed New York Auction 20% (lien) 2 anos (lien) 58 condados" [ref=e178] [cursor=pointer]:
+        - generic [ref=e179]:
+          - generic [ref=e180]: NY
+          - generic [ref=e181]: Tax Lien e Tax Deed
+        - paragraph [ref=e182]: New York
+        - generic [ref=e183]:
+          - generic [ref=e184]: Auction
+          - generic [ref=e185]: 20% (lien)
+          - generic [ref=e186]: 2 anos (lien)
+          - generic [ref=e187]: 58 condados
+      - button "NC Tax Deed North Carolina Premium Bid 100 condados" [ref=e188] [cursor=pointer]:
+        - generic [ref=e189]:
+          - generic [ref=e190]: NC
+          - generic [ref=e191]: Tax Deed
+        - paragraph [ref=e192]: North Carolina
+        - generic [ref=e193]:
+          - generic [ref=e194]: Premium Bid
+          - generic [ref=e195]: 100 condados
+      - button "ND Tax Deed North Dakota Premium Bid 53 condados" [ref=e196] [cursor=pointer]:
+        - generic [ref=e197]:
+          - generic [ref=e198]: ND
+          - generic [ref=e199]: Tax Deed
+        - paragraph [ref=e200]: North Dakota
+        - generic [ref=e201]:
+          - generic [ref=e202]: Premium Bid
+          - generic [ref=e203]: 53 condados
+      - button "OH Tax Lien e Tax Deed Ohio Auction 18% 1 ano 88 condados" [ref=e204] [cursor=pointer]:
+        - generic [ref=e205]:
+          - generic [ref=e206]: OH
+          - generic [ref=e207]: Tax Lien e Tax Deed
+        - paragraph [ref=e208]: Ohio
+        - generic [ref=e209]:
+          - generic [ref=e210]: Auction
+          - generic [ref=e211]: 18%
+          - generic [ref=e212]: 1 ano
+          - generic [ref=e213]: 88 condados
+      - button "OK Tax Deed Oklahoma Premium Bid 77 condados" [ref=e214] [cursor=pointer]:
+        - generic [ref=e215]:
+          - generic [ref=e216]: OK
+          - generic [ref=e217]: Tax Deed
+        - paragraph [ref=e218]: Oklahoma
+        - generic [ref=e219]:
+          - generic [ref=e220]: Premium Bid
+          - generic [ref=e221]: 77 condados
+      - button "OR Tax Deed Oregon Premium Bid 36 condados" [ref=e222] [cursor=pointer]:
+        - generic [ref=e223]:
+          - generic [ref=e224]: OR
+          - generic [ref=e225]: Tax Deed
+        - paragraph [ref=e226]: Oregon
+        - generic [ref=e227]:
+          - generic [ref=e228]: Premium Bid
+          - generic [ref=e229]: 36 condados
+      - button "PA Tax Deed Pennsylvania Premium Bid 67 condados" [ref=e230] [cursor=pointer]:
+        - generic [ref=e231]:
+          - generic [ref=e232]: PA
+          - generic [ref=e233]: Tax Deed
+        - paragraph [ref=e234]: Pennsylvania
+        - generic [ref=e235]:
+          - generic [ref=e236]: Premium Bid
+          - generic [ref=e237]: 67 condados
+      - button "RI Redeemable Deed Rhode Island Bid Down 16% 1 ano 5 condados" [ref=e238] [cursor=pointer]:
+        - generic [ref=e239]:
+          - generic [ref=e240]: RI
+          - generic [ref=e241]: Redeemable Deed
+        - paragraph [ref=e242]: Rhode Island
+        - generic [ref=e243]:
+          - generic [ref=e244]: Bid Down
+          - generic [ref=e245]: 16%
+          - generic [ref=e246]: 1 ano
+          - generic [ref=e247]: 5 condados
+      - button "SD Tax Deed South Dakota Premium Bid 66 condados" [ref=e248] [cursor=pointer]:
+        - generic [ref=e249]:
+          - generic [ref=e250]: SD
+          - generic [ref=e251]: Tax Deed
+        - paragraph [ref=e252]: South Dakota
+        - generic [ref=e253]:
+          - generic [ref=e254]: Premium Bid
+          - generic [ref=e255]: 66 condados
+      - button "TN Redeemable Deed Tennessee Premium Bid 10% 1 ano 95 condados" [ref=e256] [cursor=pointer]:
+        - generic [ref=e257]:
+          - generic [ref=e258]: TN
+          - generic [ref=e259]: Redeemable Deed
+        - paragraph [ref=e260]: Tennessee
+        - generic [ref=e261]:
+          - generic [ref=e262]: Premium Bid
+          - generic [ref=e263]: 10%
+          - generic [ref=e264]: 1 ano
+          - generic [ref=e265]: 95 condados
+      - button "TX Redeemable Deed Texas Premium Bid 25%–50% 6 meses–2 anos 254 condados" [ref=e266] [cursor=pointer]:
+        - generic [ref=e267]:
+          - generic [ref=e268]: TX
+          - generic [ref=e269]: Redeemable Deed
+        - paragraph [ref=e270]: Texas
+        - generic [ref=e271]:
+          - generic [ref=e272]: Premium Bid
+          - generic [ref=e273]: 25%–50%
+          - generic [ref=e274]: 6 meses–2 anos
+          - generic [ref=e275]: 254 condados
+      - button "UT Tax Deed Utah Premium Bid 29 condados" [ref=e276] [cursor=pointer]:
+        - generic [ref=e277]:
+          - generic [ref=e278]: UT
+          - generic [ref=e279]: Tax Deed
+        - paragraph [ref=e280]: Utah
+        - generic [ref=e281]:
+          - generic [ref=e282]: Premium Bid
+          - generic [ref=e283]: 29 condados
+      - button "VA Tax Deed Virginia Premium Bid 95 condados" [ref=e284] [cursor=pointer]:
+        - generic [ref=e285]:
+          - generic [ref=e286]: VA
+          - generic [ref=e287]: Tax Deed
+        - paragraph [ref=e288]: Virginia
+        - generic [ref=e289]:
+          - generic [ref=e290]: Premium Bid
+          - generic [ref=e291]: 95 condados
+      - button "WA Tax Deed Washington Premium Bid 39 condados" [ref=e292] [cursor=pointer]:
+        - generic [ref=e293]:
+          - generic [ref=e294]: WA
+          - generic [ref=e295]: Tax Deed
+        - paragraph [ref=e296]: Washington
+        - generic [ref=e297]:
+          - generic [ref=e298]: Premium Bid
+          - generic [ref=e299]: 39 condados
+      - button "WI Tax Deed Wisconsin Premium Bid 72 condados" [ref=e300] [cursor=pointer]:
+        - generic [ref=e301]:
+          - generic [ref=e302]: WI
+          - generic [ref=e303]: Tax Deed
+        - paragraph [ref=e304]: Wisconsin
+        - generic [ref=e305]:
+          - generic [ref=e306]: Premium Bid
+          - generic [ref=e307]: 72 condados

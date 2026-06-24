@@ -9,6 +9,7 @@ const translations = {
     nav_favorites: 'Favoritos',
     nav_alerts: 'Alertas',
     nav_counties: 'Condados',
+    nav_dashboard: 'Dashboard',
     nav_login: 'Entrar',
     nav_logout: 'Sair',
     // FilterBar
@@ -80,6 +81,7 @@ const translations = {
     nav_favorites: 'Favorites',
     nav_alerts: 'Alerts',
     nav_counties: 'Counties',
+    nav_dashboard: 'Dashboard',
     nav_login: 'Login',
     nav_logout: 'Logout',
     filter_state: 'State',
@@ -147,6 +149,7 @@ const translations = {
     nav_favorites: 'Favoritos',
     nav_alerts: 'Alertas',
     nav_counties: 'Condados',
+    nav_dashboard: 'Dashboard',
     nav_login: 'Ingresar',
     nav_logout: 'Salir',
     filter_state: 'Estado',

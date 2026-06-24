@@ -1,0 +1,13 @@
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - link "Tax Deed Finder" [ref=e4] [cursor=pointer]:
+      - /url: /
+    - link "Busca" [ref=e5] [cursor=pointer]:
+      - /url: /
+    - link "Favoritos" [ref=e6] [cursor=pointer]:
+      - /url: /favorites
+    - link "Alertas" [ref=e7] [cursor=pointer]:
+      - /url: /alerts
+    - link "Entrar" [ref=e9] [cursor=pointer]:
+      - /url: /auth
+  - generic [ref=e10]: Loading…

@@ -1,0 +1,529 @@
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - link "★ Tax Deed Finder" [ref=e4] [cursor=pointer]:
+      - /url: /
+    - link "Busca" [ref=e5] [cursor=pointer]:
+      - /url: /
+    - link "Favoritos" [ref=e6] [cursor=pointer]:
+      - /url: /favorites
+    - link "Alertas" [ref=e7] [cursor=pointer]:
+      - /url: /alerts
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - button "🇧🇷 PT" [ref=e10] [cursor=pointer]
+        - button "🇺🇸 EN" [ref=e11] [cursor=pointer]
+        - button "🇪🇸 ES" [ref=e12] [cursor=pointer]
+      - link "Entrar" [ref=e13] [cursor=pointer]:
+        - /url: /auth
+  - generic [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e16]:
+        - generic [ref=e17]: Estado
+        - combobox [ref=e18]:
+          - option "Todos"
+          - option "FL" [selected]
+          - option "TX"
+          - option "GA"
+      - generic [ref=e19]:
+        - generic [ref=e20]: Condado
+        - combobox [ref=e21]:
+          - option "Todos" [selected]
+          - option "Alachua"
+          - option "Bay"
+          - option "Brevard"
+          - option "Broward"
+          - option "Calhoun"
+          - option "Citrus"
+          - option "Clay"
+          - option "Dallas"
+          - option "Duval"
+          - option "Flagler"
+          - option "Fulton"
+          - option "Hillsborough"
+          - option "Indian River"
+          - option "Jackson"
+          - option "Lee"
+          - option "Leon"
+          - option "Manatee"
+          - option "Marion"
+          - option "Martin"
+          - option "Miami-Dade"
+          - option "Okeechobee"
+          - option "Orange"
+          - option "Palm Beach"
+          - option "Pasco"
+          - option "Pinellas"
+          - option "Polk"
+          - option "Putnam"
+          - option "Santa Rosa"
+          - option "Seminole"
+          - option "St. Lucie"
+          - option "Washington"
+      - generic [ref=e22]:
+        - generic [ref=e23]: Tipo
+        - combobox [ref=e24]:
+          - option "Todos" [selected]
+          - option "Tax Deed"
+          - option "Tax Lien"
+          - option "Foreclosure"
+      - generic [ref=e25]:
+        - generic [ref=e26]: Imóvel
+        - combobox [ref=e27]:
+          - option "Todos" [selected]
+          - option "Residencial"
+          - option "Comercial"
+          - option "Terreno"
+      - generic [ref=e28]:
+        - generic [ref=e29]: Lance mín. ($)
+        - spinbutton [ref=e30]
+      - generic [ref=e31]:
+        - generic [ref=e32]: Lance máx. ($)
+        - spinbutton [ref=e33]
+      - button "Buscar" [ref=e60] [cursor=pointer]
+    - generic [ref=e35]:
+      - generic [ref=e36]:
+        - paragraph [ref=e37]: 169 resultados
+        - generic [ref=e61]:
+          - generic [ref=e62]:
+            - generic [ref=e63]:
+              - generic [ref=e64]: Tax Deed
+              - link "5678 Lake Ave, Orlando, FL 32803" [ref=e65] [cursor=pointer]:
+                - /url: /auctions/7759d2b6-6e01-4b66-a1ea-6d6d5f727330
+              - paragraph [ref=e66]: Orange, FL
+            - button "☆" [ref=e67] [cursor=pointer]
+          - generic [ref=e68]:
+            - generic [ref=e69]:
+              - text: Lance Mín.
+              - paragraph [ref=e70]: $32.000
+            - generic [ref=e71]:
+              - text: Avaliado
+              - paragraph [ref=e72]: $75.000
+            - generic [ref=e73]:
+              - text: Data
+              - paragraph [ref=e74]: 2026-07-08
+            - generic [ref=e75]:
+              - text: Imóvel
+              - paragraph [ref=e76]: residential
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e79]:
+              - generic [ref=e80]: Tax Deed
+              - link "9012 Pine St, Apopka, FL 32703" [ref=e81] [cursor=pointer]:
+                - /url: /auctions/0bbd6e36-6e10-4349-a4ef-508af81b04c9
+              - paragraph [ref=e82]: Orange, FL
+            - button "☆" [ref=e83] [cursor=pointer]
+          - generic [ref=e84]:
+            - generic [ref=e85]:
+              - text: Lance Mín.
+              - paragraph [ref=e86]: $18.500
+            - generic [ref=e87]:
+              - text: Avaliado
+              - paragraph [ref=e88]: $42.000
+            - generic [ref=e89]:
+              - text: Data
+              - paragraph [ref=e90]: 2026-07-15
+            - generic [ref=e91]:
+              - text: Imóvel
+              - paragraph [ref=e92]: land
+        - generic [ref=e93]:
+          - generic [ref=e94]:
+            - generic [ref=e95]:
+              - generic [ref=e96]: Tax Deed
+              - link "3456 Oak Dr, Winter Park, FL 32789" [ref=e97] [cursor=pointer]:
+                - /url: /auctions/90b4d7bc-9ae2-4d7c-aae5-2025e558c11a
+              - paragraph [ref=e98]: Orange, FL
+            - button "☆" [ref=e99] [cursor=pointer]
+          - generic [ref=e100]:
+            - generic [ref=e101]:
+              - text: Lance Mín.
+              - paragraph [ref=e102]: $89.000
+            - generic [ref=e103]:
+              - text: Avaliado
+              - paragraph [ref=e104]: $145.000
+            - generic [ref=e105]:
+              - text: Data
+              - paragraph [ref=e106]: 2026-07-15
+            - generic [ref=e107]:
+              - text: Imóvel
+              - paragraph [ref=e108]: residential
+        - generic [ref=e109]:
+          - generic [ref=e110]:
+            - generic [ref=e111]:
+              - generic [ref=e112]: Tax Deed
+              - link "7890 Main St, Kissimmee, FL 34741" [ref=e113] [cursor=pointer]:
+                - /url: /auctions/af1eb225-bc81-46ec-9fe9-5a74b9fb77f5
+              - paragraph [ref=e114]: Orange, FL
+            - button "☆" [ref=e115] [cursor=pointer]
+          - generic [ref=e116]:
+            - generic [ref=e117]:
+              - text: Lance Mín.
+              - paragraph [ref=e118]: $125.000
+            - generic [ref=e119]:
+              - text: Avaliado
+              - paragraph [ref=e120]: $230.000
+            - generic [ref=e121]:
+              - text: Data
+              - paragraph [ref=e122]: 2026-07-22
+            - generic [ref=e123]:
+              - text: Imóvel
+              - paragraph [ref=e124]: commercial
+        - generic [ref=e125]:
+          - generic [ref=e126]:
+            - generic [ref=e127]:
+              - generic [ref=e128]: Tax Deed
+              - link "222 NW 7th Ave, Miami, FL 33128" [ref=e129] [cursor=pointer]:
+                - /url: /auctions/4f8ca0bd-f457-4a19-90c7-d7d071c70c1c
+              - paragraph [ref=e130]: Miami-Dade, FL
+            - button "☆" [ref=e131] [cursor=pointer]
+          - generic [ref=e132]:
+            - generic [ref=e133]:
+              - text: Lance Mín.
+              - paragraph [ref=e134]: $67.000
+            - generic [ref=e135]:
+              - text: Avaliado
+              - paragraph [ref=e136]: $115.000
+            - generic [ref=e137]:
+              - text: Data
+              - paragraph [ref=e138]: 2026-07-10
+            - generic [ref=e139]:
+              - text: Imóvel
+              - paragraph [ref=e140]: residential
+        - generic [ref=e141]:
+          - generic [ref=e142]:
+            - generic [ref=e143]:
+              - generic [ref=e144]: Tax Deed
+              - link "4500 NE 2nd Ave, Miami, FL 33137" [ref=e145] [cursor=pointer]:
+                - /url: /auctions/f27441de-267b-4044-ae71-ff4ce9fa1e70
+              - paragraph [ref=e146]: Miami-Dade, FL
+            - button "☆" [ref=e147] [cursor=pointer]
+          - generic [ref=e148]:
+            - generic [ref=e149]:
+              - text: Lance Mín.
+              - paragraph [ref=e150]: $210.000
+            - generic [ref=e151]:
+              - text: Avaliado
+              - paragraph [ref=e152]: $380.000
+            - generic [ref=e153]:
+              - text: Data
+              - paragraph [ref=e154]: 2026-07-10
+            - generic [ref=e155]:
+              - text: Imóvel
+              - paragraph [ref=e156]: commercial
+        - generic [ref=e157]:
+          - generic [ref=e158]:
+            - generic [ref=e159]:
+              - generic [ref=e160]: Tax Deed
+              - link "8800 SW 40th St, Miami, FL 33165" [ref=e161] [cursor=pointer]:
+                - /url: /auctions/2b8c23ff-3ba3-4096-81bb-52dafa0a81a8
+              - paragraph [ref=e162]: Miami-Dade, FL
+            - button "☆" [ref=e163] [cursor=pointer]
+          - generic [ref=e164]:
+            - generic [ref=e165]:
+              - text: Lance Mín.
+              - paragraph [ref=e166]: $55.000
+            - generic [ref=e167]:
+              - text: Avaliado
+              - paragraph [ref=e168]: $95.000
+            - generic [ref=e169]:
+              - text: Data
+              - paragraph [ref=e170]: 2026-07-17
+            - generic [ref=e171]:
+              - text: Imóvel
+              - paragraph [ref=e172]: residential
+        - generic [ref=e173]:
+          - generic [ref=e174]:
+            - generic [ref=e175]:
+              - generic [ref=e176]: Tax Deed
+              - link "120 Collins Ave, Miami Beach, FL 33139" [ref=e177] [cursor=pointer]:
+                - /url: /auctions/a27972c0-e4e9-47d9-9ac0-f8bc833b03c6
+              - paragraph [ref=e178]: Miami-Dade, FL
+            - button "☆" [ref=e179] [cursor=pointer]
+          - generic [ref=e180]:
+            - generic [ref=e181]:
+              - text: Lance Mín.
+              - paragraph [ref=e182]: $310.000
+            - generic [ref=e183]:
+              - text: Avaliado
+              - paragraph [ref=e184]: $520.000
+            - generic [ref=e185]:
+              - text: Data
+              - paragraph [ref=e186]: 2026-07-24
+            - generic [ref=e187]:
+              - text: Imóvel
+              - paragraph [ref=e188]: residential
+        - generic [ref=e189]:
+          - generic [ref=e190]:
+            - generic [ref=e191]:
+              - generic [ref=e192]: Foreclosure
+              - link "2345 Elm St, Dallas, TX 75201" [ref=e193] [cursor=pointer]:
+                - /url: /auctions/714ff71e-fa08-403b-a39a-35e81baec4fd
+              - paragraph [ref=e194]: Dallas, TX
+            - button "☆" [ref=e195] [cursor=pointer]
+          - generic [ref=e196]:
+            - generic [ref=e197]:
+              - text: Lance Mín.
+              - paragraph [ref=e198]: $78.000
+            - generic [ref=e199]:
+              - text: Avaliado
+              - paragraph [ref=e200]: $142.000
+            - generic [ref=e201]:
+              - text: Data
+              - paragraph [ref=e202]: 2026-07-01
+            - generic [ref=e203]:
+              - text: Imóvel
+              - paragraph [ref=e204]: residential
+        - generic [ref=e205]:
+          - generic [ref=e206]:
+            - generic [ref=e207]:
+              - generic [ref=e208]: Foreclosure
+              - link "6789 Commerce St, Dallas, TX 75202" [ref=e209] [cursor=pointer]:
+                - /url: /auctions/44380528-6a2b-4e12-b22d-28456c1ca9c1
+              - paragraph [ref=e210]: Dallas, TX
+            - button "☆" [ref=e211] [cursor=pointer]
+          - generic [ref=e212]:
+            - generic [ref=e213]:
+              - text: Lance Mín.
+              - paragraph [ref=e214]: $195.000
+            - generic [ref=e215]:
+              - text: Avaliado
+              - paragraph [ref=e216]: $310.000
+            - generic [ref=e217]:
+              - text: Data
+              - paragraph [ref=e218]: 2026-07-01
+            - generic [ref=e219]:
+              - text: Imóvel
+              - paragraph [ref=e220]: commercial
+        - generic [ref=e221]:
+          - generic [ref=e222]:
+            - generic [ref=e223]:
+              - generic [ref=e224]: Foreclosure
+              - link "1011 Ross Ave, Dallas, TX 75204" [ref=e225] [cursor=pointer]:
+                - /url: /auctions/45ae5540-0dda-49a5-98a2-8e7464c8846f
+              - paragraph [ref=e226]: Dallas, TX
+            - button "☆" [ref=e227] [cursor=pointer]
+          - generic [ref=e228]:
+            - generic [ref=e229]:
+              - text: Lance Mín.
+              - paragraph [ref=e230]: $62.000
+            - generic [ref=e231]:
+              - text: Avaliado
+              - paragraph [ref=e232]: $108.000
+            - generic [ref=e233]:
+              - text: Data
+              - paragraph [ref=e234]: 2026-07-01
+            - generic [ref=e235]:
+              - text: Imóvel
+              - paragraph [ref=e236]: residential
+        - generic [ref=e237]:
+          - generic [ref=e238]:
+            - generic [ref=e239]:
+              - generic [ref=e240]: Foreclosure
+              - link "3344 Live Oak St, Dallas, TX 75204" [ref=e241] [cursor=pointer]:
+                - /url: /auctions/424f4eef-61c7-4b16-8ee0-2d223ad86339
+              - paragraph [ref=e242]: Dallas, TX
+            - button "☆" [ref=e243] [cursor=pointer]
+          - generic [ref=e244]:
+            - generic [ref=e245]:
+              - text: Lance Mín.
+              - paragraph [ref=e246]: $48.500
+            - generic [ref=e247]:
+              - text: Avaliado
+              - paragraph [ref=e248]: $89.000
+            - generic [ref=e249]:
+              - text: Data
+              - paragraph [ref=e250]: 2026-07-08
+            - generic [ref=e251]:
+              - text: Imóvel
+              - paragraph [ref=e252]: residential
+        - generic [ref=e253]:
+          - generic [ref=e254]:
+            - generic [ref=e255]:
+              - generic [ref=e256]: Foreclosure
+              - link "500 N Akard St, Dallas, TX 75201" [ref=e257] [cursor=pointer]:
+                - /url: /auctions/672d5994-a57b-42c8-aa3e-c024fbd1eecb
+              - paragraph [ref=e258]: Dallas, TX
+            - button "☆" [ref=e259] [cursor=pointer]
+          - generic [ref=e260]:
+            - generic [ref=e261]:
+              - text: Lance Mín.
+              - paragraph [ref=e262]: $425.000
+            - generic [ref=e263]:
+              - text: Avaliado
+              - paragraph [ref=e264]: $780.000
+            - generic [ref=e265]:
+              - text: Data
+              - paragraph [ref=e266]: 2026-07-08
+            - generic [ref=e267]:
+              - text: Imóvel
+              - paragraph [ref=e268]: commercial
+        - generic [ref=e269]:
+          - generic [ref=e270]:
+            - generic [ref=e271]:
+              - generic [ref=e272]: Foreclosure
+              - link "7788 Gaston Ave, Dallas, TX 75214" [ref=e273] [cursor=pointer]:
+                - /url: /auctions/1099f2b2-7457-4fd5-9da1-8a5cadc8e391
+              - paragraph [ref=e274]: Dallas, TX
+            - button "☆" [ref=e275] [cursor=pointer]
+          - generic [ref=e276]:
+            - generic [ref=e277]:
+              - text: Lance Mín.
+              - paragraph [ref=e278]: $91.000
+            - generic [ref=e279]:
+              - text: Avaliado
+              - paragraph [ref=e280]: $160.000
+            - generic [ref=e281]:
+              - text: Data
+              - paragraph [ref=e282]: 2026-07-15
+            - generic [ref=e283]:
+              - text: Imóvel
+              - paragraph [ref=e284]: residential
+        - generic [ref=e285]:
+          - generic [ref=e286]:
+            - generic [ref=e287]:
+              - generic [ref=e288]: Tax Deed
+              - link "100 Peachtree St NW, Atlanta, GA 30303" [ref=e289] [cursor=pointer]:
+                - /url: /auctions/f8cacb2a-28f3-42ba-b438-14641d416c91
+              - paragraph [ref=e290]: Fulton, GA
+            - button "☆" [ref=e291] [cursor=pointer]
+          - generic [ref=e292]:
+            - generic [ref=e293]:
+              - text: Lance Mín.
+              - paragraph [ref=e294]: $285.000
+            - generic [ref=e295]:
+              - text: Avaliado
+              - paragraph [ref=e296]: $490.000
+            - generic [ref=e297]:
+              - text: Data
+              - paragraph [ref=e298]: 2026-07-14
+            - generic [ref=e299]:
+              - text: Imóvel
+              - paragraph [ref=e300]: commercial
+        - generic [ref=e301]:
+          - generic [ref=e302]:
+            - generic [ref=e303]:
+              - generic [ref=e304]: Tax Lien
+              - link "456 Auburn Ave NE, Atlanta, GA 30312" [ref=e305] [cursor=pointer]:
+                - /url: /auctions/afd910ee-8ca1-494d-be10-7ceedb8cadfe
+              - paragraph [ref=e306]: Fulton, GA
+            - button "☆" [ref=e307] [cursor=pointer]
+          - generic [ref=e308]:
+            - generic [ref=e309]:
+              - text: Lance Mín.
+              - paragraph [ref=e310]: $38.000
+            - generic [ref=e311]:
+              - text: Avaliado
+              - paragraph [ref=e312]: $72.000
+            - generic [ref=e313]:
+              - text: Data
+              - paragraph [ref=e314]: 2026-07-14
+            - generic [ref=e315]:
+              - text: Imóvel
+              - paragraph [ref=e316]: residential
+        - generic [ref=e317]:
+          - generic [ref=e318]:
+            - generic [ref=e319]:
+              - generic [ref=e320]: Tax Lien
+              - link "321 Memorial Dr SE, Atlanta, GA 30316" [ref=e321] [cursor=pointer]:
+                - /url: /auctions/da3e0127-a41d-432f-911a-e1cfe9d814b1
+              - paragraph [ref=e322]: Fulton, GA
+            - button "☆" [ref=e323] [cursor=pointer]
+          - generic [ref=e324]:
+            - generic [ref=e325]:
+              - text: Lance Mín.
+              - paragraph [ref=e326]: $15.000
+            - generic [ref=e327]:
+              - text: Avaliado
+              - paragraph [ref=e328]: $28.000
+            - generic [ref=e329]:
+              - text: Data
+              - paragraph [ref=e330]: 2026-07-21
+            - generic [ref=e331]:
+              - text: Imóvel
+              - paragraph [ref=e332]: land
+        - generic [ref=e333]:
+          - generic [ref=e334]:
+            - generic [ref=e335]:
+              - generic [ref=e336]: Tax Deed
+              - link "1600 Northside Dr NW, Atlanta, GA 30318" [ref=e337] [cursor=pointer]:
+                - /url: /auctions/c23d202f-5bb1-4f15-a7f8-59bc813853e1
+              - paragraph [ref=e338]: Fulton, GA
+            - button "☆" [ref=e339] [cursor=pointer]
+          - generic [ref=e340]:
+            - generic [ref=e341]:
+              - text: Lance Mín.
+              - paragraph [ref=e342]: $74.000
+            - generic [ref=e343]:
+              - text: Avaliado
+              - paragraph [ref=e344]: $128.000
+            - generic [ref=e345]:
+              - text: Data
+              - paragraph [ref=e346]: 2026-07-21
+            - generic [ref=e347]:
+              - text: Imóvel
+              - paragraph [ref=e348]: residential
+        - generic [ref=e349]:
+          - generic [ref=e350]:
+            - generic [ref=e351]:
+              - generic [ref=e352]: Tax Deed
+              - link "1234 Sunset Blvd, Orlando, FL 32801" [ref=e353] [cursor=pointer]:
+                - /url: /auctions/84bbfb3d-3cf3-4966-9b71-9c591d3a0f7d
+              - paragraph [ref=e354]: Orange, FL
+            - button "☆" [ref=e355] [cursor=pointer]
+          - generic [ref=e356]:
+            - generic [ref=e357]:
+              - text: Lance Mín.
+              - paragraph [ref=e358]: $45.000
+            - generic [ref=e359]:
+              - text: Avaliado
+              - paragraph [ref=e360]: $98.000
+            - generic [ref=e361]:
+              - text: Data
+              - paragraph [ref=e362]: 2026-07-08
+            - generic [ref=e363]:
+              - text: Imóvel
+              - paragraph [ref=e364]: residential
+        - generic [ref=e365]:
+          - generic [ref=e366]:
+            - generic [ref=e367]:
+              - generic [ref=e368]: Tax Deed
+              - link "789 Cascade Rd SW, Atlanta, GA 30310" [ref=e369] [cursor=pointer]:
+                - /url: /auctions/173469b6-7f28-4c7d-908f-f94ba5209868
+              - paragraph [ref=e370]: Fulton, GA
+            - button "☆" [ref=e371] [cursor=pointer]
+          - generic [ref=e372]:
+            - generic [ref=e373]:
+              - text: Lance Mín.
+              - paragraph [ref=e374]: $52.000
+            - generic [ref=e375]:
+              - text: Avaliado
+              - paragraph [ref=e376]: $93.000
+            - generic [ref=e377]:
+              - text: Data
+              - paragraph [ref=e378]: 2026-07-14
+            - generic [ref=e379]:
+              - text: Imóvel
+              - paragraph [ref=e380]: residential
+        - generic [ref=e381]:
+          - button "Anterior" [disabled] [ref=e382]
+          - generic [ref=e383]: 1 / 9
+          - button "Próximo" [ref=e384] [cursor=pointer]
+      - generic [ref=e39]:
+        - generic:
+          - generic:
+            - img
+        - generic:
+          - generic [ref=e40]:
+            - button "Zoom in" [ref=e41] [cursor=pointer]: +
+            - button "Zoom out" [ref=e42] [cursor=pointer]: −
+          - generic [ref=e43]:
+            - link "Leaflet" [ref=e44] [cursor=pointer]:
+              - /url: https://leafletjs.com
+              - img [ref=e45]
+              - text: Leaflet
+            - text: "| ©"
+            - link "OpenStreetMap" [ref=e49] [cursor=pointer]:
+              - /url: https://www.openstreetmap.org/copyright
+        - generic [ref=e50]:
+          - generic [ref=e53]: Tax Deed
+          - generic [ref=e56]: Tax Lien
+          - generic [ref=e59]: Foreclosure

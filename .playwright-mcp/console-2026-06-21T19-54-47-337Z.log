@@ -1,0 +1,12 @@
+[      53ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/chunk-PJEEZAML.js?v=932984aa:21550
+[      64ms] [WARNING] ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition. @ http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b236fe48:4426
+[      64ms] [WARNING] ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath. @ http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=b236fe48:4426
+[     627ms] [ERROR] Access to XMLHttpRequest at 'http://localhost:8000/auctions/counties' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://localhost:5173/:0
+[     628ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://localhost:8000/auctions/counties:0
+[     629ms] [ERROR] Access to XMLHttpRequest at 'http://localhost:8000/auctions?page=1&page_size=20' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://localhost:5173/:0
+[     629ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://localhost:8000/auctions?page=1&page_size=20:0
+[     631ms] AxiosError: Network Error
+    at XMLHttpRequest.handleError (http://localhost:5173/node_modules/.vite/deps/axios.js?v=509c9790:2013:19)
+    at Axios.request (http://localhost:5173/node_modules/.vite/deps/axios.js?v=509c9790:2898:41)
+    at async Object.getAuctions (http://localhost:5173/src/lib/api.ts?t=1782060302909:17:22)
+    at async http://localhost:5173/src/pages/Search.tsx?t=1782071296557:63:22

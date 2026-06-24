@@ -26,7 +26,7 @@ export default function Navbar() {
         ★ BidLand
       </Link>
       {session && (
-        <Link to="/dashboard" className="text-blue-200 hover:text-white text-sm transition-colors">Dashboard</Link>
+        <Link to="/dashboard" className="text-blue-200 hover:text-white text-sm transition-colors">{t.nav_dashboard}</Link>
       )}
       <Link to="/search" className="text-blue-200 hover:text-white text-sm transition-colors">{t.nav_search}</Link>
       <Link to="/favorites" className="text-blue-200 hover:text-white text-sm transition-colors">{t.nav_favorites}</Link>
