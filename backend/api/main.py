@@ -2,7 +2,7 @@ import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.routes import auctions, favorites, alerts, flood_zone
+from api.routes import auctions, favorites, alerts, flood_zone, stats
 from scheduler import create_scheduler
 
 @asynccontextmanager
@@ -27,6 +27,7 @@ app.include_router(auctions.router, prefix="/auctions", tags=["auctions"])
 app.include_router(favorites.router, prefix="/favorites", tags=["favorites"])
 app.include_router(alerts.router, prefix="/alerts", tags=["alerts"])
 app.include_router(flood_zone.router, prefix="/flood-zone", tags=["flood-zone"])
+app.include_router(stats.router, prefix="/stats", tags=["stats"])
 
 @app.get("/health")
 def health():
