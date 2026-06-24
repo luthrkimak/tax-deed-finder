@@ -18,7 +18,7 @@ def create_favorite(body: FavoriteCreate, user_id: str = Depends(get_current_use
 @router.get("")
 def list_favorites(user_id: str = Depends(get_current_user)):
     sb = get_supabase()
-    result = sb.table("favorites").select("*, auctions(*)").eq("user_id", user_id).execute()
+    result = sb.table("favorites").select("*, auction:auctions(*)").eq("user_id", user_id).execute()
     return result.data
 
 @router.patch("/{favorite_id}")
