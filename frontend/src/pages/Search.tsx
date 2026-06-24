@@ -32,6 +32,7 @@ export default function Search() {
   const [loading, setLoading] = useState(false)
   const initialFilters = useMemo(() => paramsToFilters(searchParams), [])  // eslint-disable-line react-hooks/exhaustive-deps
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set())
+  const [favError, setFavError] = useState<string | null>(null)
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -79,13 +80,13 @@ export default function Search() {
   useEffect(() => { search(initialFilters) }, [])  // eslint-disable-line react-hooks/exhaustive-deps
 
   async function toggleFavorite(auction: Auction) {
-    // Check session at click time — avoids stale isLoggedIn state
-    const { data } = await supabase.auth.getSession()
-    if (!data.session) {
-      navigate('/auth')
-      return
-    }
+    setFavError(null)
     try {
+      const { data } = await supabase.auth.getSession()
+      if (!data.session) {
+        navigate('/auth')
+        return
+      }
       if (favoriteIds.has(auction.id)) {
         const favs = await apiClient.listFavorites()
         const fav = favs.find(f => f.auction_id === auction.id)
@@ -99,12 +100,12 @@ export default function Search() {
       }
     } catch (err: unknown) {
       const status = (err as { response?: { status?: number } })?.response?.status
+      console.error('toggleFavorite error:', err)
       if (status === 401 || status === 403) {
-        alert('Sessão expirada. Faça login novamente.')
-        navigate('/auth')
+        setFavError('Sessão expirada. Faça login novamente.')
+        setTimeout(() => navigate('/auth'), 2000)
       } else {
-        alert(`Erro ao salvar favorito (${status ?? 'rede'}). Tente novamente.`)
-        console.error('toggleFavorite error:', err)
+        setFavError(`Erro ao salvar favorito (${status ?? 'verifique o console'}).`)
       }
     }
   }
@@ -116,6 +117,11 @@ export default function Search() {
       <FilterBar onSearch={f => search(f, 1)} loading={loading} initialValues={filters} />
       <div className="flex flex-1 overflow-hidden">
         <div className="w-[480px] flex-shrink-0 overflow-y-auto p-4 space-y-3 border-r">
+          {favError && (
+            <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-3 py-2 rounded-lg">
+              {favError}
+            </div>
+          )}
           <p className="text-sm text-gray-500">{total.toLocaleString()} {t.search_results}</p>
           {auctions.map(auction => (
             <AuctionCard
