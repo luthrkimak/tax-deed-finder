@@ -32,11 +32,9 @@ export default function Search() {
   const [loading, setLoading] = useState(false)
   const initialFilters = useMemo(() => paramsToFilters(searchParams), [])  // eslint-disable-line react-hooks/exhaustive-deps
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set())
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      setIsLoggedIn(!!data.session)
       if (data.session) {
         apiClient.listFavorites().then(favs => {
           setFavoriteIds(new Set(favs.map(f => f.auction_id)))
@@ -44,7 +42,6 @@ export default function Search() {
       }
     })
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_, s) => {
-      setIsLoggedIn(!!s)
       if (s) {
         apiClient.listFavorites().then(favs => {
           setFavoriteIds(new Set(favs.map(f => f.auction_id)))
@@ -82,7 +79,9 @@ export default function Search() {
   useEffect(() => { search(initialFilters) }, [])  // eslint-disable-line react-hooks/exhaustive-deps
 
   async function toggleFavorite(auction: Auction) {
-    if (!isLoggedIn) {
+    // Check session at click time — avoids stale isLoggedIn state
+    const { data } = await supabase.auth.getSession()
+    if (!data.session) {
       navigate('/auth')
       return
     }
@@ -104,7 +103,7 @@ export default function Search() {
         alert('Sessão expirada. Faça login novamente.')
         navigate('/auth')
       } else {
-        alert(`Erro ao salvar favorito: ${status ?? 'verifique o console'}`)
+        alert(`Erro ao salvar favorito (${status ?? 'rede'}). Tente novamente.`)
         console.error('toggleFavorite error:', err)
       }
     }
