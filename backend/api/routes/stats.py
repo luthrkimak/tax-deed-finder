@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from datetime import date, timedelta
+from collections import Counter
 from db.client import get_supabase
 
 router = APIRouter()
@@ -15,7 +16,7 @@ def get_stats():
     # All upcoming available auctions
     all_rows = (
         sb.table("auctions")
-        .select("id,county,type,min_bid,assessed_value,auction_date")
+        .select("id,county,type,min_bid,assessed_value,auction_date,address")
         .not_.in_("status", EXCLUDE_STATUSES)
         .gte("auction_date", today)
         .eq("state", "FL")
@@ -31,7 +32,6 @@ def get_stats():
     min_bid_available = min(bids) if bids else None
 
     # Count by county
-    from collections import Counter
     county_counts = Counter(r["county"] for r in all_rows if r.get("county"))
     top_counties = [
         {"county": c, "count": n}
@@ -44,11 +44,11 @@ def get_stats():
     for r in all_rows:
         mb = r.get("min_bid")
         av = r.get("assessed_value")
-        if mb and av and av > 0 and mb < av:
+        if mb is not None and av is not None and av > 0 and mb < av:
             pct = round((1 - mb / av) * 100, 1)
             discounts.append({
                 "id": r["id"],
-                "address": None,  # fetched below
+                "address": r.get("address"),
                 "county": r["county"],
                 "type": r["type"],
                 "auction_date": r["auction_date"],
@@ -58,14 +58,6 @@ def get_stats():
             })
     discounts.sort(key=lambda x: -x["discount_pct"])
     top5 = discounts[:5]
-
-    # Enrich top5 with address
-    if top5:
-        ids = [r["id"] for r in top5]
-        addr_rows = sb.table("auctions").select("id,address").in_("id", ids).execute().data
-        addr_map = {r["id"]: r["address"] for r in addr_rows}
-        for r in top5:
-            r["address"] = addr_map.get(r["id"])
 
     return {
         "total_available": total_available,
