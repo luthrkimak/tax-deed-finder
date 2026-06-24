@@ -71,11 +71,16 @@ export default function AuctionCard({ auction, isFavorited, onToggleFavorite }: 
               try { await onToggleFavorite(auction) } finally { setPending(false) }
             }}
             disabled={pending}
-            style={{ color: isFavorited || pending ? '#ef4444' : undefined }}
-            className="text-xl flex-shrink-0 text-gray-300 hover:text-red-600 transition-colors disabled:opacity-60 p-2 -mr-2"
             title={isFavorited ? 'Remover favorito' : 'Adicionar favorito'}
+            style={{ minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, background: 'none', border: 'none', cursor: 'pointer', padding: 8 }}
           >
-            {pending ? '⟳' : isFavorited ? '★' : '☆'}
+            {pending ? (
+              <span style={{ fontSize: 20, color: '#ef4444' }}>⟳</span>
+            ) : (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill={isFavorited ? '#ef4444' : 'none'} stroke={isFavorited ? '#ef4444' : '#9ca3af'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            )}
           </button>
         )}
       </div>
