@@ -1,22 +1,27 @@
 import os
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from jose import JWTError, jwt
+from supabase import create_client
 
 security = HTTPBearer()
 
 def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
 ) -> str:
-    secret = os.environ.get("SUPABASE_JWT_SECRET")
-    if not secret:
+    """Validate user token via Supabase Auth — no manual JWT secret needed."""
+    url = os.environ.get("SUPABASE_URL")
+    key = os.environ.get("SUPABASE_SERVICE_KEY")
+    if not url or not key:
         raise HTTPException(status_code=503, detail="Auth not configured")
     token = credentials.credentials
     try:
-        payload = jwt.decode(token, secret, algorithms=["HS256"], audience="authenticated")
-        user_id: str = payload.get("sub")
+        sb = create_client(url, key)
+        response = sb.auth.get_user(token)
+        user_id: str = response.user.id if response.user else None
         if not user_id:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
         return user_id
-    except JWTError:
+    except HTTPException:
+        raise
+    except Exception:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
