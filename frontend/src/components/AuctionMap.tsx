@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
@@ -93,25 +93,40 @@ interface Props {
 export default function AuctionMap({ filters }: Props) {
   const [pins, setPins] = useState<PinData[]>([])
   const navigate = useNavigate()
+  const filterKey = JSON.stringify(filters)
+
+  // Read saved viewport synchronously before first render to avoid flash
+  const initialView = useMemo(() => {
+    try {
+      const raw = sessionStorage.getItem(MAP_VIEWPORT_KEY)
+      if (raw) {
+        const saved = JSON.parse(raw)
+        if (saved.filterKey === filterKey) {
+          return { center: [saved.lat, saved.lng] as [number, number], zoom: saved.zoom as number }
+        }
+      }
+    } catch {}
+    return null
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const { page, page_size, date_from, date_to, status, ...mapFilters } = filters
     void page; void page_size; void date_from; void date_to; void status
     apiClient.getPins(mapFilters).then(setPins).catch(() => setPins([]))
-  }, [JSON.stringify(filters)])  // stringify avoids infinite loops from object identity changes
+  }, [filterKey])
 
   return (
     <MapContainer
-      center={[37, -95]}
-      zoom={4}
+      center={initialView?.center ?? [37, -95]}
+      zoom={initialView?.zoom ?? 4}
       style={{ width: '100%', height: '100%' }}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <FitBounds pins={pins} filterKey={JSON.stringify(filters)} />
+      <FitBounds pins={pins} filterKey={filterKey} />
       <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 1000 }}
         className="bg-white rounded-lg shadow px-3 py-1.5 text-xs text-gray-600 font-medium">
         {pins.length.toLocaleString()} propriedades
