@@ -57,13 +57,45 @@ FL_COUNTIES: list[tuple[str, str]] = [
 
 
 # FL counties on realtaxdeed.com (different domain, same RealForeclose platform)
+# These counties hold TAX DEED sales on realtaxdeed.com separately from their
+# foreclosure sales on realforeclose.com — both must be scraped independently.
 FL_TAXDEED_COUNTIES: list[tuple[str, str]] = [
-    ("Hendry",    "hendry"),
-    ("Hernando",  "hernando"),
-    ("Highlands", "highlands"),
-    ("Monroe",    "monroe"),
-    ("Suwannee",  "suwannee"),
-    ("Washington","washington"),
+    # Previously known
+    ("Hendry",        "hendry"),
+    ("Hernando",      "hernando"),
+    ("Highlands",     "highlands"),
+    ("Monroe",        "monroe"),
+    ("Suwannee",      "suwannee"),
+    ("Washington",    "washington"),
+    # Confirmed via RealForeclose platform "Jump To" dropdown (June 2026)
+    ("Alachua",       "alachua"),
+    ("Bay",           "bay"),
+    ("Brevard",       "brevard"),
+    ("Citrus",        "citrus"),
+    ("Clay",          "clay"),
+    ("Duval",         "duval"),
+    ("Escambia",      "escambia"),
+    ("Flagler",       "flagler"),
+    ("Gilchrist",     "gilchrist"),
+    ("Gulf",          "gulf"),
+    ("Hillsborough",  "hillsborough"),
+    ("Indian River",  "indianriver"),
+    ("Jackson",       "jackson"),
+    ("Lake",          "lake"),
+    ("Lee",           "lee"),
+    ("Leon",          "leon"),
+    ("Marion",        "marion"),
+    ("Martin",        "martin"),
+    ("Nassau",        "nassau"),
+    ("Osceola",       "osceola"),
+    ("Palm Beach",    "palmbeach"),
+    ("Pasco",         "pasco"),
+    ("Pinellas",      "pinellas"),
+    ("Polk",          "polk"),
+    ("Putnam",        "putnam"),
+    ("Sarasota",      "sarasota"),
+    ("Seminole",      "seminole"),
+    ("Volusia",       "volusia"),
 ]
 
 
@@ -76,7 +108,7 @@ def make_fl_scraper(county_name: str, slug: str) -> type[RealForecloseScraper]:
             "county":       county_name,
             "source_name":  f"{slug}_fl",
             "base_url":     f"https://{slug}.realforeclose.com",
-            "auction_type": "tax_deed",
+            "auction_type": "foreclosure",
         },
     )
 

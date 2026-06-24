@@ -1,7 +1,7 @@
 from __future__ import annotations
 import hashlib
 import re
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from bs4 import BeautifulSoup, Tag
 from playwright.sync_api import sync_playwright
 from scrapers.base import BaseScraper
@@ -12,20 +12,65 @@ class RealForecloseScraper(BaseScraper):
     auction_type: str = "foreclosure"
     ignore_ssl: bool = False  # set True for realtaxdeed.com counties
 
+    # Horizon in days: follow "Next Auction" links until the date exceeds this window.
+    SCRAPE_HORIZON_DAYS: int = 15
+    # Safety cap on page loads regardless of dates (avoid infinite loops on broken nav).
+    MAX_PAGE_LOADS: int = 20
+
     def _get_html(self) -> str:
+        """Fetch and combine HTML from the default preview page plus all upcoming date pages
+        within the next SCRAPE_HORIZON_DAYS days.
+
+        The RealForeclose platform shows one auction date at a time. Each page has a
+        "Next Auction" link pointing to the next scheduled date. We follow that chain in
+        a single browser session (session cookies required for date-specific URLs).
+        """
         ua = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+        collected_items: list[str] = []
+        cutoff = date.today() + timedelta(days=self.SCRAPE_HORIZON_DAYS)
+
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
             context = browser.new_context(user_agent=ua, ignore_https_errors=self.ignore_ssl)
-            page = context.new_page()
-            page.goto(
-                f"{self.base_url}/index.cfm?zaction=AUCTION&Zmethod=PREVIEW",
-                timeout=30000,
-            )
-            page.wait_for_timeout(5000)
-            html = page.content()
+            pw_page = context.new_page()
+
+            def _load(url: str) -> str:
+                pw_page.goto(url, timeout=30000, wait_until="networkidle")
+                pw_page.wait_for_timeout(2000)
+                return pw_page.content()
+
+            # First load establishes the session and returns today's/current date auctions.
+            html = _load(f"{self.base_url}/index.cfm?zaction=AUCTION&Zmethod=PREVIEW")
+            soup = BeautifulSoup(html, "lxml")
+            collected_items.extend(str(el) for el in soup.find_all(class_="AUCTION_ITEM"))
+
+            # Follow "Next Auction" links until the date exceeds the 30-day window.
+            visited: set[str] = set()
+            for _ in range(self.MAX_PAGE_LOADS):
+                next_tag = soup.find("a", string=lambda t: t and "Next Auction" in t)
+                if not next_tag:
+                    break
+                href = str(next_tag.get("href", ""))
+                m = re.search(r"AuctionDate=(\d{2}/\d{2}/\d{4})", href, re.IGNORECASE)
+                if not m or m.group(1) in visited:
+                    break
+                next_date_str = m.group(1)
+                try:
+                    next_date_obj = datetime.strptime(next_date_str, "%m/%d/%Y").date()
+                except ValueError:
+                    break
+                if next_date_obj > cutoff:
+                    break
+                visited.add(next_date_str)
+                html = _load(
+                    f"{self.base_url}/index.cfm?zaction=AUCTION&Zmethod=PREVIEW&AuctionDate={next_date_str}"
+                )
+                soup = BeautifulSoup(html, "lxml")
+                collected_items.extend(str(el) for el in soup.find_all(class_="AUCTION_ITEM"))
+
             browser.close()
-        return html
+
+        return f"<div>{''.join(collected_items)}</div>"
 
     def _parse_label(self, item: Tag, label: str) -> str:
         for lbl in item.find_all(class_="AD_LBL"):

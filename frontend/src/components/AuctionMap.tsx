@@ -31,20 +31,31 @@ const LEGEND = [
   { label: 'Foreclosure', color: '#ea580c' },
 ]
 
-const makeIcon = (color: string) =>
+const makeIcon = (color: string, approximate = false) =>
   L.divIcon({
     className: '',
-    // 48x52px hit area com a casa centralizada — maior área de toque para tablet/mobile
-    html: `<div style="width:48px;height:52px;display:flex;align-items:center;justify-content:center;padding-bottom:8px">
+    html: `<div style="width:48px;height:52px;display:flex;align-items:flex-end;justify-content:center;opacity:${approximate ? 0.55 : 1}">
       <svg width="32" height="38" viewBox="0 0 28 32" xmlns="http://www.w3.org/2000/svg" style="display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))">
-        <polygon points="14,2 26,13 26,27 2,27 2,13" fill="${color}" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+        <polygon points="14,2 26,13 26,27 2,27 2,13" fill="${approximate ? '#94a3b8' : color}" stroke="white" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="${approximate ? '3,2' : 'none'}"/>
         <rect x="10.5" y="18" width="7" height="9" rx="1" fill="white" fill-opacity="0.3"/>
-        <polygon points="11,27 17,27 14,32" fill="${color}"/>
+        <polygon points="11,27 17,27 14,32" fill="${approximate ? '#94a3b8' : color}"/>
       </svg>
     </div>`,
     iconSize: [48, 52],
     iconAnchor: [24, 52],
+    popupAnchor: [0, -50],
   })
+
+const ICONS: Record<string, L.DivIcon> = {
+  tax_deed:              makeIcon('#2563eb'),
+  tax_lien:              makeIcon('#16a34a'),
+  foreclosure:           makeIcon('#ea580c'),
+  default:               makeIcon('#6b7280'),
+  tax_deed_approx:       makeIcon('#2563eb', true),
+  tax_lien_approx:       makeIcon('#16a34a', true),
+  foreclosure_approx:    makeIcon('#ea580c', true),
+  default_approx:        makeIcon('#6b7280', true),
+}
 
 interface Props {
   filters: AuctionFilters
@@ -52,7 +63,6 @@ interface Props {
 
 export default function AuctionMap({ filters }: Props) {
   const [pins, setPins] = useState<PinData[]>([])
-  const [selected, setSelected] = useState<string | null>(null)
   const navigate = useNavigate()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -82,11 +92,9 @@ export default function AuctionMap({ filters }: Props) {
           <Marker
             key={pin.id}
             position={[pin.lat, pin.lng]}
-            icon={makeIcon(PIN_COLORS[pin.type] ?? '#6b7280')}
-            eventHandlers={{ click: () => setSelected(pin.id) }}
+            icon={pin.approximate ? (ICONS[`${pin.type}_approx`] ?? ICONS.default_approx) : (ICONS[pin.type] ?? ICONS.default)}
           >
-            {selected === pin.id && (
-              <Popup eventHandlers={{ remove: () => setSelected(null) }} minWidth={200}>
+            <Popup minWidth={200}>
                 <div style={{ margin: '-14px -20px -14px', overflow: 'hidden', borderRadius: '8px', width: 220 }}>
                   <div style={{ height: 4, backgroundColor: PIN_COLORS[pin.type] ?? '#6b7280' }} />
                   <div style={{ padding: '12px 14px 14px' }}>
@@ -104,6 +112,11 @@ export default function AuctionMap({ filters }: Props) {
                     }}>
                       {pin.type?.replace(/_/g, ' ')}
                     </span>
+                    {pin.approximate && (
+                      <p style={{ margin: '0 0 6px', fontSize: '10px', color: '#94a3b8', fontStyle: 'italic' }}>
+                        📍 Localização aproximada (condado)
+                      </p>
+                    )}
                     <p style={{ margin: '0 0 6px', fontSize: '13px', fontWeight: 600, color: '#1e293b', lineHeight: 1.4 }}>
                       {pin.address ?? '—'}
                     </p>
@@ -140,7 +153,6 @@ export default function AuctionMap({ filters }: Props) {
                   </div>
                 </div>
               </Popup>
-            )}
           </Marker>
         ))}
       </MarkerClusterGroup>
@@ -156,6 +168,14 @@ export default function AuctionMap({ filters }: Props) {
             <span className="text-gray-700">{label}</span>
           </div>
         ))}
+        <div className="flex items-center gap-2 pt-1 border-t border-gray-100 mt-1">
+          <svg width="12" height="14" viewBox="0 0 28 32" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0" style={{ opacity: 0.55 }}>
+            <polygon points="14,2 26,13 26,27 2,27 2,13" fill="#94a3b8" stroke="white" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="3,2"/>
+            <rect x="10.5" y="18" width="7" height="9" rx="1" fill="white" fillOpacity="0.3"/>
+            <polygon points="11,27 17,27 14,32" fill="#94a3b8"/>
+          </svg>
+          <span className="text-gray-400 italic">Localiz. aproximada</span>
+        </div>
       </div>
     </MapContainer>
   )

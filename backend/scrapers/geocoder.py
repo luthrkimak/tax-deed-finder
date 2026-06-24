@@ -1,4 +1,5 @@
 from __future__ import annotations
+import os
 import re
 import time
 import logging
@@ -9,6 +10,8 @@ from scrapers.address_normalizer import normalize_address
 logger = logging.getLogger(__name__)
 
 HEADERS = {"User-Agent": "TAx-Deed-Finder/1.0 (luthrkimak@gmail.com)"}
+MAPBOX_TOKEN = os.environ.get("MAPBOX_TOKEN", "")
+
 COUNTY_CITY: dict[str, str] = {
     "Orange": "Orlando", "Miami-Dade": "Miami", "Broward": "Fort Lauderdale",
     "Palm Beach": "West Palm Beach", "Hillsborough": "Tampa", "Pinellas": "Clearwater",
@@ -25,6 +28,27 @@ COUNTY_CITY: dict[str, str] = {
     "Washington": "Chipley", "Dallas": "Dallas", "Travis": "Austin",
     "Fulton": "Atlanta",
 }
+
+
+def _mapbox(query: str) -> tuple[float, float] | None:
+    if not MAPBOX_TOKEN:
+        return None
+    try:
+        import urllib.parse
+        encoded = urllib.parse.quote(query)
+        r = requests.get(
+            f"https://api.mapbox.com/geocoding/v5/mapbox.places/{encoded}.json",
+            params={"access_token": MAPBOX_TOKEN, "country": "us", "limit": 1},
+            timeout=10,
+        )
+        data = r.json()
+        features = data.get("features", [])
+        if features:
+            lng, lat = features[0]["geometry"]["coordinates"]
+            return float(lat), float(lng)
+    except Exception as e:
+        logger.warning("Mapbox error for %r: %s", query, e)
+    return None
 
 
 def _nominatim(query: str) -> tuple[float, float] | None:
@@ -44,7 +68,7 @@ def _nominatim(query: str) -> tuple[float, float] | None:
 
 
 def geocode_auctions(auction_ids: list[str]) -> None:
-    """Geocode a list of auction IDs using Nominatim and update lat/lng in the DB."""
+    """Geocode auction IDs using Mapbox (primary) then Nominatim (fallback)."""
     if not auction_ids:
         return
     sb = get_supabase()
@@ -61,22 +85,34 @@ def geocode_auctions(auction_ids: list[str]) -> None:
         state = row.get("state", "")
         city = COUNTY_CITY.get(county, county)
 
-        # Normalize: strip trailing state abbreviation that may already be appended
-        addr_clean = re.sub(r",\s*[A-Z]{2}\s*$", "", addr).strip()
-        # Strip unit/apt suffixes for fallback query
+        # Strip trailing state abbreviation (e.g. ", FL" or ", Fl")
+        addr_clean = re.sub(r",\s*[A-Za-z]{2}\s*$", "", addr).strip()
+        # Strip unit/apt for fallback
         street_only = re.sub(r"\s*(UNIT|APT|#|STE)\s*\S+", "", addr_clean, flags=re.I).strip()
 
-        coords = None
-        queries = [
-            f"{addr_clean}, {city}, {state}",
-            f"{street_only}, {city}, {state}",
-        ] if addr_clean else []
+        # If address already has city/zip embedded, don't add county city again
+        parts = [p.strip() for p in addr_clean.split(",") if p.strip()]
+        addr_has_city = len(parts) >= 2
 
+        if addr_clean:
+            if addr_has_city:
+                queries = [f"{addr_clean}, {state}", f"{street_only}, {state}"]
+            else:
+                queries = [f"{addr_clean}, {city}, {state}", f"{street_only}, {city}, {state}"]
+        else:
+            queries = []
+
+        coords = None
         for q in queries:
+            # Try Mapbox first (no rate-limit sleep needed — 600 req/min free tier)
+            coords = _mapbox(q)
+            if coords:
+                break
+            # Fallback to Nominatim
             coords = _nominatim(q)
             if coords:
                 break
-            time.sleep(1.1)  # rate-limit only between retries
+            time.sleep(1.1)
 
         if coords:
             sb.table("auctions").update({"lat": coords[0], "lng": coords[1]}).eq("id", row["id"]).execute()

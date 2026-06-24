@@ -40,6 +40,14 @@ class BaseScraper(ABC):
             result.records_found = len(records)
 
             if records:
+                # Deduplicate by (parcel_id, state, county) — the same auction can appear
+                # on multiple date pages when navigating future dates in one session.
+                seen: dict[tuple, dict] = {}
+                for r in records:
+                    key = (r.get("parcel_id"), r.get("state"), r.get("county"))
+                    seen[key] = r
+                records = list(seen.values())
+
                 # Get existing parcel IDs for this county before upsert
                 existing_result = sb.table("auctions").select("parcel_id").eq("state", self.state).eq("county", self.county).execute()
                 existing_parcels = {row["parcel_id"] for row in existing_result.data}
