@@ -72,7 +72,7 @@ export default function AuctionCard({ auction, isFavorited, onToggleFavorite }: 
             }}
             disabled={pending}
             style={{ color: isFavorited || pending ? '#ef4444' : undefined }}
-            className="text-xl flex-shrink-0 text-gray-300 hover:text-red-600 transition-colors disabled:opacity-60"
+            className="text-xl flex-shrink-0 text-gray-300 hover:text-red-600 transition-colors disabled:opacity-60 p-2 -mr-2"
             title={isFavorited ? 'Remover favorito' : 'Adicionar favorito'}
           >
             {pending ? '⟳' : isFavorited ? '★' : '☆'}
