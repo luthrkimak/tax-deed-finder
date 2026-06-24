@@ -75,7 +75,7 @@ export default function Dashboard() {
           {favs.length === 0 ? (
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 text-center text-gray-400 text-sm">
               Nenhum favorito com leilão futuro.<br />
-              <button onClick={() => navigate('/')} className="mt-2 text-blue-600 hover:underline">Buscar leilões →</button>
+              <button onClick={() => navigate('/search')} className="mt-2 text-blue-600 hover:underline">Buscar leilões →</button>
             </div>
           ) : (
             <div className="space-y-3">
