@@ -86,16 +86,27 @@ export default function Search() {
       navigate('/auth')
       return
     }
-    if (favoriteIds.has(auction.id)) {
-      const favs = await apiClient.listFavorites()
-      const fav = favs.find(f => f.auction_id === auction.id)
-      if (fav) {
-        await apiClient.deleteFavorite(fav.id)
-        setFavoriteIds(prev => { const s = new Set(prev); s.delete(auction.id); return s })
+    try {
+      if (favoriteIds.has(auction.id)) {
+        const favs = await apiClient.listFavorites()
+        const fav = favs.find(f => f.auction_id === auction.id)
+        if (fav) {
+          await apiClient.deleteFavorite(fav.id)
+          setFavoriteIds(prev => { const s = new Set(prev); s.delete(auction.id); return s })
+        }
+      } else {
+        await apiClient.createFavorite(auction.id)
+        setFavoriteIds(prev => new Set([...prev, auction.id]))
       }
-    } else {
-      await apiClient.createFavorite(auction.id)
-      setFavoriteIds(prev => new Set([...prev, auction.id]))
+    } catch (err: unknown) {
+      const status = (err as { response?: { status?: number } })?.response?.status
+      if (status === 401 || status === 403) {
+        alert('Sessão expirada. Faça login novamente.')
+        navigate('/auth')
+      } else {
+        alert(`Erro ao salvar favorito: ${status ?? 'verifique o console'}`)
+        console.error('toggleFavorite error:', err)
+      }
     }
   }
 
