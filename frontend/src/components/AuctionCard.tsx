@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Auction } from '../types'
 import { useI18n } from '../lib/i18n'
@@ -35,6 +36,7 @@ interface Props {
 
 export default function AuctionCard({ auction, isFavorited, onToggleFavorite }: Props) {
   const { t } = useI18n()
+  const [pending, setPending] = useState(false)
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
@@ -64,11 +66,16 @@ export default function AuctionCard({ auction, isFavorited, onToggleFavorite }: 
         </div>
         {onToggleFavorite && (
           <button
-            onClick={() => onToggleFavorite(auction)}
-            style={{ color: isFavorited ? 'var(--red)' : undefined }}
-            className="text-xl flex-shrink-0 text-gray-300 hover:text-red-600 transition-colors"
+            onClick={async () => {
+              setPending(true)
+              try { await onToggleFavorite(auction) } finally { setPending(false) }
+            }}
+            disabled={pending}
+            style={{ color: isFavorited || pending ? '#ef4444' : undefined }}
+            className="text-xl flex-shrink-0 text-gray-300 hover:text-red-600 transition-colors disabled:opacity-60"
+            title={isFavorited ? 'Remover favorito' : 'Adicionar favorito'}
           >
-            {isFavorited ? '★' : '☆'}
+            {pending ? '⟳' : isFavorited ? '★' : '☆'}
           </button>
         )}
       </div>
