@@ -79,3 +79,28 @@ export interface Alert {
   last_sent_at: string | null
   created_at: string
 }
+
+export interface TopCounty {
+  county: string
+  count: number
+}
+
+export interface TopDiscount {
+  id: string
+  address: string | null
+  county: string
+  type: AuctionType
+  auction_date: string
+  min_bid: number
+  assessed_value: number
+  discount_pct: number
+}
+
+export interface StatsResponse {
+  total_available: number
+  next_7_days: number
+  min_bid_available: number | null
+  active_counties: number
+  top_counties: TopCounty[]
+  top_discounts: TopDiscount[]
+}
