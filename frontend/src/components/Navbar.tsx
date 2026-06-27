@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import type { Session } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
 import { useI18n, LANG_OPTIONS, type Lang } from '../lib/i18n'
 
 export default function Navbar() {
   const navigate = useNavigate()
+  const location = useLocation()
   const [session, setSession] = useState<Session | null>(null)
   const { lang, setLang, t } = useI18n()
 
@@ -17,21 +18,30 @@ export default function Navbar() {
 
   async function signOut() {
     await supabase.auth.signOut()
-    navigate('/search')
+    navigate('/auth')
+  }
+
+  function navLink(path: string) {
+    const active = location.pathname === path
+    return `px-3 py-1.5 rounded-md text-sm transition-colors ${
+      active
+        ? 'bg-white/15 text-white font-medium'
+        : 'text-blue-200 hover:text-white hover:bg-white/10'
+    }`
   }
 
   return (
-    <nav style={{ backgroundColor: 'var(--navy)' }} className="px-6 py-3 flex items-center gap-6">
-      <Link to="/" className="font-bold text-white text-lg tracking-wide">
+    <nav style={{ backgroundColor: 'var(--navy)' }} className="px-6 py-3 flex items-center gap-1">
+      <Link to="/" className="font-bold text-white text-lg tracking-wide mr-4">
         ★ BidLand
       </Link>
       {session && (
-        <Link to="/dashboard" className="text-blue-200 hover:text-white text-sm transition-colors">{t.nav_dashboard}</Link>
+        <Link to="/dashboard" className={navLink('/dashboard')}>{t.nav_dashboard}</Link>
       )}
-      <Link to="/search" className="text-blue-200 hover:text-white text-sm transition-colors">{t.nav_search}</Link>
-      <Link to="/favorites" className="text-blue-200 hover:text-white text-sm transition-colors">{t.nav_favorites}</Link>
-      <Link to="/alerts" className="text-blue-200 hover:text-white text-sm transition-colors">{t.nav_alerts}</Link>
-      <Link to="/counties" className="text-blue-200 hover:text-white text-sm transition-colors">{t.nav_counties}</Link>
+      <Link to="/search" className={navLink('/search')}>{t.nav_search}</Link>
+      <Link to="/favorites" className={navLink('/favorites')}>{t.nav_favorites}</Link>
+      <Link to="/alerts" className={navLink('/alerts')}>{t.nav_alerts}</Link>
+      <Link to="/counties" className={navLink('/counties')}>{t.nav_counties}</Link>
 
       <div className="ml-auto flex items-center gap-3">
         {/* Language selector */}
@@ -52,8 +62,13 @@ export default function Navbar() {
           ))}
         </div>
 
+        <span className="w-px h-4 bg-white/20" />
+
         {session ? (
-          <button onClick={signOut} className="text-sm text-blue-200 hover:text-white transition-colors">
+          <button
+            onClick={signOut}
+            className="text-sm text-blue-200 hover:text-white border border-white/20 hover:border-white/40 px-3 py-1.5 rounded-md transition-colors"
+          >
             {t.nav_logout}
           </button>
         ) : (
