@@ -98,11 +98,16 @@ export default function Counties() {
                   <div key={county.name} className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-sm flex flex-col gap-1">
                     <div className="flex items-center justify-between gap-2">
                       <p className="font-semibold text-sm" style={{ color: 'var(--navy)' }}>{county.name}</p>
-                      {selected?.abbr === 'FL' && (
-                        <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full flex-shrink-0 ${isCovered ? 'bg-green-50 text-green-700' : 'bg-amber-50 text-amber-700'}`}>
-                          {isCovered ? '● Coberto' : '○ Manual'}
+                      <div className="flex items-center gap-1.5 flex-shrink-0">
+                        <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${SALE_TYPE_COLORS[selected.saleType]}`}>
+                          {SALE_TYPE_LABELS[selected.saleType]}
                         </span>
-                      )}
+                        {selected?.abbr === 'FL' && (
+                          <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${isCovered ? 'bg-green-50 text-green-700' : 'bg-amber-50 text-amber-700'}`}>
+                            {isCovered ? '● Coberto' : '○ Manual'}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     {county.phone && <p className="text-xs text-gray-500">📞 {county.phone}</p>}
                     {county.address && <p className="text-xs text-gray-500">📍 {county.address}</p>}

@@ -7,6 +7,13 @@ import TitleResearch from '../components/TitleResearch'
 
 type FloodZoneState = { zone: string; sfha: boolean } | 'loading' | 'error' | null
 
+const AUCTION_TYPE_BADGE: Record<string, { label: string; bg: string; text: string }> = {
+  tax_deed:       { label: 'Tax Deed',       bg: 'bg-green-100',  text: 'text-green-800' },
+  tax_lien:       { label: 'Tax Lien',       bg: 'bg-blue-100',   text: 'text-blue-800'  },
+  redeemable_deed:{ label: 'Redeemable Deed',bg: 'bg-purple-100', text: 'text-purple-800'},
+  foreclosure:    { label: 'Foreclosure',    bg: 'bg-orange-100', text: 'text-orange-800'},
+}
+
 function floodZoneStyle(zone: string) {
   if (zone.startsWith('V')) return { bg: 'bg-red-100', border: 'border-red-300', text: 'text-red-900', label: 'Alto risco costeiro' }
   if (zone.startsWith('A'))  return { bg: 'bg-red-50',  border: 'border-red-200', text: 'text-red-800', label: 'Alto risco' }
@@ -105,7 +112,17 @@ export default function AuctionDetail() {
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
           <h1 style={{ color: 'var(--navy)' }} className="text-2xl font-bold">{auction.address || t.detail_no_address}</h1>
-          <p className="text-gray-500 mt-1">{auction.county}, {auction.state} · <span className="capitalize">{auction.type.replace('_', ' ')}</span></p>
+          <div className="flex items-center gap-2 mt-1 flex-wrap">
+            <p className="text-gray-500">{auction.county}, {auction.state}</p>
+            {(() => {
+              const badge = AUCTION_TYPE_BADGE[auction.type] ?? { label: auction.type.replace(/_/g, ' '), bg: 'bg-gray-100', text: 'text-gray-700' }
+              return (
+                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full capitalize ${badge.bg} ${badge.text}`}>
+                  {badge.label}
+                </span>
+              )
+            })()}
+          </div>
           {!auction.address && (
             <div className="mt-3 flex gap-2 items-center">
               <input
