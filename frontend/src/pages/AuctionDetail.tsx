@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import type { Auction, Favorite } from '../types'
 import { apiClient } from '../lib/api'
 import { useI18n } from '../lib/i18n'
+import TitleResearch from '../components/TitleResearch'
 
 type FloodZoneState = { zone: string; sfha: boolean } | 'loading' | 'error' | null
 
@@ -229,6 +230,8 @@ export default function AuctionDetail() {
             )
           })()}
         </div>
+
+      <TitleResearch auction={auction} />
 
       <div className="mt-6">
         <h2 style={{ color: 'var(--navy)' }} className="font-semibold mb-2">{t.detail_notes}</h2>
