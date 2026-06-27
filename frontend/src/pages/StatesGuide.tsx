@@ -453,14 +453,16 @@ const ESTADOS: Estado[] = [
   },
   {
     abbr: 'TX', nome: 'Texas', tipo: 'tax_deed',
-    frequencia: 'Mensal (1ª terça-feira)', resgate: '6 meses (residencial)',
-    notas: 'Leilões realizados na escadaria do tribunal, todo 1º terça do mês. Imóveis residenciais têm 6 meses de resgate; propriedades agrícolas, 2 anos.',
+    frequencia: 'Mensal (1ª terça-feira)', resgate: '6 meses a 2 anos',
+    notas: 'Leilões na escadaria do tribunal, todo 1º terça do mês. Imóvel comercial/não-homestead: 6 meses de resgate. Homestead (residência principal) e terra agrícola: 2 anos de resgate.',
     restricoes: [
       'Sem exigência de residência no estado',
       'Participantes com impostos atrasados no Texas NÃO podem licitar',
       'Pagamento integral no dia do leilão (cheque administrativo ou dinheiro)',
-      'Imóvel residencial: período de resgate de 6 meses — não tome posse nem faça reformas antes do fim do prazo',
-      'Propriedades agrícolas: período de resgate de 2 anos',
+      'Direito de resgate (Tax Code §34.21): ex-proprietário pode recomprar pagando o valor do leilão + 25% (1º ano) ou + 50% (2º ano)',
+      'Homestead e terra agrícola: resgate de até 2 anos — NÃO faça reformas nem invista no imóvel durante esse período',
+      'Imóvel comercial / não-homestead: resgate de 6 meses',
+      'Não é possível impedir o resgate — é direito garantido por lei estadual',
     ],
   },
   {
