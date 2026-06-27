@@ -623,6 +623,32 @@ const ESTADOS: Estado[] = [
   },
 ]
 
+// Taxa de juros e método de lance para estados Tax Lien / Híbrido
+const TAX_LIEN_INFO: Record<string, { juros: string; metodo: string }> = {
+  AL: { juros: '12% a.a.',                    metodo: 'Maior prêmio de lance' },
+  AZ: { juros: 'até 16% a.a.',               metodo: 'Menor taxa de juros ganha' },
+  CO: { juros: 'até 9% a.a. + prêmio',       metodo: 'Menor taxa de juros ganha' },
+  FL: { juros: 'até 18% a.a. (mín. 5%)',     metodo: 'Menor taxa de juros ganha' },
+  IL: { juros: '18% a.a. (36% semestral)',    metodo: 'Menor taxa de juros ganha' },
+  IN: { juros: '15% ano 1 / 10% ano 2',      metodo: 'Menor taxa de juros ganha' },
+  IA: { juros: '24% a.a.',                    metodo: 'Menor taxa (sorteio em empate)' },
+  LA: { juros: '5% residencial / 12% outros',metodo: 'Maior prêmio de lance' },
+  MD: { juros: '6–24% a.a. (por condado)',    metodo: 'Maior prêmio de lance' },
+  MA: { juros: '16% a.a.',                    metodo: 'Varia por município' },
+  MS: { juros: '18% a.a.',                    metodo: 'Maior prêmio de lance' },
+  MO: { juros: '10% ano 1 / 8% ano 2',       metodo: 'Maior prêmio de lance' },
+  MT: { juros: '10% a.a. + 2%/mês',          metodo: 'Condado retém e revende' },
+  NE: { juros: '14% a.a.',                    metodo: 'Menor taxa de juros ganha' },
+  NJ: { juros: 'até 18% a.a. + 6% prêmio',   metodo: 'Menor taxa de juros ganha' },
+  ND: { juros: '12% a.a.',                    metodo: 'Condado retém primeiro' },
+  RI: { juros: 'até 18% a.a.',               metodo: 'Maior prêmio de lance' },
+  SC: { juros: '3–12% penalidade',            metodo: 'Maior prêmio de lance' },
+  SD: { juros: '10% a.a.',                    metodo: 'Maior prêmio de lance' },
+  VT: { juros: '12% a.a.',                    metodo: 'Varia por município' },
+  WV: { juros: '12% a.a.',                    metodo: 'Maior prêmio de lance' },
+  WY: { juros: '15% a.a.',                    metodo: 'Maior prêmio de lance' },
+}
+
 const TIPO_CONFIG = {
   tax_deed: { label: 'Tax Deed', bg: 'bg-blue-50',  text: 'text-blue-700',  border: 'border-blue-200' },
   tax_lien: { label: 'Tax Lien', bg: 'bg-green-50', text: 'text-green-700', border: 'border-green-200' },
@@ -746,6 +772,19 @@ export default function StatesGuide() {
                     {estado.resgate ?? <span className="text-gray-400">Sem resgate</span>}
                   </div>
                 </div>
+
+                {TAX_LIEN_INFO[estado.abbr] && (
+                  <div className="mb-3 bg-emerald-50 border border-emerald-100 rounded-lg px-3 py-2.5 flex gap-4">
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[10px] text-emerald-600 uppercase tracking-wide font-semibold mb-0.5">Taxa de juros</div>
+                      <div className="text-sm font-bold text-emerald-800">{TAX_LIEN_INFO[estado.abbr].juros}</div>
+                    </div>
+                    <div className="flex-1 min-w-0 border-l border-emerald-200 pl-4">
+                      <div className="text-[10px] text-emerald-600 uppercase tracking-wide font-semibold mb-0.5">Método de lance</div>
+                      <div className="text-xs font-medium text-emerald-800 leading-tight">{TAX_LIEN_INFO[estado.abbr].metodo}</div>
+                    </div>
+                  </div>
+                )}
 
                 <p className="text-xs text-gray-500 leading-relaxed border-t border-gray-50 pt-3">
                   {estado.notas}
