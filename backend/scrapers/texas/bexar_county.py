@@ -1,6 +1,7 @@
 from __future__ import annotations
 import calendar
-from datetime import date, timedelta
+import time
+from datetime import date
 
 import requests
 
@@ -8,6 +9,8 @@ from scrapers.base import BaseScraper
 
 ARCGIS_BASE = "https://maps.bexar.org/arcgis/rest/services/CC/ForeclosuresProd/MapServer"
 QUERY_PARAMS = "where=1%3D1&outFields=*&outSR=4326&returnGeometry=true&f=json"
+PARCELS_URL = "https://maps.bexar.org/arcgis/rest/services/Parcels/MapServer/0/query"
+BCAD_PROP_URL = "https://bexar.trueautomation.com/clientdb/Property.aspx?cid=110&prop_id={}"
 
 
 def _first_tuesday(year: int, month: int) -> date:
@@ -25,6 +28,33 @@ def _fetch_layer(layer: int) -> list[dict]:
     resp = requests.get(url, timeout=30)
     resp.raise_for_status()
     return resp.json().get("features", [])
+
+
+def _lookup_bcad_url(lng: float, lat: float) -> str | None:
+    """Spatial query on the Bexar County Parcels layer to get the BCAD property URL."""
+    try:
+        resp = requests.get(
+            PARCELS_URL,
+            params={
+                "geometry": f"{lng},{lat}",
+                "geometryType": "esriGeometryPoint",
+                "spatialRel": "esriSpatialRelIntersects",
+                "outFields": "PropID",
+                "returnGeometry": "false",
+                "inSR": "4326",
+                "f": "json",
+            },
+            timeout=15,
+        )
+        resp.raise_for_status()
+        features = resp.json().get("features", [])
+        if features:
+            prop_id = features[0]["attributes"].get("PropID")
+            if prop_id:
+                return BCAD_PROP_URL.format(int(prop_id))
+    except Exception:
+        pass
+    return None
 
 
 class BexarCountyScraper(BaseScraper):
@@ -72,6 +102,14 @@ class BexarCountyScraper(BaseScraper):
             lng = geom.get("x")
             lat = geom.get("y")
 
+            # Spatial query on Bexar County Parcels layer to get the BCAD property page URL
+            source_url = self.source_url
+            if lat and lng:
+                bcad_url = _lookup_bcad_url(lng, lat)
+                if bcad_url:
+                    source_url = bcad_url
+                time.sleep(0.3)  # rate-limit parcel queries
+
             records.append({
                 "type": auction_type,
                 "status": "upcoming",
@@ -81,7 +119,7 @@ class BexarCountyScraper(BaseScraper):
                 "parcel_id": doc_number,
                 "auction_date": auction_date.isoformat(),
                 "source": "scrape",
-                "source_url": self.source_url,
+                "source_url": source_url,
                 "lat": lat if lat else None,
                 "lng": lng if lng else None,
             })
