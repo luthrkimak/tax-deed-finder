@@ -14,17 +14,24 @@ def get_stats(state: Optional[str] = Query(default=None)):
     today = date.today().isoformat()
     in_7_days = (date.today() + timedelta(days=7)).isoformat()
 
-    # All upcoming available auctions
-    query = (
-        sb.table("auctions")
-        .select("id,county,state,type,min_bid,assessed_value,auction_date,address")
-        .not_.in_("status", EXCLUDE_STATUSES)
-        .gte("auction_date", today)
-        .limit(5000)
-    )
-    if state and state.upper() != "ALL":
-        query = query.eq("state", state.upper())
-    all_rows = query.execute().data
+    # All upcoming available auctions — paginate to bypass Supabase 1000-row cap
+    all_rows = []
+    page_size = 1000
+    offset = 0
+    while True:
+        q = (
+            sb.table("auctions")
+            .select("id,county,state,type,min_bid,assessed_value,auction_date,address")
+            .not_.in_("status", EXCLUDE_STATUSES)
+            .gte("auction_date", today)
+        )
+        if state and state.upper() != "ALL":
+            q = q.eq("state", state.upper())
+        batch = q.range(offset, offset + page_size - 1).execute().data
+        all_rows.extend(batch)
+        if len(batch) < page_size:
+            break
+        offset += page_size
 
     total_available = len(all_rows)
     next_7_days = sum(1 for r in all_rows if r.get("auction_date") and r["auction_date"] <= in_7_days)

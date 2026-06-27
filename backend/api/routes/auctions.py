@@ -128,19 +128,27 @@ def get_pins(
     if max_bid is not None:
         base_filters = base_filters.lte("min_bid", float(max_bid))
 
-    result = base_filters.limit(3000).execute()
     pins = []
-    for row in result.data:
-        if row.get("lat") and row.get("lng"):
-            row["approximate"] = False
-            pins.append(row)
-        else:
-            center = COUNTY_CENTERS.get(row.get("county", ""))
-            if center:
-                row["lat"] = center[0]
-                row["lng"] = center[1]
-                row["approximate"] = True
-                pins.append(row)
+    page_size = 1000
+    offset = 0
+    while True:
+        batch = base_filters.range(offset, offset + page_size - 1).execute().data
+        pins_batch = []
+        for row in batch:
+            if row.get("lat") and row.get("lng"):
+                row["approximate"] = False
+                pins_batch.append(row)
+            else:
+                center = COUNTY_CENTERS.get(row.get("county", ""))
+                if center:
+                    row["lat"] = center[0]
+                    row["lng"] = center[1]
+                    row["approximate"] = True
+                    pins_batch.append(row)
+        pins.extend(pins_batch)
+        if len(batch) < page_size:
+            break
+        offset += page_size
     return pins
 
 
