@@ -11,6 +11,7 @@ from scrapers.california.all_counties import CA_SCRAPERS
 from scrapers.north_carolina.all_counties import NC_SCRAPERS
 from scrapers.texas.dallas_county import DallasCountyScraper
 from scrapers.texas.travis_county import TravisCountyScraper
+from scrapers.texas.bexar_county import BexarCountyScraper
 from scrapers.georgia.fulton_county import FultonCountyScraper
 from notifications import send_alert_emails
 
@@ -24,6 +25,7 @@ SCRAPERS = [
     *NC_SCRAPERS,
     DallasCountyScraper,
     TravisCountyScraper,
+    BexarCountyScraper,
     FultonCountyScraper,
 ]
 
