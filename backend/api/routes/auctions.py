@@ -62,7 +62,7 @@ def get_auctions(
 @router.get("/counties")
 def get_counties(state: Optional[str] = Query(None)):
     sb = get_supabase()
-    query = sb.table("auctions").select("county")
+    query = sb.table("auctions").select("county").limit(10000)
     if state:
         query = query.eq("state", state.upper())
     result = query.execute()
