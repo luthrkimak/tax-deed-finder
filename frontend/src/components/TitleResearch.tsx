@@ -1,31 +1,31 @@
 import { useState } from 'react'
 import type { Auction } from '../types'
 
-// County recorder URLs keyed by "STATE:County"
+// County recorder URLs keyed by "STATE:County" — verified 2026-06-27
 const COUNTY_RECORDER: Record<string, string> = {
   'TX:Bexar':       'https://bexar.tx.publicsearch.us/',
-  'TX:Dallas':      'https://countyclerk.dallascounty.org/',
-  'TX:Travis':      'https://deed.traviscountytx.gov/',
+  'TX:Dallas':      'https://www.dallascounty.org/county-clerk/',
+  'TX:Travis':      'https://www.traviscountytx.gov/county-clerk/records',
   'TX:Collin':      'https://www.collincountytx.gov/county_clerk/pages/official_public_records.aspx',
   'TX:Harris':      'https://www.cclerk.hctx.net/applications/websearch/',
-  'TX:Tarrant':     'https://www.tarrantcountytx.gov/en/county-clerk/real-property.html',
+  'TX:Tarrant':     'https://www.tarrantcounty.com/en/county-clerk.html',
   'FL:Orange':      'https://or.occompt.com/recorder/web/',
-  'FL:Miami-Dade':  'https://www2.miamidadeclerk.gov/officialrecords/StandardSearch.aspx',
-  'FL:Broward':     'https://officialrecords.broward.org/',
-  'FL:Hillsborough':'https://pubrec.hillsclerk.com/',
-  'FL:Pinellas':    'https://www.pinellasclerk.org/apps2/OfficialRecordsSearch/',
-  'FL:Palm Beach':  'https://www.mypalmbeachclerk.com/official-records/search',
-  'FL:Lee':         'https://clts.leeclerk.org/',
-  'FL:Polk':        'https://apps.polkcountyclerk.net/oncore/',
-  'FL:Volusia':     'https://vweb2.clerk.org/',
-  'FL:Sarasota':    'https://apps.scgov.net/RealPropertySearch/',
-  'FL:Brevard':     'https://oncore.brevardclerk.us/',
-  'FL:Seminole':    'https://public.seminoleclerk.org/',
+  'FL:Miami-Dade':  'https://www2.miamidadeclerk.gov/ocs/',
+  'FL:Broward':     'https://www.browardclerk.org/web2/',
+  'FL:Hillsborough':'https://www.hillsclerk.com/',
+  'FL:Pinellas':    'https://www.pinellasclerk.org/',
+  'FL:Palm Beach':  'https://www.mypalmbeachclerk.com/',
+  'FL:Lee':         'https://www.leeclerk.org/',
+  'FL:Polk':        'https://www.polkcountyclerk.net/',
+  'FL:Volusia':     'https://www.clerk.org/',
+  'FL:Sarasota':    'https://www.sarasotaclerk.com/',
+  'FL:Brevard':     'https://www.brevardclerk.us/',
+  'FL:Seminole':    'https://www.seminoleclerk.org/',
   'FL:Duval':       'https://oncore.duvalclerk.com/',
-  'FL:Pasco':       'https://apps.pascoclerk.com/officialrecords/',
-  'FL:Alachua':     'https://www.alachuaclerk.org/real-property/',
-  'FL:Collier':     'https://www.collierclerk.com/records/official-records/',
-  'FL:Manatee':     'https://www.manateeclerk.com/official-records/',
+  'FL:Pasco':       'https://www.pascoclerk.com/',
+  'FL:Alachua':     'https://www.alachuaclerk.org/',
+  'FL:Collier':     'https://www.collierclerk.com/records/',
+  'FL:Manatee':     'https://www.manateeclerk.com/',
   'GA:Fulton':      'https://www.gsccca.org/search',
   'GA:Gwinnett':    'https://www.gsccca.org/search',
   'GA:Cobb':        'https://www.gsccca.org/search',
@@ -82,7 +82,7 @@ export default function TitleResearch({ auction }: Props) {
     ? `https://echo.epa.gov/facilities/facility-search/results?location_name=${encodeURIComponent(auction.address)}&p_radius=0.25`
     : 'https://echo.epa.gov/facilities/facility-search'
 
-  const pacerUrl = 'https://pcl.uscourts.gov/content/search.jsf'
+  const pacerUrl = 'https://pacer.uscourts.gov/'
 
   const progress = checked.size
   const total = CHECKLIST_ITEMS.length
