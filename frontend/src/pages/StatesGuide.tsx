@@ -463,6 +463,7 @@ const ESTADOS: Estado[] = [
       'Homestead e terra agrícola: resgate de até 2 anos — NÃO faça reformas nem invista no imóvel durante esse período',
       'Imóvel comercial / não-homestead: resgate de 6 meses',
       'Não é possível impedir o resgate — é direito garantido por lei estadual',
+      '💡 Estratégia: o ex-dono pode vender/ceder o direito de resgate a terceiros. Investidores pagam um valor ao ex-proprietário pela cessão, exercem o resgate (valor do leilão + 25%) e ficam com o imóvel abaixo do mercado.',
     ],
   },
   {
