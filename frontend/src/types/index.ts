@@ -83,12 +83,14 @@ export interface Alert {
 export interface TopCounty {
   county: string
   count: number
+  state: string
 }
 
 export interface TopDiscount {
   id: string
   address: string | null
   county: string
+  state: string
   type: AuctionType
   auction_date: string
   min_bid: number

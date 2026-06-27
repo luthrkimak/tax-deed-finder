@@ -1,6 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from datetime import date, timedelta
 from collections import Counter
+from typing import Optional
 from db.client import get_supabase
 
 router = APIRouter()
@@ -8,22 +9,22 @@ router = APIRouter()
 EXCLUDE_STATUSES = ["archived", "cancelled", "sold", "no_bid"]
 
 @router.get("")
-def get_stats():
+def get_stats(state: Optional[str] = Query(default=None)):
     sb = get_supabase()
     today = date.today().isoformat()
     in_7_days = (date.today() + timedelta(days=7)).isoformat()
 
     # All upcoming available auctions
-    all_rows = (
+    query = (
         sb.table("auctions")
-        .select("id,county,type,min_bid,assessed_value,auction_date,address")
+        .select("id,county,state,type,min_bid,assessed_value,auction_date,address")
         .not_.in_("status", EXCLUDE_STATUSES)
         .gte("auction_date", today)
-        .eq("state", "FL")
-        .limit(3000)
-        .execute()
-        .data
+        .limit(5000)
     )
+    if state and state.upper() != "ALL":
+        query = query.eq("state", state.upper())
+    all_rows = query.execute().data
 
     total_available = len(all_rows)
     next_7_days = sum(1 for r in all_rows if r.get("auction_date") and r["auction_date"] <= in_7_days)
@@ -31,10 +32,17 @@ def get_stats():
     bids = [r["min_bid"] for r in all_rows if r.get("min_bid") is not None]
     min_bid_available = min(bids) if bids else None
 
-    # Count by county
-    county_counts = Counter(r["county"] for r in all_rows if r.get("county"))
+    # Count by (state, county)
+    county_state: dict[str, str] = {}
+    county_counts: Counter = Counter()
+    for r in all_rows:
+        c = r.get("county")
+        s = r.get("state", "")
+        if c:
+            county_counts[c] += 1
+            county_state[c] = s
     top_counties = [
-        {"county": c, "count": n}
+        {"county": c, "count": n, "state": county_state.get(c, "")}
         for c, n in county_counts.most_common(8)
     ]
     active_counties = len(county_counts)
@@ -50,6 +58,7 @@ def get_stats():
                 "id": r["id"],
                 "address": r.get("address"),
                 "county": r["county"],
+                "state": r.get("state", ""),
                 "type": r["type"],
                 "auction_date": r["auction_date"],
                 "min_bid": mb,

@@ -28,8 +28,9 @@ export const apiClient = {
     return data
   },
 
-  async getStats(): Promise<StatsResponse> {
-    const { data } = await axios.get(`${BASE_URL}/stats`)
+  async getStats(state?: string): Promise<StatsResponse> {
+    const params = state && state !== 'ALL' ? { state } : {}
+    const { data } = await axios.get(`${BASE_URL}/stats`, { params })
     return data
   },
 
