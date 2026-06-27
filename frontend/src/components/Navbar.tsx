@@ -42,6 +42,7 @@ export default function Navbar() {
       <Link to="/favorites" className={navLink('/favorites')}>{t.nav_favorites}</Link>
       <Link to="/alerts" className={navLink('/alerts')}>{t.nav_alerts}</Link>
       <Link to="/counties" className={navLink('/counties')}>{t.nav_counties}</Link>
+      <Link to="/estados" className={navLink('/estados')}>Guia</Link>
 
       <div className="ml-auto flex items-center gap-3">
         {/* Language selector */}
