@@ -39,26 +39,25 @@ export default function AuctionCard({ auction, isFavorited, onToggleFavorite }: 
   const [pending, setPending] = useState(false)
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+    <div className="bg-white border border-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5 mb-2 flex-wrap">
             <span
               style={TYPE_STYLE[auction.type] ?? { background: '#475569', color: '#fff' }}
-              className="text-xs font-semibold px-2 py-0.5 rounded-full tracking-wide uppercase"
+              className="text-xs font-semibold px-2 py-0.5 rounded-md tracking-wide uppercase"
             >
               {t[TYPE_LABELS_KEY[auction.type] ?? 'type_tax_deed']}
             </span>
             {auction.status === 'no_bid' && (
-              <span className="text-xs font-semibold bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
+              <span className="text-xs font-semibold bg-amber-100 text-amber-700 px-2 py-0.5 rounded-md">
                 {t[`status_${auction.status}` as keyof typeof t] ?? auction.status}
               </span>
             )}
           </div>
           <Link
             to={`/auctions/${auction.id}`}
-            style={{ color: 'var(--navy)' }}
-            className="block font-semibold hover:underline truncate"
+            className="block text-sm font-bold text-gray-900 hover:underline truncate"
           >
             {auction.address || t.card_no_address}
           </Link>
@@ -72,7 +71,8 @@ export default function AuctionCard({ auction, isFavorited, onToggleFavorite }: 
             }}
             disabled={pending}
             title={isFavorited ? 'Remover favorito' : 'Adicionar favorito'}
-            style={{ minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, background: 'none', border: 'none', cursor: 'pointer', padding: 8 }}
+            className="flex items-center justify-center flex-shrink-0 hover:bg-gray-50 rounded-lg transition-colors"
+            style={{ minWidth: 44, minHeight: 44, background: 'none', border: 'none', cursor: 'pointer', padding: 8 }}
           >
             {pending ? (
               <span style={{ fontSize: 20, color: '#ef4444' }}>⟳</span>
@@ -84,24 +84,28 @@ export default function AuctionCard({ auction, isFavorited, onToggleFavorite }: 
           </button>
         )}
       </div>
-      <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
+
+      {auction.min_bid && (
+        <div className="mt-3 mb-1">
+          <span className="text-xs text-gray-400 uppercase tracking-wide">{t.card_min_bid}</span>
+          <p className="text-lg font-bold text-gray-900">{`$${Number(auction.min_bid).toLocaleString()}`}</p>
+        </div>
+      )}
+
+      <div className="grid grid-cols-2 gap-2 text-sm mt-2">
         <div>
-          <span className="text-gray-400 text-xs uppercase tracking-wide">{t.card_min_bid}</span>
-          <p className="font-bold text-gray-900">{auction.min_bid ? `$${Number(auction.min_bid).toLocaleString()}` : '—'}</p>
+          <span className="text-xs text-gray-400 uppercase tracking-wide">{t.card_assessed}</span>
+          <p className="text-sm font-medium text-gray-700">{auction.assessed_value ? `$${Number(auction.assessed_value).toLocaleString()}` : '—'}</p>
         </div>
         <div>
-          <span className="text-gray-400 text-xs uppercase tracking-wide">{t.card_assessed}</span>
-          <p className="font-semibold text-gray-700">{auction.assessed_value ? `$${Number(auction.assessed_value).toLocaleString()}` : '—'}</p>
-        </div>
-        <div>
-          <span className="text-gray-400 text-xs uppercase tracking-wide">{t.card_date}</span>
-          <p className="font-semibold text-gray-900">
+          <span className="text-xs text-gray-400 uppercase tracking-wide">{t.card_date}</span>
+          <p className="text-sm font-medium text-gray-900">
             {auction.auction_date ? relativeDate(auction.auction_date) : '—'}
           </p>
         </div>
         <div>
-          <span className="text-gray-400 text-xs uppercase tracking-wide">{t.card_property}</span>
-          <p className="font-semibold text-gray-900 capitalize">{auction.property_type || '—'}</p>
+          <span className="text-xs text-gray-400 uppercase tracking-wide">{t.card_property}</span>
+          <p className="text-sm font-medium text-gray-900 capitalize">{auction.property_type || '—'}</p>
         </div>
       </div>
     </div>
