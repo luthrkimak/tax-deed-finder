@@ -10,6 +10,7 @@ interface Estado {
   resgate: string | null
   notas: string
   restricoes: string[]
+  estrategias: string[]
 }
 
 const ESTADOS: Estado[] = [
@@ -23,6 +24,7 @@ const ESTADOS: Estado[] = [
       'Proprietários com impostos atrasados no estado não podem licitar',
       'Pagamento integral exigido logo após arrematação',
     ],
+    estrategias: [],
   },
   {
     abbr: 'AK', nome: 'Alaska', tipo: 'tax_deed',
@@ -33,6 +35,7 @@ const ESTADOS: Estado[] = [
       'Regras variam muito por município — consulte cada prefeitura',
       'Muitas propriedades vendidas no balcão, sem leilão público formal',
     ],
+    estrategias: [],
   },
   {
     abbr: 'AZ', nome: 'Arizona', tipo: 'tax_lien',
@@ -44,6 +47,9 @@ const ESTADOS: Estado[] = [
       'Leilão online disponível na maioria dos condados',
       'Endereço postal nos EUA necessário para receber o certificado',
     ],
+    estrategias: [
+      'Pagamento de impostos subsequentes: se o proprietário não pagar os impostos dos anos seguintes, o titular do lien pode pagá-los e adicioná-los ao seu certificado. Isso aumenta o valor do resgate e impede que outro investidor compre um lien concorrente sobre o mesmo imóvel.',
+    ],
   },
   {
     abbr: 'AR', nome: 'Arkansas', tipo: 'tax_deed',
@@ -54,6 +60,7 @@ const ESTADOS: Estado[] = [
       'Registro online via Commissioner of State Lands',
       'Pagamento integral imediato após arrematação',
     ],
+    estrategias: [],
   },
   {
     abbr: 'CA', nome: 'California', tipo: 'tax_deed',
@@ -63,7 +70,10 @@ const ESTADOS: Estado[] = [
       'Sem exigência de residência no estado',
       'Pagamento em cheque administrativo exigido no dia do leilão',
       'Registro antecipado exigido na maioria dos condados',
-      'Lei SB 1079: inquilinos e ONGs têm direito de prelação em imóveis residenciais de 1–4 unidades executados por hipoteca',
+      'Lei SB 1079: inquilinos e ONGs têm direito de prelação em imóveis residenciais de 1–4 unidades — podem superar o lance vencedor em até 45 dias após o leilão',
+    ],
+    estrategias: [
+      'Lei SB 1079 usada a favor: investidores constituem ONGs ou parceiros elegíveis para exercer o direito de prelação em imóveis residenciais sem precisar competir no leilão ao vivo.',
     ],
   },
   {
@@ -74,7 +84,9 @@ const ESTADOS: Estado[] = [
       'Sem exigência de residência no estado',
       'Registro obrigatório via plataforma do condado',
       'Leilão online disponível na maioria dos condados',
+      'Prêmio pago acima dos impostos é reembolsado se o proprietário resgatar (diferente de NJ)',
     ],
+    estrategias: [],
   },
   {
     abbr: 'CT', nome: 'Connecticut', tipo: 'tax_deed',
@@ -85,6 +97,7 @@ const ESTADOS: Estado[] = [
       'Regras definidas individualmente por cada município',
       'Advogado local recomendado para due diligence',
     ],
+    estrategias: [],
   },
   {
     abbr: 'DE', nome: 'Delaware', tipo: 'tax_deed',
@@ -95,6 +108,7 @@ const ESTADOS: Estado[] = [
       'Processo 100% judicial — advogado local necessário',
       'Escritura emitida somente após confirmação judicial',
     ],
+    estrategias: [],
   },
   {
     abbr: 'FL', nome: 'Florida', tipo: 'hibrido',
@@ -108,6 +122,9 @@ const ESTADOS: Estado[] = [
       'Tax Deed: pagamento integral no dia do leilão',
       'Empresas estrangeiras devem estar registradas na Flórida para adquirir o imóvel',
     ],
+    estrategias: [
+      'Surplus Funds: quando um imóvel é arrematado por valor acima da dívida fiscal, o excedente vai para um fundo de "surplus". O ex-proprietário tem prazo limitado para resgatar esse dinheiro — se não reclamar, o valor vai para o estado. Há investidores especializados em localizar esses ex-donos e ajudá-los a recuperar o surplus em troca de comissão (geralmente 30–40%).',
+    ],
   },
   {
     abbr: 'GA', nome: 'Georgia', tipo: 'tax_deed',
@@ -118,6 +135,11 @@ const ESTADOS: Estado[] = [
       'Registro prévio obrigatório no condado (Sheriff)',
       'Pagamento em dinheiro ou cheque administrativo no dia da venda',
       'Empresas devem estar registradas na Georgia para tomar posse do imóvel',
+      'Não faça reformas durante o período de resgate — o ex-dono paga apenas o valor arrematado + 20%, sem compensar melhorias',
+    ],
+    estrategias: [
+      'Cessão do direito de resgate: assim como no Texas, o ex-proprietário pode vender o direito de resgate a terceiros. O investidor paga ao ex-dono pela cessão e exerce o resgate (valor do leilão + 20%), adquirindo o imóvel abaixo do mercado.',
+      'Cobrança de aluguel: durante os 12 meses de resgate, o arrematante pode cobrar aluguel do imóvel se estiver vago e acessível, gerando renda enquanto aguarda o desfecho.',
     ],
   },
   {
@@ -129,6 +151,7 @@ const ESTADOS: Estado[] = [
       'Volume baixo de leilões — mercado muito competitivo',
       'Pagamento integral exigido no dia do leilão',
     ],
+    estrategias: [],
   },
   {
     abbr: 'ID', nome: 'Idaho', tipo: 'tax_deed',
@@ -139,6 +162,7 @@ const ESTADOS: Estado[] = [
       'Depósito antecipado pode ser exigido pelo condado',
       'Pagamento integral no dia do leilão',
     ],
+    estrategias: [],
   },
   {
     abbr: 'IL', nome: 'Illinois', tipo: 'tax_lien',
@@ -149,6 +173,10 @@ const ESTADOS: Estado[] = [
       'Registro antecipado obrigatório',
       'Proprietários com impostos atrasados em Illinois não podem licitar',
       'Cook County (Chicago) tem regras e plataforma próprias',
+    ],
+    estrategias: [
+      'Retorno garantido: Illinois garante 18% a.a. por lei — mesmo se o proprietário resgatar, o investidor recebe principal + juros. O "pior cenário" ainda é lucrativo, tornando Illinois um dos estados mais seguros para tax lien.',
+      'Scavenger Sale: liens não vendidos no leilão regular vão para um leilão secundário (Scavenger Sale) com lance mínimo de $1. Alta oportunidade em imóveis de menor valor ou áreas menos competitivas.',
     ],
   },
   {
@@ -161,6 +189,9 @@ const ESTADOS: Estado[] = [
       'Proprietários com impostos atrasados no condado não podem participar',
       'Leilão online disponível em muitos condados',
     ],
+    estrategias: [
+      'Scavenger Sale: imóveis que não foram vendidos no leilão regular vão para um leilão secundário com lance mínimo muito baixo (às vezes $1). Oportunidade para adquirir propriedades em áreas menos disputadas a preços mínimos.',
+    ],
   },
   {
     abbr: 'IA', nome: 'Iowa', tipo: 'tax_lien',
@@ -170,6 +201,9 @@ const ESTADOS: Estado[] = [
       'Sem exigência de residência no estado',
       'Registro antecipado obrigatório no condado',
       'Proprietários com impostos atrasados no condado não podem licitar',
+    ],
+    estrategias: [
+      'Taxa fixa de 24%: diferente de outros estados onde os juros são licitados para baixo, Iowa tem taxa fixada por lei. Todos os investidores ganham exatamente 24% a.a. — sem disputa por taxa, apenas pelo imóvel.',
     ],
   },
   {
@@ -181,6 +215,7 @@ const ESTADOS: Estado[] = [
       'Processo judicial — advogado local recomendado',
       'Pagamento integral exigido após confirmação do juiz',
     ],
+    estrategias: [],
   },
   {
     abbr: 'KY', nome: 'Kentucky', tipo: 'tax_deed',
@@ -191,6 +226,7 @@ const ESTADOS: Estado[] = [
       'Processo judicial via Master Commissioner',
       'Advogado local recomendado para due diligence',
     ],
+    estrategias: [],
   },
   {
     abbr: 'LA', nome: 'Louisiana', tipo: 'tax_lien',
@@ -201,6 +237,10 @@ const ESTADOS: Estado[] = [
       'Registro antecipado obrigatório',
       'Investidor com lien tem direitos e responsabilidades de posse limitada durante o período de resgate',
       'Manutenção mínima do imóvel pode ser exigida legalmente',
+      'Não faça reformas — se o proprietário resgatar, ele paga apenas os impostos + juros, sem compensar melhorias',
+    ],
+    estrategias: [
+      'Posse durante o resgate: o investidor pode tomar posse de imóveis vagos logo após comprar o lien, cobrando aluguel durante os 3 anos de resgate. Se o proprietário não resgatar, o investidor fica com o imóvel. Se resgatar, recebe de volta os impostos + juros.',
     ],
   },
   {
@@ -212,6 +252,7 @@ const ESTADOS: Estado[] = [
       'Regras totalmente definidas por cada município',
       'Volume baixo — mercado fragmentado e pouco padronizado',
     ],
+    estrategias: [],
   },
   {
     abbr: 'MD', nome: 'Maryland', tipo: 'tax_lien',
@@ -223,6 +264,7 @@ const ESTADOS: Estado[] = [
       'Proprietários com impostos atrasados no condado não podem licitar',
       'Baltimore City tem plataforma e regras próprias',
     ],
+    estrategias: [],
   },
   {
     abbr: 'MA', nome: 'Massachusetts', tipo: 'tax_lien',
@@ -233,6 +275,7 @@ const ESTADOS: Estado[] = [
       'Processo complexo via Land Court — advogado local altamente recomendado',
       'Volume baixo e processo lento',
     ],
+    estrategias: [],
   },
   {
     abbr: 'MI', nome: 'Michigan', tipo: 'tax_deed',
@@ -244,6 +287,9 @@ const ESTADOS: Estado[] = [
       'Entidades com impostos atrasados no Michigan não podem licitar',
       'Pagamento integral exigido no dia do leilão',
     ],
+    estrategias: [
+      'Compra pré-foreclosure: após o forfeiture (ano 1) mas antes do leilão (ano 2), o proprietário ainda pode negociar a venda diretamente. Investidores abordam os donos nessa janela para comprar o imóvel abaixo do mercado sem enfrentar concorrência no leilão.',
+    ],
   },
   {
     abbr: 'MN', nome: 'Minnesota', tipo: 'tax_deed',
@@ -254,6 +300,7 @@ const ESTADOS: Estado[] = [
       'Processo conduzido pelo condado',
       'Pagamento integral exigido no dia da venda',
     ],
+    estrategias: [],
   },
   {
     abbr: 'MS', nome: 'Mississippi', tipo: 'tax_lien',
@@ -264,6 +311,7 @@ const ESTADOS: Estado[] = [
       'Registro antecipado necessário',
       'Pagamento em dinheiro ou cheque administrativo no dia do leilão',
     ],
+    estrategias: [],
   },
   {
     abbr: 'MO', nome: 'Missouri', tipo: 'hibrido',
@@ -274,6 +322,7 @@ const ESTADOS: Estado[] = [
       'Registro antecipado obrigatório',
       'Proprietários com impostos atrasados não podem participar',
     ],
+    estrategias: [],
   },
   {
     abbr: 'MT', nome: 'Montana', tipo: 'tax_lien',
@@ -284,6 +333,7 @@ const ESTADOS: Estado[] = [
       'Registro no condado necessário',
       'Processo administrativo — sem leilão público formal em muitos condados',
     ],
+    estrategias: [],
   },
   {
     abbr: 'NE', nome: 'Nebraska', tipo: 'tax_lien',
@@ -294,6 +344,7 @@ const ESTADOS: Estado[] = [
       'Registro antecipado obrigatório',
       'Pagamento integral exigido após arrematação',
     ],
+    estrategias: [],
   },
   {
     abbr: 'NV', nome: 'Nevada', tipo: 'tax_deed',
@@ -304,6 +355,7 @@ const ESTADOS: Estado[] = [
       'Registro online obrigatório (Clark County: Bid4Assets)',
       'Pagamento integral no dia do leilão — cheque administrativo ou transferência bancária',
     ],
+    estrategias: [],
   },
   {
     abbr: 'NH', nome: 'New Hampshire', tipo: 'tax_deed',
@@ -314,6 +366,7 @@ const ESTADOS: Estado[] = [
       'Regras definidas por cada município',
       'Volume muito baixo de leilões públicos',
     ],
+    estrategias: [],
   },
   {
     abbr: 'NJ', nome: 'New Jersey', tipo: 'tax_lien',
@@ -322,8 +375,11 @@ const ESTADOS: Estado[] = [
     restricoes: [
       'Sem exigência de residência no estado',
       'Registro antecipado obrigatório com depósito (tipicamente $2.000+)',
-      'Mercado muito competitivo — juros muitas vezes licitados até 0%, o prêmio vira o lucro',
-      'Municípios têm regras próprias de registro e depósito',
+      'Mercado muito competitivo — municípios têm regras próprias de registro',
+      'Prêmio pago ao município NÃO é reembolsado se o proprietário resgatar',
+    ],
+    estrategias: [
+      'Licitação de prêmio: em NJ os juros são licitados para baixo (de 18% até 0%). Quando chegam a 0%, investidores passam a licitar um "prêmio" em dinheiro pago ao município. O prêmio não é recuperado no resgate — o ganho vem somente dos juros sobre os impostos. Estratégia: licitar prêmio apenas em imóveis onde há alta probabilidade de o proprietário não resgatar.',
     ],
   },
   {
@@ -335,6 +391,7 @@ const ESTADOS: Estado[] = [
       'Registro antecipado no condado necessário',
       'Pagamento integral exigido no dia da venda',
     ],
+    estrategias: [],
   },
   {
     abbr: 'NY', nome: 'New York', tipo: 'tax_deed',
@@ -346,6 +403,7 @@ const ESTADOS: Estado[] = [
       'NYC: imóveis com violações pendentes podem ter ônus adicionais não eliminados na venda',
       'Registro antecipado necessário para leilões municipais',
     ],
+    estrategias: [],
   },
   {
     abbr: 'NC', nome: 'North Carolina', tipo: 'tax_deed',
@@ -353,9 +411,12 @@ const ESTADOS: Estado[] = [
     notas: 'Sistema de "upset bid" único: após o leilão, qualquer pessoa pode superar o lance em 5% em até 10 dias. Processo pode se estender por semanas.',
     restricoes: [
       'Sem exigência de residência no estado',
-      'Sistema de upset bid: qualquer pessoa pode superar seu lance em 5% dentro de 10 dias após o leilão',
-      'Processo pode levar semanas ou meses até confirmação final',
       'Pagamento imediato após confirmação definitiva do lance',
+      'Processo pode levar semanas ou meses até confirmação final do bid',
+    ],
+    estrategias: [
+      'Upset bid aberto a todos: qualquer pessoa — não apenas participantes do leilão original — pode fazer um upset bid de 5% acima do lance vencedor dentro de 10 dias. Isso permite entrar em leilões já realizados sem ter participado ao vivo.',
+      'Estratégia de cansaço: alguns investidores fazem sucessivos upset bids para desestimular concorrentes, sabendo que cada novo bid reinicia o prazo de 10 dias e exige novo depósito dos outros.',
     ],
   },
   {
@@ -367,6 +428,7 @@ const ESTADOS: Estado[] = [
       'Volume muito baixo de leilões',
       'Processo administrativo pelo condado',
     ],
+    estrategias: [],
   },
   {
     abbr: 'OH', nome: 'Ohio', tipo: 'tax_deed',
@@ -378,6 +440,9 @@ const ESTADOS: Estado[] = [
       'Proprietários com impostos atrasados no condado não podem licitar',
       'Leilão online disponível em muitos condados (ex: Bid4Assets)',
     ],
+    estrategias: [
+      'Board of Revision: após arrematar, o novo proprietário pode contestar o valor avaliado do imóvel junto ao Board of Revision do condado, potencialmente reduzindo o IPTU futuro — especialmente útil em imóveis com avaliação acima do mercado.',
+    ],
   },
   {
     abbr: 'OK', nome: 'Oklahoma', tipo: 'tax_deed',
@@ -388,6 +453,7 @@ const ESTADOS: Estado[] = [
       'Registro antecipado obrigatório',
       'Pagamento integral exigido no dia do leilão',
     ],
+    estrategias: [],
   },
   {
     abbr: 'OR', nome: 'Oregon', tipo: 'tax_deed',
@@ -398,6 +464,7 @@ const ESTADOS: Estado[] = [
       'Registro antecipado obrigatório no condado',
       'Pagamento integral exigido no dia da arrematação',
     ],
+    estrategias: [],
   },
   {
     abbr: 'PA', nome: 'Pennsylvania', tipo: 'tax_deed',
@@ -409,6 +476,9 @@ const ESTADOS: Estado[] = [
       'Judicial Sale: sem restrição de delinquência para participação',
       'Registro antecipado obrigatório — prazo geralmente 2 semanas antes do leilão',
     ],
+    estrategias: [
+      'Judicial Sale elimina hipotecas: diferente do Upset Sale (que mantém ônus remanescentes), a Judicial Sale transfere o imóvel completamente livre de hipotecas e outros gravames — incluindo dívidas de bancos. Permite adquirir imóveis hipotecados por apenas o valor dos impostos devidos.',
+    ],
   },
   {
     abbr: 'RI', nome: 'Rhode Island', tipo: 'tax_lien',
@@ -419,6 +489,7 @@ const ESTADOS: Estado[] = [
       'Regras definidas por cada município',
       'Volume baixo de leilões públicos',
     ],
+    estrategias: [],
   },
   {
     abbr: 'SC', nome: 'South Carolina', tipo: 'tax_lien',
@@ -428,6 +499,9 @@ const ESTADOS: Estado[] = [
       'Sem exigência de residência no estado',
       'Proprietários com impostos atrasados no condado não podem licitar',
       'Registro antecipado obrigatório',
+    ],
+    estrategias: [
+      'Licitação de taxa: assim como Illinois e NJ, SC leiloa a taxa de juros para baixo. Quem aceitar a menor taxa leva o certificado. Em imóveis muito desejados a taxa pode ir a 3% — mas o ganho real vem se o proprietário não resgatar e o investidor ficar com o imóvel.',
     ],
   },
   {
@@ -439,6 +513,7 @@ const ESTADOS: Estado[] = [
       'Processo administrativo pelo condado',
       'Volume baixo — mercado menos ativo',
     ],
+    estrategias: [],
   },
   {
     abbr: 'TN', nome: 'Tennessee', tipo: 'tax_deed',
@@ -450,6 +525,7 @@ const ESTADOS: Estado[] = [
       'Leilão online disponível em condados como Shelby (Memphis)',
       'Processo judicial — advogado local recomendado',
     ],
+    estrategias: [],
   },
   {
     abbr: 'TX', nome: 'Texas', tipo: 'tax_deed',
@@ -459,11 +535,13 @@ const ESTADOS: Estado[] = [
       'Sem exigência de residência no estado',
       'Participantes com impostos atrasados no Texas NÃO podem licitar',
       'Pagamento integral no dia do leilão (cheque administrativo ou dinheiro)',
-      'Direito de resgate (Tax Code §34.21): ex-proprietário pode recomprar pagando o valor do leilão + 25% (1º ano) ou + 50% (2º ano)',
       'Homestead e terra agrícola: resgate de até 2 anos — NÃO faça reformas nem invista no imóvel durante esse período',
       'Imóvel comercial / não-homestead: resgate de 6 meses',
-      'Não é possível impedir o resgate — é direito garantido por lei estadual',
-      '💡 Estratégia: o ex-dono pode vender/ceder o direito de resgate a terceiros. Investidores pagam um valor ao ex-proprietário pela cessão, exercem o resgate (valor do leilão + 25%) e ficam com o imóvel abaixo do mercado.',
+      'Direito de resgate (Tax Code §34.21): ex-proprietário recompra pagando o valor do leilão + 25% (1º ano) ou + 50% (2º ano) — não é possível impedir',
+    ],
+    estrategias: [
+      'Cessão do direito de resgate: o ex-proprietário pode vender o direito de resgate a terceiros. Você paga ao ex-dono um valor pela cessão (ex: $5.000), exerce o resgate pagando ao arrematante o valor do leilão + 25%, e adquire o imóvel abaixo do mercado.',
+      'Propriedades "struck off": imóveis que não foram vendidos no leilão são transferidos à entidade tributária (condado, cidade, escola). Essas entidades vendem diretamente ao público — sem leilão, sem concorrência — geralmente pelo valor dos impostos devidos.',
     ],
   },
   {
@@ -475,6 +553,7 @@ const ESTADOS: Estado[] = [
       'Registro antecipado no condado necessário',
       'Pagamento integral exigido no dia da venda',
     ],
+    estrategias: [],
   },
   {
     abbr: 'VT', nome: 'Vermont', tipo: 'tax_lien',
@@ -485,6 +564,7 @@ const ESTADOS: Estado[] = [
       'Regras definidas por cada município',
       'Volume muito baixo de leilões públicos',
     ],
+    estrategias: [],
   },
   {
     abbr: 'VA', nome: 'Virginia', tipo: 'tax_deed',
@@ -495,6 +575,7 @@ const ESTADOS: Estado[] = [
       'Processo 100% judicial — advogado local necessário',
       'Registro antecipado necessário para leilões do condado',
     ],
+    estrategias: [],
   },
   {
     abbr: 'WA', nome: 'Washington', tipo: 'tax_deed',
@@ -505,6 +586,7 @@ const ESTADOS: Estado[] = [
       'Registro antecipado obrigatório',
       'Pagamento integral exigido no dia do leilão (cheque administrativo)',
     ],
+    estrategias: [],
   },
   {
     abbr: 'WV', nome: 'West Virginia', tipo: 'hibrido',
@@ -515,6 +597,7 @@ const ESTADOS: Estado[] = [
       'Registro antecipado obrigatório para ambos os leilões (lien e deed)',
       'Processo em dois estágios — acompanhe o calendário do condado',
     ],
+    estrategias: [],
   },
   {
     abbr: 'WI', nome: 'Wisconsin', tipo: 'tax_deed',
@@ -525,6 +608,7 @@ const ESTADOS: Estado[] = [
       'Processo conduzido pelo County Treasurer',
       'Pagamento integral exigido no dia da venda',
     ],
+    estrategias: [],
   },
   {
     abbr: 'WY', nome: 'Wyoming', tipo: 'tax_lien',
@@ -535,6 +619,7 @@ const ESTADOS: Estado[] = [
       'Volume muito baixo de leilões — estado pouco populoso',
       'Processo administrativo pelo condado',
     ],
+    estrategias: [],
   },
 ]
 
@@ -551,9 +636,11 @@ const FILTROS = [
   { value: 'hibrido',  label: 'Híbrido' },
 ]
 
+type Panel = 'regras' | 'estrategias'
+
 export default function StatesGuide() {
   const [filtro, setFiltro] = useState<string>('todos')
-  const [expanded, setExpanded] = useState<Set<string>>(new Set())
+  const [expanded, setExpanded] = useState<Map<string, Panel>>(new Map())
 
   const visíveis = filtro === 'todos' ? ESTADOS : ESTADOS.filter(e => e.tipo === filtro)
 
@@ -563,10 +650,14 @@ export default function StatesGuide() {
     hibrido:  ESTADOS.filter(e => e.tipo === 'hibrido').length,
   }
 
-  function toggleExpanded(abbr: string) {
+  function togglePanel(abbr: string, panel: Panel) {
     setExpanded(prev => {
-      const next = new Set(prev)
-      next.has(abbr) ? next.delete(abbr) : next.add(abbr)
+      const next = new Map(prev)
+      if (next.get(abbr) === panel) {
+        next.delete(abbr)
+      } else {
+        next.set(abbr, panel)
+      }
       return next
     })
   }
@@ -629,7 +720,7 @@ export default function StatesGuide() {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {visíveis.map(estado => {
           const cfg = TIPO_CONFIG[estado.tipo]
-          const isOpen = expanded.has(estado.abbr)
+          const activePanel = expanded.get(estado.abbr)
           return (
             <div key={estado.abbr} className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
               <div className="p-5">
@@ -644,13 +735,11 @@ export default function StatesGuide() {
                   </span>
                 </div>
 
-                {/* Frequência */}
                 <div className="mb-2">
                   <div className="text-xs text-gray-400 uppercase tracking-wide mb-0.5">Frequência</div>
                   <div className="text-sm font-medium text-gray-800">{estado.frequencia}</div>
                 </div>
 
-                {/* Período de resgate */}
                 <div className="mb-3">
                   <div className="text-xs text-gray-400 uppercase tracking-wide mb-0.5">Período de resgate</div>
                   <div className="text-sm font-medium text-gray-800">
@@ -658,26 +747,43 @@ export default function StatesGuide() {
                   </div>
                 </div>
 
-                {/* Notas */}
                 <p className="text-xs text-gray-500 leading-relaxed border-t border-gray-50 pt-3">
                   {estado.notas}
                 </p>
 
-                {/* Toggle regras */}
-                <button
-                  onClick={() => toggleExpanded(estado.abbr)}
-                  className="mt-3 flex items-center gap-1 text-xs font-semibold text-[#002868] hover:opacity-75 transition-opacity"
-                >
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                    style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
-                    <polyline points="6 9 12 15 18 9" />
-                  </svg>
-                  {isOpen ? 'Ocultar regras' : 'Ver regras de participação'}
-                </button>
+                {/* Toggle buttons */}
+                <div className="mt-3 flex gap-3">
+                  <button
+                    onClick={() => togglePanel(estado.abbr, 'regras')}
+                    className={`flex items-center gap-1 text-xs font-semibold transition-opacity ${
+                      activePanel === 'regras' ? 'text-[#002868]' : 'text-gray-400 hover:text-[#002868]'
+                    }`}
+                  >
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                      style={{ transform: activePanel === 'regras' ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}>
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                    Regras
+                  </button>
+                  {estado.estrategias.length > 0 && (
+                    <button
+                      onClick={() => togglePanel(estado.abbr, 'estrategias')}
+                      className={`flex items-center gap-1 text-xs font-semibold transition-opacity ${
+                        activePanel === 'estrategias' ? 'text-amber-600' : 'text-gray-400 hover:text-amber-600'
+                      }`}
+                    >
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                        style={{ transform: activePanel === 'estrategias' ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}>
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                      Estratégias
+                    </button>
+                  )}
+                </div>
               </div>
 
               {/* Regras expandidas */}
-              {isOpen && (
+              {activePanel === 'regras' && (
                 <div className="border-t border-gray-100 px-5 py-4 bg-gray-50 rounded-b-xl">
                   <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Regras de participação</div>
                   <ul className="space-y-1.5">
@@ -687,6 +793,21 @@ export default function StatesGuide() {
                           {i + 1}
                         </span>
                         {r}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Estratégias expandidas */}
+              {activePanel === 'estrategias' && (
+                <div className="border-t border-amber-100 px-5 py-4 bg-amber-50 rounded-b-xl">
+                  <div className="text-xs font-semibold text-amber-700 uppercase tracking-wide mb-2">Estratégias de investimento</div>
+                  <ul className="space-y-3">
+                    {estado.estrategias.map((e, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs text-amber-900 leading-relaxed">
+                        <span className="mt-0.5 shrink-0 text-amber-500">💡</span>
+                        {e}
                       </li>
                     ))}
                   </ul>
