@@ -24,6 +24,17 @@ export default function AuctionDetail() {
   const [floodZone, setFloodZone] = useState<FloodZoneState>(null)
   const [manualAddress, setManualAddress] = useState('')
   const [savingAddress, setSavingAddress] = useState(false)
+  const [copiedCoords, setCopiedCoords] = useState(false)
+
+  function copyAndOpenRegrid() {
+    if (!auction?.lat || !auction?.lng) return
+    navigator.clipboard.writeText(`${auction.lat}, ${auction.lng}`)
+    setCopiedCoords(true)
+    setTimeout(() => setCopiedCoords(false), 2000)
+    const state = auction.state.toLowerCase()
+    const county = auction.county.toLowerCase().replace(/\s+county$/i, '').trim().replace(/\s+/g, '-')
+    window.open(`https://app.regrid.com/us/${state}/${county}`, '_blank')
+  }
 
   useEffect(() => {
     if (!id) return
@@ -171,15 +182,17 @@ export default function AuctionDetail() {
         )
       })()}
 
-      {auction.lat && auction.lng && (
-        <div className="mt-6">
+      <div className="mt-6">
           <h2 style={{ color: 'var(--navy)' }} className="font-semibold mb-2">Zona de Inundação (FEMA)</h2>
-          {floodZone === 'loading' && (
+          {!auction.lat || !auction.lng ? (
+            <div className="text-sm text-gray-400 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3">
+              Sem coordenadas disponíveis para consultar a zona de inundação.
+            </div>
+          ) : floodZone === 'loading' ? (
             <div className="text-sm text-gray-400">Consultando FEMA...</div>
-          )}
-          {floodZone === 'error' && (
+          ) : floodZone === 'error' ? (
             <div className="text-sm text-gray-400">Não foi possível consultar a zona de inundação.</div>
-          )}
+          ) : null}
           {floodZone && floodZone !== 'loading' && floodZone !== 'error' && (() => {
             const s = floodZoneStyle(floodZone.zone)
             return (
@@ -210,7 +223,6 @@ export default function AuctionDetail() {
             )
           })()}
         </div>
-      )}
 
       <div className="mt-6">
         <h2 style={{ color: 'var(--navy)' }} className="font-semibold mb-2">{t.detail_notes}</h2>
@@ -258,6 +270,25 @@ export default function AuctionDetail() {
             </div>
           </a>
         )}
+        <button
+          onClick={copyAndOpenRegrid}
+          className="flex items-center gap-3 p-4 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 transition-all text-left w-full">
+          <div className="w-10 h-10 rounded-lg bg-emerald-600 flex items-center justify-center flex-shrink-0">
+            {copiedCoords ? (
+              <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            ) : (
+              <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+            )}
+          </div>
+          <div className="min-w-0">
+            <p className="font-semibold text-emerald-900 text-sm">{copiedCoords ? 'Copiado! Abrindo Regrid...' : 'Regrid'}</p>
+            <p className="text-xs text-emerald-600">
+              {copiedCoords
+                ? `${auction.lat}, ${auction.lng}`
+                : auction.lat && auction.lng ? 'Copiar coords e abrir' : 'Sem coordenadas — abre no condado'}
+            </p>
+          </div>
+        </button>
         {(auction.address || (auction.lat && auction.lng)) && (
           <a
             href={auction.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(auction.address)}` : `https://www.google.com/maps?q=${auction.lat},${auction.lng}`}
