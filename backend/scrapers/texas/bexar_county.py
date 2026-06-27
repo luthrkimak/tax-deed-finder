@@ -81,7 +81,7 @@ class BexarCountyScraper(BaseScraper):
                 "parcel_id": doc_number,
                 "auction_date": auction_date.isoformat(),
                 "source": "scrape",
-                "source_url": f"https://bexar.tx.publicsearch.us/doc/{doc_number}" if doc_number else self.source_url,
+                "source_url": self.source_url,
                 "lat": lat if lat else None,
                 "lng": lng if lng else None,
             })
