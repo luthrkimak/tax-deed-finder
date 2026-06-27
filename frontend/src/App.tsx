@@ -31,7 +31,7 @@ function HomeRedirect() {
     return () => subscription.unsubscribe()
   }, [])
   if (session === undefined) return null
-  return session ? <Navigate to="/dashboard" replace /> : <Search />
+  return session ? <Navigate to="/dashboard" replace /> : <Navigate to="/auth" replace />
 }
 
 export default function App() {
@@ -44,7 +44,7 @@ export default function App() {
             <Navbar />
             <Routes>
               <Route path="/" element={<HomeRedirect />} />
-              <Route path="/search" element={<Search />} />
+              <Route path="/search" element={<RequireAuth><Search /></RequireAuth>} />
               <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
               <Route path="/auctions/:id" element={<AuctionDetail />} />
               <Route path="/favorites" element={<RequireAuth><Favorites /></RequireAuth>} />
