@@ -129,7 +129,9 @@ export default function Search() {
               {favError}
             </div>
           )}
-          <p className="text-sm text-gray-500">{total.toLocaleString()} {t.search_results}</p>
+          <p className="text-sm text-gray-500">
+            <span className="font-semibold text-gray-900">{total.toLocaleString()}</span> {t.search_results}
+          </p>
           {auctions.map(auction => (
             <AuctionCard
               key={auction.id}

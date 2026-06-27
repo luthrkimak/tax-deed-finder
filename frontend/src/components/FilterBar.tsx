@@ -52,13 +52,13 @@ export default function FilterBar({ onSearch, loading, initialValues }: Props) {
     })
   }
 
-  const selectClass = "border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-[#002868]"
-  const inputClass  = "border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-[#002868]"
+  const selectClass = "border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:border-[#002868] focus:ring-1 focus:ring-[#002868]/20 bg-white"
+  const inputClass  = "border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:border-[#002868] focus:ring-1 focus:ring-[#002868]/20 bg-white"
 
   return (
-    <form onSubmit={handleSearch} className="bg-white border-b px-6 py-3 flex flex-wrap gap-3 items-end">
+    <form onSubmit={handleSearch} className="bg-white border-b border-gray-100 shadow-sm px-6 py-3 flex flex-wrap gap-3 items-end">
       <div>
-        <label className="block text-xs font-medium text-gray-500 mb-1">{t.filter_state}</label>
+        <label className="block text-xs font-medium text-gray-400 mb-1">{t.filter_state}</label>
         <select value={state} onChange={e => setState(e.target.value)} className={selectClass}>
           <option value="">{t.filter_all}</option>
           {US_STATES.map(s => <option key={s} value={s}>{s}</option>)}
@@ -66,7 +66,7 @@ export default function FilterBar({ onSearch, loading, initialValues }: Props) {
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-500 mb-1">{t.filter_county}</label>
+        <label className="block text-xs font-medium text-gray-400 mb-1">{t.filter_county}</label>
         <select
           value={county}
           onChange={e => setCounty(e.target.value)}
@@ -79,7 +79,7 @@ export default function FilterBar({ onSearch, loading, initialValues }: Props) {
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-500 mb-1">{t.filter_type}</label>
+        <label className="block text-xs font-medium text-gray-400 mb-1">{t.filter_type}</label>
         <select value={type} onChange={e => setType(e.target.value as AuctionType | '')} className={selectClass}>
           <option value="">{t.filter_all}</option>
           <option value="tax_deed">{t.type_tax_deed}</option>
@@ -89,7 +89,7 @@ export default function FilterBar({ onSearch, loading, initialValues }: Props) {
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-500 mb-1">{t.filter_property}</label>
+        <label className="block text-xs font-medium text-gray-400 mb-1">{t.filter_property}</label>
         <select value={propertyType} onChange={e => setPropertyType(e.target.value as PropertyType | '')} className={selectClass}>
           <option value="">{t.filter_all}</option>
           <option value="residential">{t.prop_residential}</option>
@@ -99,17 +99,17 @@ export default function FilterBar({ onSearch, loading, initialValues }: Props) {
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-500 mb-1">{t.filter_min_bid}</label>
+        <label className="block text-xs font-medium text-gray-400 mb-1">{t.filter_min_bid}</label>
         <input type="number" value={minBid} onChange={e => setMinBid(e.target.value)} placeholder="0" className={`${inputClass} w-28`} />
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-500 mb-1">{t.filter_max_bid}</label>
+        <label className="block text-xs font-medium text-gray-400 mb-1">{t.filter_max_bid}</label>
         <input type="number" value={maxBid} onChange={e => setMaxBid(e.target.value)} placeholder={t.filter_any_value} className={`${inputClass} w-28`} />
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-500 mb-1">{t.filter_date_from}</label>
+        <label className="block text-xs font-medium text-gray-400 mb-1">{t.filter_date_from}</label>
         <input
           type="date"
           value={dateFrom}
@@ -119,7 +119,7 @@ export default function FilterBar({ onSearch, loading, initialValues }: Props) {
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-500 mb-1">{t.filter_date_to}</label>
+        <label className="block text-xs font-medium text-gray-400 mb-1">{t.filter_date_to}</label>
         <input
           type="date"
           value={dateTo}
@@ -131,8 +131,7 @@ export default function FilterBar({ onSearch, loading, initialValues }: Props) {
       <button
         type="submit"
         disabled={loading}
-        style={{ backgroundColor: loading ? undefined : 'var(--red)' }}
-        className="bg-gray-400 text-white px-5 py-1.5 rounded font-medium text-sm hover:opacity-90 transition-opacity disabled:opacity-50"
+        className="bg-[#002868] text-white px-5 py-1.5 rounded-lg font-medium text-sm hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {loading ? t.filter_searching : t.filter_search}
       </button>
