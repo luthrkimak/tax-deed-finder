@@ -88,7 +88,7 @@ export default function AuctionDetail() {
     [t.field_date,      auction.auction_date],
     [t.field_parcel,    auction.parcel_id],
     [t.field_prop_type, auction.property_type],
-    [t.field_status,    auction.status],
+    [t.field_status,    t[`status_${auction.status}` as keyof typeof t] ?? auction.status],
   ]
 
   return (

@@ -51,7 +51,7 @@ export default function AuctionCard({ auction, isFavorited, onToggleFavorite }: 
             </span>
             {auction.status === 'no_bid' && (
               <span className="text-xs font-semibold bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
-                Sem lance
+                {t[`status_${auction.status}` as keyof typeof t] ?? auction.status}
               </span>
             )}
           </div>
