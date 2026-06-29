@@ -7,6 +7,7 @@ from db.client import get_supabase
 router = APIRouter()
 
 EXCLUDE_STATUSES = ["archived", "cancelled", "sold", "no_bid"]
+ACTIVE_STATES = ["FL", "MS"]
 
 @router.get("")
 def get_stats(state: Optional[str] = Query(default=None)):
@@ -27,6 +28,8 @@ def get_stats(state: Optional[str] = Query(default=None)):
         )
         if state and state.upper() != "ALL":
             q = q.eq("state", state.upper())
+        else:
+            q = q.in_("state", ACTIVE_STATES)
         batch = q.range(offset, offset + page_size - 1).execute().data
         all_rows.extend(batch)
         if len(batch) < page_size:

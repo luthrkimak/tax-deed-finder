@@ -8,6 +8,8 @@ from models.auction import Auction, AuctionType, AuctionStatus, PropertyType
 
 router = APIRouter()
 
+ACTIVE_STATES = ["FL", "MS"]
+
 @router.get("")
 def get_auctions(
     state: Optional[str] = Query(None),
@@ -27,6 +29,8 @@ def get_auctions(
 
     if state:
         query = query.eq("state", state.upper())
+    else:
+        query = query.in_("state", ACTIVE_STATES)
     if county:
         query = query.eq("county", county)
     if type:
@@ -111,12 +115,14 @@ def get_pins(
     sb = get_supabase()
     base_filters = (
         sb.table("auctions")
-        .select("id,lat,lng,type,address,county,min_bid,assessed_value")
+        .select("id,lat,lng,type,state,address,county,min_bid,assessed_value")
         .not_.in_("status", ["archived", "cancelled", "sold", "no_bid"])
         .gte("auction_date", date.today().isoformat())
     )
     if state:
         base_filters = base_filters.eq("state", state.upper())
+    else:
+        base_filters = base_filters.in_("state", ACTIVE_STATES)
     if county:
         base_filters = base_filters.eq("county", county)
     if type:
