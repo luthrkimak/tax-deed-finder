@@ -1,6 +1,6 @@
 from __future__ import annotations
 import logging
-from datetime import date
+from datetime import date, datetime
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from db.client import get_supabase
@@ -14,7 +14,20 @@ from scrapers.texas.travis_county import TravisCountyScraper
 from scrapers.texas.bexar_county import BexarCountyScraper
 from scrapers.texas.collin_county import CollinCountyScraper
 from scrapers.georgia.fulton_county import FultonCountyScraper
+from scrapers.georgia.glynn import GlynnCountyScraper
+from scrapers.govease.discovery import GovEaseDiscovery
 from scrapers.mississippi.all_counties import MS_SCRAPERS
+# TODO (Task 4): add individual MS county scraper imports:
+# from scrapers.mississippi.counties.hinds import HindsCountyScraper
+# from scrapers.mississippi.counties.desoto import DeSotoCountyScraper
+# from scrapers.mississippi.counties.rankin import RankinCountyScraper
+# from scrapers.mississippi.counties.madison import MadisonCountyScraper
+# from scrapers.mississippi.counties.lee import LeeCountyScraper
+# from scrapers.mississippi.counties.lauderdale import LauderdaleCountyScraper
+# from scrapers.mississippi.counties.forrest import ForrestCountyScraper
+# from scrapers.mississippi.counties.jackson import JacksonCountyScraper
+# from scrapers.mississippi.counties.lowndes import LowndesCountyScraper
+# from scrapers.mississippi.counties.oktibbeha import OktibbehaCountyScraper
 from notifications import send_alert_emails
 
 logger = logging.getLogger(__name__)
@@ -30,8 +43,13 @@ SCRAPERS = [
     BexarCountyScraper,
     CollinCountyScraper,
     FultonCountyScraper,
+    GlynnCountyScraper,
     *MS_SCRAPERS,
 ]
+
+# GovEase Discovery runs only in July and August (MS annual tax lien auction season)
+if datetime.now().month in (7, 8):
+    SCRAPERS.append(GovEaseDiscovery)
 
 
 def run_all_scrapers():
