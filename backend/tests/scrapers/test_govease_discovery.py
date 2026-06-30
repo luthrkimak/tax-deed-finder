@@ -54,8 +54,8 @@ def test_run_dispatches_sub_scrapers(mock_playwright):
         discovery = GovEaseDiscovery()
         result = discovery.run()
 
-    # Two MS counties found → two sub-scrapers' run() called
-    assert mock_run.call_count == 2
+    # Two MS counties + one GA county found → three sub-scrapers' run() called
+    assert mock_run.call_count == 3
     # GovEaseDiscovery.run() always returns a zero-result aggregate
     assert result.records_found == 0
     assert result.records_new == 0

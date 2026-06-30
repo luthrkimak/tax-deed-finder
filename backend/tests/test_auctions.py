@@ -28,7 +28,19 @@ def test_get_auctions_returns_list(mock_get_supabase):
     result = MagicMock()
     result.data = [SAMPLE_AUCTION]
     result.count = 1
-    mock_sb.table.return_value.select.return_value.range.return_value.execute.return_value = result
+
+    # Build a chainable query mock: every filter method returns itself
+    q = MagicMock()
+    q.in_.return_value = q
+    q.eq.return_value = q
+    q.not_ = MagicMock()
+    q.not_.in_.return_value = q
+    q.gte.return_value = q
+    q.lte.return_value = q
+    q.order.return_value = q
+    q.range.return_value = q
+    q.execute.return_value = result
+    mock_sb.table.return_value.select.return_value = q
     mock_get_supabase.return_value = mock_sb
 
     response = client.get("/auctions")

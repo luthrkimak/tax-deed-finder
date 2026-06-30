@@ -1,6 +1,6 @@
 from __future__ import annotations
 import logging
-from datetime import date, datetime
+from datetime import date
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from db.client import get_supabase
@@ -14,7 +14,6 @@ from scrapers.texas.travis_county import TravisCountyScraper
 from scrapers.texas.bexar_county import BexarCountyScraper
 from scrapers.texas.collin_county import CollinCountyScraper
 from scrapers.georgia.fulton_county import FultonCountyScraper
-from scrapers.georgia.glynn import GlynnCountyScraper
 from scrapers.govease.discovery import GovEaseDiscovery
 from scrapers.mississippi.all_counties import MS_SCRAPERS
 from scrapers.mississippi.counties.hinds import HindsCountyScraper
@@ -42,7 +41,7 @@ SCRAPERS = [
     BexarCountyScraper,
     CollinCountyScraper,
     FultonCountyScraper,
-    GlynnCountyScraper,
+    GovEaseDiscovery,
     *MS_SCRAPERS,
     HindsCountyScraper,
     DeSotoCountyScraper,
@@ -58,8 +57,6 @@ SCRAPERS = [
 
 def run_all_scrapers():
     scrapers = list(SCRAPERS)
-    if datetime.now().month in (7, 8):
-        scrapers.append(GovEaseDiscovery)
     new_ids: list[str] = []
     for ScraperClass in scrapers:
         scraper = ScraperClass()

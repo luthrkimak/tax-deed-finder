@@ -7,7 +7,7 @@ from db.client import get_supabase
 router = APIRouter()
 
 EXCLUDE_STATUSES = ["archived", "cancelled", "sold", "no_bid"]
-ACTIVE_STATES = ["FL", "MS"]
+ACTIVE_STATES = ["FL", "MS", "GA"]
 
 @router.get("")
 def get_stats(state: Optional[str] = Query(default=None)):
