@@ -123,6 +123,7 @@ def make_fl_taxdeed_scraper(county_name: str, slug: str) -> type[RealForecloseSc
             "source_name":  f"{slug}_taxdeed_fl",
             "base_url":     f"https://{slug}.realtaxdeed.com",
             "auction_type": "tax_deed",
+            "ignore_ssl":   True,
         },
     )
 
