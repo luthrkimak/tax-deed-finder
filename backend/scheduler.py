@@ -56,14 +56,12 @@ SCRAPERS = [
     OktibbehaCountyScraper,
 ]
 
-# GovEase Discovery runs only in July and August (MS annual tax lien auction season)
-if datetime.now().month in (7, 8):
-    SCRAPERS.append(GovEaseDiscovery)
-
-
 def run_all_scrapers():
+    scrapers = list(SCRAPERS)
+    if datetime.now().month in (7, 8):
+        scrapers.append(GovEaseDiscovery)
     new_ids: list[str] = []
-    for ScraperClass in SCRAPERS:
+    for ScraperClass in scrapers:
         scraper = ScraperClass()
         try:
             result = scraper.run()
