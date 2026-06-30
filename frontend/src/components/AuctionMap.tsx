@@ -125,7 +125,7 @@ function FitBounds({ pins, filterKey, state, county }: {
           return
         }
       }
-    } catch {}
+    } catch { /* ignore stale localStorage */ }
     const bounds = L.latLngBounds(pins.map(p => [p.lat, p.lng]))
     map.fitBounds(bounds, { padding: [48, 48], maxZoom: 13, animate: true })
   }, [pins]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -190,7 +190,7 @@ export default function AuctionMap({ filters }: Props) {
           return { center: [saved.lat, saved.lng] as [number, number], zoom: saved.zoom as number }
         }
       }
-    } catch {}
+    } catch { /* ignore stale localStorage */ }
     return null
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 

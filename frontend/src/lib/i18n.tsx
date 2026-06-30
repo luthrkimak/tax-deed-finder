@@ -251,12 +251,14 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useI18n() {
   const ctx = useContext(I18nContext)
   if (!ctx) throw new Error('useI18n must be used inside I18nProvider')
   return ctx
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const LANG_OPTIONS: { value: Lang; flag: string; label: string }[] = [
   { value: 'pt', flag: '🇧🇷', label: 'Português' },
   { value: 'en', flag: '🇺🇸', label: 'English' },

@@ -67,6 +67,7 @@ export default function AuctionDetail() {
 
   useEffect(() => {
     if (!auction?.lat || !auction?.lng) return
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setFloodZone('loading')
     const base = import.meta.env.VITE_API_URL || 'http://localhost:8000'
     fetch(`${base}/flood-zone?lat=${auction.lat}&lng=${auction.lng}`)

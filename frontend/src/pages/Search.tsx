@@ -84,7 +84,8 @@ export default function Search() {
     }
   }, [setSearchParams])
 
-  useEffect(() => { search(initialFilters, initialPage) }, [])  // eslint-disable-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
+  useEffect(() => { search(initialFilters, initialPage) }, [])
 
   async function toggleFavorite(auction: Auction) {
     setFavError(null)
