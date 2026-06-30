@@ -11,7 +11,7 @@ def test_parse_returns_auction_records():
 
     assert len(records) == 2
     assert records[0]["parcel_id"] == "01-23-28-0000-00-001"
-    assert records[0]["address"] == "123 Main St Orlando FL 32801"
+    assert records[0]["address"] == "123 Main St Orlando FL 32801, FL"
     assert records[0]["min_bid"] == 45000.00
     assert records[0]["state"] == "FL"
     assert records[0]["county"] == "Orange"

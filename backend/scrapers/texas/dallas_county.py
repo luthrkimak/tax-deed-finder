@@ -97,6 +97,44 @@ class DallasCountyScraper(BaseScraper):
             "source_url": url,
         }
 
+    def parse(self, html: str) -> list[dict]:
+        soup = BeautifulSoup(html, "lxml")
+        records = []
+        for item in soup.select("div.listing-item"):
+            parcel_el = item.select_one(".parcel")
+            addr_el = item.select_one(".address")
+            bid_el = item.select_one(".opening-bid")
+            date_el = item.select_one(".sale-date")
+
+            parcel_id = parcel_el.get_text(strip=True) if parcel_el else None
+            address = addr_el.get_text(strip=True) if addr_el else None
+            bid_text = bid_el.get_text(strip=True) if bid_el else ""
+            date_text = date_el.get_text(strip=True) if date_el else None
+
+            bid_clean = re.sub(r"[^\d.]", "", bid_text)
+            min_bid = float(bid_clean) if bid_clean else None
+
+            if not parcel_id and not address:
+                continue
+            if not parcel_id:
+                key = f"{address}-{self.county}-{self.state}"
+                parcel_id = "DAL-" + hashlib.md5(key.encode()).hexdigest()[:12]
+
+            records.append({
+                "type": "foreclosure",
+                "status": "upcoming",
+                "state": self.state,
+                "county": self.county,
+                "address": address,
+                "parcel_id": parcel_id,
+                "min_bid": min_bid,
+                "assessed_value": None,
+                "auction_date": date_text,
+                "source": "scrape",
+                "source_url": NOTICES_URL,
+            })
+        return records
+
     def scrape(self) -> list[dict]:
         pdf_urls = self._get_pdf_urls()
         records = []

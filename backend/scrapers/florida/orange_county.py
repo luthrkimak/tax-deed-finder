@@ -5,4 +5,4 @@ class OrangeCountyScraper(RealForecloseScraper):
     county = "Orange"
     source_name = "orange_county_fl"
     base_url = "https://myorangeclerk.realforeclose.com"
-    auction_type = "foreclosure"
+    auction_type = "tax_deed"
