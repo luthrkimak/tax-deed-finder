@@ -17,17 +17,16 @@ from scrapers.georgia.fulton_county import FultonCountyScraper
 from scrapers.georgia.glynn import GlynnCountyScraper
 from scrapers.govease.discovery import GovEaseDiscovery
 from scrapers.mississippi.all_counties import MS_SCRAPERS
-# TODO (Task 4): add individual MS county scraper imports:
-# from scrapers.mississippi.counties.hinds import HindsCountyScraper
-# from scrapers.mississippi.counties.desoto import DeSotoCountyScraper
-# from scrapers.mississippi.counties.rankin import RankinCountyScraper
-# from scrapers.mississippi.counties.madison import MadisonCountyScraper
-# from scrapers.mississippi.counties.lee import LeeCountyScraper
-# from scrapers.mississippi.counties.lauderdale import LauderdaleCountyScraper
-# from scrapers.mississippi.counties.forrest import ForrestCountyScraper
-# from scrapers.mississippi.counties.jackson import JacksonCountyScraper
-# from scrapers.mississippi.counties.lowndes import LowndesCountyScraper
-# from scrapers.mississippi.counties.oktibbeha import OktibbehaCountyScraper
+from scrapers.mississippi.counties.hinds import HindsCountyScraper
+from scrapers.mississippi.counties.desoto import DeSotoCountyScraper
+from scrapers.mississippi.counties.rankin import RankinCountyScraper
+from scrapers.mississippi.counties.madison import MadisonCountyScraper
+from scrapers.mississippi.counties.lee import LeeCountyScraper
+from scrapers.mississippi.counties.lauderdale import LauderdaleCountyScraper
+from scrapers.mississippi.counties.forrest import ForrestCountyScraper
+from scrapers.mississippi.counties.jackson import JacksonCountyScraper
+from scrapers.mississippi.counties.lowndes import LowndesCountyScraper
+from scrapers.mississippi.counties.oktibbeha import OktibbehaCountyScraper
 from notifications import send_alert_emails
 
 logger = logging.getLogger(__name__)
@@ -45,6 +44,16 @@ SCRAPERS = [
     FultonCountyScraper,
     GlynnCountyScraper,
     *MS_SCRAPERS,
+    HindsCountyScraper,
+    DeSotoCountyScraper,
+    RankinCountyScraper,
+    MadisonCountyScraper,
+    LeeCountyScraper,
+    LauderdaleCountyScraper,
+    ForrestCountyScraper,
+    JacksonCountyScraper,
+    LowndesCountyScraper,
+    OktibbehaCountyScraper,
 ]
 
 # GovEase Discovery runs only in July and August (MS annual tax lien auction season)
