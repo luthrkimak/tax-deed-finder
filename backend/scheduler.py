@@ -14,6 +14,7 @@ from scrapers.texas.travis_county import TravisCountyScraper
 from scrapers.texas.bexar_county import BexarCountyScraper
 from scrapers.texas.collin_county import CollinCountyScraper
 from scrapers.georgia.fulton_county import FultonCountyScraper
+from scrapers.georgia.dekalb_county import DeKalbCountyScraper
 from scrapers.govease.discovery import GovEaseDiscovery
 from scrapers.mississippi.all_counties import MS_SCRAPERS
 from scrapers.mississippi.counties.hinds import HindsCountyScraper
@@ -41,6 +42,7 @@ SCRAPERS = [
     BexarCountyScraper,
     CollinCountyScraper,
     FultonCountyScraper,
+    DeKalbCountyScraper,
     GovEaseDiscovery,
     *MS_SCRAPERS,
     HindsCountyScraper,
