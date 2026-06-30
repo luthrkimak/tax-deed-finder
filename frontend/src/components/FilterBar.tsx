@@ -9,7 +9,7 @@ interface Props {
   initialValues?: AuctionFilters
 }
 
-const US_STATES = ['FL', 'TX', 'GA']
+const US_STATES = ['FL', 'MS', 'GA']
 
 export default function FilterBar({ onSearch, loading, initialValues }: Props) {
   const { t } = useI18n()

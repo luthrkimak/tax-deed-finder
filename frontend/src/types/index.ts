@@ -64,6 +64,7 @@ export interface PinData {
   lat: number
   lng: number
   type: string
+  state: string
   address: string | null
   min_bid: number | null
   assessed_value: number | null

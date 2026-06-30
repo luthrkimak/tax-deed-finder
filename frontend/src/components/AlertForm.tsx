@@ -36,7 +36,7 @@ export default function AlertForm({ email: defaultEmail, onSubmit }: Props) {
           <select value={state} onChange={e => setState(e.target.value)} className="border rounded px-2 py-1.5 text-sm w-full">
             <option value="">Any</option>
             <option value="FL">FL</option>
-            <option value="TX">TX</option>
+            <option value="MS">MS</option>
             <option value="GA">GA</option>
           </select>
         </div>

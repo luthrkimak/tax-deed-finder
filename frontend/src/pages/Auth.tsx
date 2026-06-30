@@ -118,12 +118,12 @@ export default function Auth() {
             before the crowd.
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.95rem', lineHeight: 1.65, maxWidth: '30ch' }}>
-            Property auctions across Florida, Texas and Georgia — tracked daily, geocoded, and filtered so you can act first.
+            Property auctions across Florida, Mississippi and Georgia — tracked daily, geocoded, and filtered so you can act first.
           </p>
         </div>
 
         <div style={{ display: 'flex', gap: '2.5rem' }}>
-          {[{ value: 'FL · TX · GA', label: 'States' }, { value: 'Daily', label: 'Updates' }].map(({ value, label }) => (
+          {[{ value: 'FL · MS · GA', label: 'States' }, { value: 'Daily', label: 'Updates' }].map(({ value, label }) => (
             <div key={label}>
               <div style={{ color: '#ffffff', fontWeight: 700, fontSize: '1rem' }}>{value}</div>
               <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.15em', marginTop: '2px' }}>{label}</div>

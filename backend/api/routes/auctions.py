@@ -8,7 +8,7 @@ from models.auction import Auction, AuctionType, AuctionStatus, PropertyType
 
 router = APIRouter()
 
-ACTIVE_STATES = ["FL", "MS"]
+ACTIVE_STATES = ["FL", "MS", "GA"]
 
 @router.get("")
 def get_auctions(

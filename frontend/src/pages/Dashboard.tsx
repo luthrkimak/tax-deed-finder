@@ -6,7 +6,7 @@ import { apiClient } from '../lib/api'
 const STATES = [
   { value: 'ALL', label: 'Todos' },
   { value: 'FL',  label: 'Florida' },
-  { value: 'TX',  label: 'Texas' },
+  { value: 'MS',  label: 'Mississippi' },
   { value: 'GA',  label: 'Georgia' },
 ]
 
