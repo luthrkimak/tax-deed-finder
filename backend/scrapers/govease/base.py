@@ -1,6 +1,7 @@
 from __future__ import annotations
 import re
 import hashlib
+from datetime import datetime
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 from scrapers.base import BaseScraper
@@ -67,7 +68,6 @@ class GovEaseBaseScraper(BaseScraper):
             m = re.search(r"(\d{1,2}/\d{1,2}/\d{4})", desc_text)
             if m:
                 try:
-                    from datetime import datetime
                     auction_date = datetime.strptime(m.group(1), "%m/%d/%Y").date().isoformat()
                 except ValueError:
                     pass

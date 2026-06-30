@@ -48,6 +48,29 @@ def test_parse_fallback_parcel_id_for_missing():
     assert "987654321" in parcel_ids
 
 
+def test_parse_fallback_parcel_id_for_nonempty_owner():
+    """Row with empty parcel_id but non-empty owner gets a GE- hash id."""
+    html = """<html><body><table><tbody>
+      <tr class="nobid odd">
+        <td></td><td></td>
+        <td></td>
+        <td></td>
+        <td>Some Owner</td>
+        <td class="alignDollar">$500.00</td>
+        <td class="no-translate"></td>
+        <td></td>
+        <td class="no-translate-auctionname">2026 Adams Auction</td>
+        <td class="no-translate-auctiontype">Tax Lien</td>
+        <td>03d 01h</td><td></td><td></td>
+      </tr>
+    </tbody></table></body></html>"""
+    records = AdamsMSScraper().parse(html)
+    assert len(records) == 1
+    assert records[0]["parcel_id"].startswith("GE-")
+    assert len(records[0]["parcel_id"]) == 15  # "GE-" + 12 hex chars
+    assert records[0]["min_bid"] == 500.00
+
+
 @patch("scrapers.govease.base.sync_playwright")
 def test_scrape_calls_playwright(mock_playwright):
     mock_page = MagicMock()
