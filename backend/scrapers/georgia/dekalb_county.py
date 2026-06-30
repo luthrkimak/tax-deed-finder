@@ -18,7 +18,12 @@ class DeKalbCountyScraper(BaseScraper):
 
     def parse(self, html: str) -> list[dict]:
         soup = BeautifulSoup(html, "lxml")
-        table = soup.find("table")
+        # Page has a hidden maintenance table first; find the data table by header
+        table = next(
+            (t for t in soup.find_all("table")
+             if t.find("th") and "Tax Sale Date" in t.get_text()),
+            None,
+        )
         if not table:
             return []
         records = []
