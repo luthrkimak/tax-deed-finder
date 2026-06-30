@@ -170,7 +170,10 @@ class RealForecloseScraper(BaseScraper):
             assessed_raw = self._parse_label(item, "Assessed Value")
             assessed = self._parse_currency(assessed_raw) if assessed_raw else None
 
-            judgment_raw = self._parse_label(item, "Final Judgment Amount")
+            judgment_raw = (
+                self._parse_label(item, "Opening Bid")
+                or self._parse_label(item, "Final Judgment Amount")
+            )
             min_bid = self._parse_currency(judgment_raw) if judgment_raw else None
 
             if not parcel_id and not address:
