@@ -1,9 +1,10 @@
 import os
+import threading
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from api.routes import auctions, favorites, alerts, flood_zone, stats
-from scheduler import create_scheduler
+from scheduler import create_scheduler, run_all_scrapers
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -32,3 +33,11 @@ app.include_router(stats.router, prefix="/stats", tags=["stats"])
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+@app.post("/admin/scrape")
+def trigger_scrape(x_admin_key: str = Header(None)):
+    expected = os.environ.get("ADMIN_KEY")
+    if not expected or x_admin_key != expected:
+        raise HTTPException(status_code=403, detail="Forbidden")
+    threading.Thread(target=run_all_scrapers, daemon=True).start()
+    return {"status": "started"}
