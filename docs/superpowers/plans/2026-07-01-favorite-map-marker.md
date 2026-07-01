@@ -444,30 +444,30 @@ git commit -m "feat: add remove-favorite button to map marker popup"
 
 **Interfaces:** none — exercises the full feature end-to-end as a real user would.
 
-- [ ] **Step 1: Start the frontend dev server**
+- [x] **Step 1: Start the frontend dev server**
 
 ```bash
 cd frontend && npm run dev
 ```
 Expected: Vite dev server starts, prints a local URL (typically `http://localhost:5173`).
 
-- [ ] **Step 2: Log in and favorite an auction from the list**
+- [x] **Step 2: Log in and favorite an auction from the list**
 
 In a browser, navigate to the app, log in with a test account, go to the Search page. In the results list on the left, click the star/heart button on an `AuctionCard` to favorite an auction that has a visible marker on the map (pick one with a known address/county so it's easy to spot).
 
 Expected: the button fills in (existing behavior, unchanged).
 
-- [ ] **Step 3: Confirm the marker turns into a gold star**
+- [x] **Step 3: Confirm the marker turns into a gold star**
 
 Locate that same auction's marker on the map (pan/zoom if needed, or use the popup from the card if one exists).
 
 Expected: the marker now renders as a gold 5-point star instead of the colored pin shape for its type.
 
-- [ ] **Step 4: Confirm the legend shows the new "Favorito" entry**
+- [x] **Step 4: Confirm the legend shows the new "Favorito" entry**
 
 Expected: the bottom-left legend box shows a "Favorito" row with a small gold star, above the "Localiz. aproximada" row.
 
-- [ ] **Step 5: Remove the favorite from the map popup**
+- [x] **Step 5: Remove the favorite from the map popup**
 
 Click the gold star marker to open its popup.
 
@@ -477,7 +477,7 @@ Click "★ Remover dos favoritos".
 
 Expected: the marker reverts to its type-colored pin icon (no page reload needed — this is the same optimistic `favoriteIds` state update already used elsewhere). Re-open the results list and confirm the corresponding `AuctionCard`'s favorite button also shows as un-favorited (since both read from the same `favoriteIds` state).
 
-- [ ] **Step 6: Confirm non-favorited markers are unaffected**
+- [x] **Step 6: Confirm non-favorited markers are unaffected**
 
 Expected: all other markers still render with their normal type-based pin icons (blue/green/orange), unchanged.
 
