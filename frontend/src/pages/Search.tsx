@@ -87,7 +87,7 @@ export default function Search() {
   // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
   useEffect(() => { search(initialFilters, initialPage) }, [])
 
-  async function toggleFavorite(auction: Auction) {
+  async function toggleFavorite(auctionId: string) {
     setFavError(null)
     try {
       const { data } = await supabase.auth.getSession()
@@ -95,16 +95,16 @@ export default function Search() {
         navigate('/auth')
         return
       }
-      if (favoriteIds.has(auction.id)) {
+      if (favoriteIds.has(auctionId)) {
         const favs = await apiClient.listFavorites()
-        const fav = favs.find(f => f.auction_id === auction.id)
+        const fav = favs.find(f => f.auction_id === auctionId)
         if (fav) {
           await apiClient.deleteFavorite(fav.id)
-          setFavoriteIds(prev => { const s = new Set(prev); s.delete(auction.id); return s })
+          setFavoriteIds(prev => { const s = new Set(prev); s.delete(auctionId); return s })
         }
       } else {
-        await apiClient.createFavorite(auction.id)
-        setFavoriteIds(prev => new Set([...prev, auction.id]))
+        await apiClient.createFavorite(auctionId)
+        setFavoriteIds(prev => new Set([...prev, auctionId]))
       }
     } catch (err: unknown) {
       const status = (err as { response?: { status?: number } })?.response?.status

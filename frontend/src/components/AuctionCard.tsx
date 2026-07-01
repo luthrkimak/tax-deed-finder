@@ -31,7 +31,7 @@ const TYPE_STYLE: Record<string, React.CSSProperties> = {
 interface Props {
   auction: Auction
   isFavorited?: boolean
-  onToggleFavorite?: (auction: Auction) => void
+  onToggleFavorite?: (auctionId: string) => void
 }
 
 export default function AuctionCard({ auction, isFavorited, onToggleFavorite }: Props) {
@@ -67,7 +67,7 @@ export default function AuctionCard({ auction, isFavorited, onToggleFavorite }: 
           <button
             onClick={async () => {
               setPending(true)
-              try { await onToggleFavorite(auction) } finally { setPending(false) }
+              try { await onToggleFavorite(auction.id) } finally { setPending(false) }
             }}
             disabled={pending}
             title={isFavorited ? 'Remover favorito' : 'Adicionar favorito'}
