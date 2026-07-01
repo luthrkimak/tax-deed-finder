@@ -31,7 +31,7 @@
 
 Pins (`PinData`) only carry an `id`, not a full `Auction` object, so the map can't call a function that expects `Auction`. Since `toggleFavorite` today only ever reads `auction.id`, narrowing the parameter to `auctionId: string` lets both `AuctionCard` and the map call it identically.
 
-- [ ] **Step 1: Update `AuctionCard.tsx` prop type and call site**
+- [x] **Step 1: Update `AuctionCard.tsx` prop type and call site**
 
 In `frontend/src/components/AuctionCard.tsx`, change:
 
@@ -71,7 +71,7 @@ onClick={async () => {
 }}
 ```
 
-- [ ] **Step 2: Update `toggleFavorite` in `Search.tsx`**
+- [x] **Step 2: Update `toggleFavorite` in `Search.tsx`**
 
 In `frontend/src/pages/Search.tsx`, change the function signature and every internal use of `auction.id` to `auctionId`:
 
@@ -110,7 +110,7 @@ async function toggleFavorite(auctionId: string) {
 
 The `<AuctionCard onToggleFavorite={toggleFavorite} .../>` usage at line 141 needs no textual change — it already passes the function by reference, and the new signature matches the updated `AuctionCard` prop type.
 
-- [ ] **Step 3: Type-check and lint**
+- [x] **Step 3: Type-check and lint**
 
 ```bash
 cd frontend && npm run build
@@ -122,7 +122,7 @@ cd frontend && npm run lint
 ```
 Expected: no new lint errors.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add frontend/src/components/AuctionCard.tsx frontend/src/pages/Search.tsx
@@ -140,7 +140,7 @@ git commit -m "refactor: toggleFavorite takes auctionId instead of full Auction 
 - Consumes: nothing new (self-contained within `AuctionMap.tsx`)
 - Produces: `ICONS.favorite: L.DivIcon` — consumed by Task 3's marker icon selection logic.
 
-- [ ] **Step 1: Add `makeStarIcon` next to the existing `makeIcon`**
+- [x] **Step 1: Add `makeStarIcon` next to the existing `makeIcon`**
 
 In `frontend/src/components/AuctionMap.tsx`, right after the closing of `makeIcon` (after line 161, before the `ICONS` object), add:
 
@@ -159,7 +159,7 @@ const makeStarIcon = (color: string) =>
   })
 ```
 
-- [ ] **Step 2: Register the icon in `ICONS`**
+- [x] **Step 2: Register the icon in `ICONS`**
 
 Change:
 
@@ -192,7 +192,7 @@ const ICONS: Record<string, L.DivIcon> = {
 }
 ```
 
-- [ ] **Step 3: Add a "Favorito" row to the legend**
+- [x] **Step 3: Add a "Favorito" row to the legend**
 
 In the legend block at the bottom of `AuctionMap.tsx` (currently lines 288-308), add a new row for favorites between the `LEGEND.map(...)` block and the existing "Localiz. aproximada" row. Change:
 
@@ -226,7 +226,7 @@ In the legend block at the bottom of `AuctionMap.tsx` (currently lines 288-308),
       </div>
 ```
 
-- [ ] **Step 4: Type-check and lint**
+- [x] **Step 4: Type-check and lint**
 
 ```bash
 cd frontend && npm run build
@@ -238,7 +238,7 @@ cd frontend && npm run lint
 ```
 Expected: no new lint errors.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add frontend/src/components/AuctionMap.tsx
@@ -258,7 +258,7 @@ git commit -m "feat: add gold star icon and legend entry for favorited map pins"
 - Consumes: `ICONS.favorite` from Task 2.
 - Produces: `AuctionMap` props `favoriteIds: Set<string>` and `onToggleFavorite: (auctionId: string) => void` — consumed by Task 4's popup button.
 
-- [ ] **Step 1: Extend `AuctionMap`'s Props interface and signature**
+- [x] **Step 1: Extend `AuctionMap`'s Props interface and signature**
 
 Change:
 
@@ -292,7 +292,7 @@ export default function AuctionMap({ filters, favoriteIds, onToggleFavorite }: P
 
 (TypeScript will flag `onToggleFavorite` as unused until Task 4 uses it in the popup — that's expected and resolved in the next task. If `npm run build` fails on this due to `noUnusedParameters`, that's fine to leave failing until Task 4 in the same work session; do not silence it with an eslint-disable comment.)
 
-- [ ] **Step 2: Select `ICONS.favorite` for favorited pins**
+- [x] **Step 2: Select `ICONS.favorite` for favorited pins**
 
 Change the marker's `icon` prop from:
 
@@ -310,7 +310,7 @@ icon={
 }
 ```
 
-- [ ] **Step 3: Pass the new props from `Search.tsx`**
+- [x] **Step 3: Pass the new props from `Search.tsx`**
 
 In `frontend/src/pages/Search.tsx`, change:
 
@@ -324,14 +324,14 @@ to:
 <AuctionMap filters={filters} favoriteIds={favoriteIds} onToggleFavorite={toggleFavorite} />
 ```
 
-- [ ] **Step 4: Type-check and lint**
+- [x] **Step 4: Type-check and lint**
 
 ```bash
 cd frontend && npm run build
 ```
 Expected: builds successfully. If it fails specifically because `onToggleFavorite` is unused, that confirms Task 4 is needed next — proceed to Task 4 before treating this as a blocking failure.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add frontend/src/components/AuctionMap.tsx frontend/src/pages/Search.tsx
@@ -348,7 +348,7 @@ git commit -m "feat: render gold star icon on map for favorited auctions"
 **Interfaces:**
 - Consumes: `favoriteIds` and `onToggleFavorite` props from Task 3.
 
-- [ ] **Step 1: Add the button after "Ver detalhes →"**
+- [x] **Step 1: Add the button after "Ver detalhes →"**
 
 In `frontend/src/components/AuctionMap.tsx`, inside the `<Popup>` body, change:
 
@@ -417,7 +417,7 @@ to:
               </Popup>
 ```
 
-- [ ] **Step 2: Type-check and lint**
+- [x] **Step 2: Type-check and lint**
 
 ```bash
 cd frontend && npm run build
@@ -429,7 +429,7 @@ cd frontend && npm run lint
 ```
 Expected: no new lint errors.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add frontend/src/components/AuctionMap.tsx
