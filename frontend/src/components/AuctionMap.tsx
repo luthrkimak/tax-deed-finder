@@ -187,9 +187,11 @@ const ICONS: Record<string, L.DivIcon> = {
 
 interface Props {
   filters: AuctionFilters
+  favoriteIds: Set<string>
+  onToggleFavorite: (auctionId: string) => void
 }
 
-export default function AuctionMap({ filters }: Props) {
+export default function AuctionMap({ filters, favoriteIds, onToggleFavorite }: Props) {
   const [pins, setPins] = useState<PinData[]>([])
   const navigate = useNavigate()
   const filterKey = JSON.stringify(filters)
@@ -235,7 +237,11 @@ export default function AuctionMap({ filters }: Props) {
           <Marker
             key={pin.id}
             position={[pin.lat, pin.lng]}
-            icon={pin.approximate ? (ICONS[`${pin.type}_approx`] ?? ICONS.default_approx) : (ICONS[pin.type] ?? ICONS.default)}
+            icon={
+              favoriteIds.has(pin.id)
+                ? ICONS.favorite
+                : pin.approximate ? (ICONS[`${pin.type}_approx`] ?? ICONS.default_approx) : (ICONS[pin.type] ?? ICONS.default)
+            }
           >
             <Popup minWidth={200}>
                 <div style={{ margin: '-14px -20px -14px', overflow: 'hidden', borderRadius: '8px', width: 220 }}>

@@ -150,7 +150,7 @@ export default function Search() {
           )}
         </div>
         <div className="flex-1">
-          <AuctionMap filters={filters} />
+          <AuctionMap filters={filters} favoriteIds={favoriteIds} onToggleFavorite={toggleFavorite} />
         </div>
       </div>
     </div>
