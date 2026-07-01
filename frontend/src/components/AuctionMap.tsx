@@ -299,6 +299,25 @@ export default function AuctionMap({ filters, favoriteIds, onToggleFavorite }: P
                     >
                       Ver detalhes →
                     </button>
+                    {favoriteIds.has(pin.id) && (
+                      <button
+                        onClick={() => onToggleFavorite(pin.id)}
+                        style={{
+                          width: '100%',
+                          padding: '7px 0',
+                          marginTop: '6px',
+                          backgroundColor: 'transparent',
+                          color: FAVORITE_COLOR,
+                          border: `1px solid ${FAVORITE_COLOR}`,
+                          borderRadius: '6px',
+                          fontSize: '12px',
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                        }}
+                      >
+                        ★ Remover dos favoritos
+                      </button>
+                    )}
                   </div>
                 </div>
               </Popup>
