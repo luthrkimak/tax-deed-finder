@@ -160,6 +160,19 @@ const makeIcon = (color: string, approximate = false) =>
     popupAnchor: [0, -50],
   })
 
+const FAVORITE_COLOR = '#eab308'
+
+const makeStarIcon = (color: string) =>
+  L.divIcon({
+    className: '',
+    html: `<svg width="34" height="34" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.4))">
+      <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2" fill="${color}" stroke="white" stroke-width="1" stroke-linejoin="round"/>
+    </svg>`,
+    iconSize: [34, 34],
+    iconAnchor: [17, 17],
+    popupAnchor: [0, -17],
+  })
+
 const ICONS: Record<string, L.DivIcon> = {
   tax_deed:              makeIcon('#2563eb'),
   tax_lien:              makeIcon('#16a34a'),
@@ -169,6 +182,7 @@ const ICONS: Record<string, L.DivIcon> = {
   tax_lien_approx:       makeIcon('#16a34a', true),
   foreclosure_approx:    makeIcon('#ea580c', true),
   default_approx:        makeIcon('#6b7280', true),
+  favorite:              makeStarIcon(FAVORITE_COLOR),
 }
 
 interface Props {
@@ -297,6 +311,12 @@ export default function AuctionMap({ filters }: Props) {
             <span className="text-gray-700">{label}</span>
           </div>
         ))}
+        <div className="flex items-center gap-2 pt-1 border-t border-gray-100 mt-1">
+          <svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2" fill={FAVORITE_COLOR} stroke="white" strokeWidth="1"/>
+          </svg>
+          <span className="text-gray-700">Favorito</span>
+        </div>
         <div className="flex items-center gap-2 pt-1 border-t border-gray-100 mt-1">
           <svg width="12" height="14" viewBox="0 0 28 32" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0" style={{ opacity: 0.55 }}>
             <polygon points="14,2 26,13 26,27 2,27 2,13" fill="#94a3b8" stroke="white" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="3,2"/>
