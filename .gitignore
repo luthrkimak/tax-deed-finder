@@ -22,3 +22,6 @@ node_modules/
 .vscode/
 .idea/
 .vercel
+
+# Playwright MCP session artifacts (console logs, page snapshots, screenshots)
+.playwright-mcp/

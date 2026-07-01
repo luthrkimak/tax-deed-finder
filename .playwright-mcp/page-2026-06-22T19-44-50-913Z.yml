@@ -1,7 +1,0 @@
-- generic [ref=e4]:
-  - heading "Tax Deed Finder" [level=1] [ref=e5]
-  - generic [ref=e6]:
-    - textbox "Email" [ref=e7]
-    - textbox "Password" [ref=e8]
-    - button "Log In" [ref=e9] [cursor=pointer]
-  - button "Don't have an account? Sign up" [ref=e10] [cursor=pointer]
